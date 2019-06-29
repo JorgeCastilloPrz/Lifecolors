@@ -96,7 +96,7 @@ class DetailActivity : AppCompatActivity() {
                 overlay.generateRandomDots(bitmap)
                 overlay.animate()
                   .alpha(1f)
-                  .setDuration(150)
+                  .setDuration(700)
                   .start()
               }
             }

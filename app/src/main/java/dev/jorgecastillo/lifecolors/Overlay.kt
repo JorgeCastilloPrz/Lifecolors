@@ -9,7 +9,6 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.palette.graphics.Palette
 import kotlin.math.abs
-import kotlin.random.Random
 
 internal class Overlay @JvmOverloads constructor(
   context: Context,
