@@ -2,48 +2,30 @@ package dev.jorgecastillo.lifecolors
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
 import android.util.AttributeSet
-import android.view.View
+import android.widget.FrameLayout
 import androidx.palette.graphics.Palette
+import dev.jorgecastillo.lifecolors.detail.view.Dot
 import kotlin.math.abs
 
 internal class Overlay @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
-  companion object {
-    private const val STROKE_WIDTH = 8f
+  init {
+    setWillNotDraw(true)
   }
 
-  private val dotRadius = context.resources.getDimensionPixelSize(R.dimen.color_dot_radius)
+  private val dotRadius = resources.getDimensionPixelSize(R.dimen.dot_size) / 2
   private var detectedObjects: List<Triple<Float, Float, Int>> = listOf()
     set(value) {
       field = value
-      invalidate()
+      removeAllViews()
+      addDots(value)
     }
-
-  private val objectBoundaryPaint = Paint().apply {
-    strokeWidth = STROKE_WIDTH
-    color = Color.WHITE
-    style = Paint.Style.STROKE
-  }
-
-  override fun draw(canvas: Canvas) {
-    super.draw(canvas)
-    detectedObjects.forEach {
-      objectBoundaryPaint.color = Color.WHITE
-      objectBoundaryPaint.style = Paint.Style.STROKE
-      canvas.drawCircle(it.first, it.second, dotRadius.toFloat(), objectBoundaryPaint)
-      objectBoundaryPaint.color = it.third
-      objectBoundaryPaint.style = Paint.Style.FILL
-      canvas.drawCircle(it.first, it.second, dotRadius.toFloat() - STROKE_WIDTH / 2, objectBoundaryPaint)
-    }
-  }
 
   fun generateRandomDots(bitmap: Bitmap) {
     detectedObjects = (1..30).map {
@@ -62,6 +44,18 @@ internal class Overlay @JvmOverloads constructor(
         .getDominantColor(Color.parseColor("#FFE0B2"))
 
       Triple(randomX.toFloat(), randomY.toFloat(), color)
+    }
+  }
+
+  private fun addDots(dots: List<Triple<Float, Float, Int>>) {
+    val dotSize = resources.getDimensionPixelSize(R.dimen.dot_size)
+    dots.forEach {
+      val dot = Dot(context).apply {
+        color = it.third
+      }
+      addView(dot, LayoutParams(dotSize, dotSize))
+      dot.x = it.first
+      dot.y = it.second
     }
   }
 }
