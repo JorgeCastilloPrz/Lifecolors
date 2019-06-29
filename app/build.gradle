@@ -30,6 +30,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
     implementation 'com.google.android.material:material:1.1.0-alpha07'
+    implementation 'com.oeri.arcmotionplus:arcmotionplus:1.0.2'
 
     def camerax_version = "1.0.0-alpha02"
     implementation "androidx.camera:camera-core:${camerax_version}"

@@ -15,6 +15,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       app:elevation="0dp"
+      android:elevation="0dp"
       android:layout_margin="24dp"
       android:src="@drawable/ic_eye"
       android:tint="@color/white"

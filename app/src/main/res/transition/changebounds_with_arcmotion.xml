@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:duration="300"
     android:interpolator="@android:interpolator/linear_out_slow_in"
     >
   <changeBounds>
-    <arcMotion
-        android:maximumAngle="90"
-        android:minimumHorizontalAngle="90"
-        android:minimumVerticalAngle="0"/>
+    <pathMotion
+        class="com.oeri.arcmotionplus.ArcMotionPlus"
+        app:arcAngle="50"
+        app:reflect="true"/>
   </changeBounds>
 </transitionSet>

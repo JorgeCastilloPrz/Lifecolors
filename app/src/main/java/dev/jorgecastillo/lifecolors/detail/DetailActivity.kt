@@ -53,7 +53,6 @@ class DetailActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_detail)
     setupEnterAnimation()
-    setupExitAnimation()
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -61,6 +60,7 @@ class DetailActivity : AppCompatActivity() {
     val transition = TransitionInflater.from(this)
       .inflateTransition(R.transition.changebounds_with_arcmotion)
     window.sharedElementEnterTransition = transition
+
     transition.addListener(object : SimpleTransitionListener() {
       override fun onTransitionEnd(transition: Transition) {
         transition.removeListener(this)
@@ -81,14 +81,6 @@ class DetailActivity : AppCompatActivity() {
         initViews()
       }
     })
-  }
-
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  private fun setupExitAnimation() {
-    val fade = Fade()
-    window.returnTransition = fade
-    fade.duration = resources.getInteger(R.integer.animation_duration)
-      .toLong()
   }
 
   fun initViews() {
@@ -119,6 +111,14 @@ class DetailActivity : AppCompatActivity() {
   }
 
   override fun onBackPressed() {
+    picture.animate()
+      .alpha(0f)
+      .setDuration(150)
+      .start()
+    overlay.animate()
+      .alpha(0f)
+      .setDuration(150)
+      .start()
     GUIUtils.animateRevealHide(
       this,
       activityRoot,
@@ -135,6 +135,10 @@ class DetailActivity : AppCompatActivity() {
   }
 
   fun backPressed() {
-    super.onBackPressed()
+    val fade = Fade()
+    window.returnTransition = fade
+    fade.duration = resources.getInteger(R.integer.animation_duration)
+      .toLong()
+    finishAfterTransition()
   }
 }

@@ -1,54 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="dev.jorgecastillo.lifecolors">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="dev.jorgecastillo.lifecolors">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
+  <uses-permission android:name="android.permission.CAMERA"/>
 
-    <uses-feature
-        android:name="android.hardware.sensor.gyroscope"
-        android:required="true"/>
+  <uses-feature
+      android:name="android.hardware.sensor.gyroscope"
+      android:required="true"/>
 
-    <application
-        android:allowBackup="true"
-        android:fullBackupContent="@xml/backup_descriptor"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+  <application
+      android:allowBackup="true"
+      android:fullBackupContent="@xml/backup_descriptor"
+      android:icon="@mipmap/ic_launcher"
+      android:label="@string/app_name"
+      android:roundIcon="@mipmap/ic_launcher_round"
+      android:supportsRtl="true"
+      android:theme="@style/AppTheme"
+      tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".detail.DetailActivity"/>
+    <activity
+        android:name=".detail.DetailActivity"
+        android:theme="@style/Transparent"/>
 
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+    <activity android:name=".MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
 
-            <!-- Register as a system camera app -->
-            <intent-filter>
-                <action android:name="android.media.action.IMAGE_CAPTURE" />
-                <action android:name="android.media.action.STILL_IMAGE_CAMERA"/>
-                <action android:name="android.media.action.VIDEO_CAMERA" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
+      <!-- Register as a system camera app -->
+      <intent-filter>
+        <action android:name="android.media.action.IMAGE_CAPTURE"/>
+        <action android:name="android.media.action.STILL_IMAGE_CAMERA"/>
+        <action android:name="android.media.action.VIDEO_CAMERA"/>
 
-            <!-- Declare notch support -->
-            <meta-data android:name="android.notch_support" android:value="true"/>
-        </activity>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
 
-        <!-- FileProvider used to share photos with other apps -->
-        <provider
-                android:name="androidx.core.content.FileProvider"
-                android:authorities="${applicationId}.provider"
-                android:exported="false"
-                android:grantUriPermissions="true">
-            <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/file_paths"/>
-        </provider>
-    </application>
+      <!-- Declare notch support -->
+      <meta-data
+          android:name="android.notch_support"
+          android:value="true"/>
+    </activity>
+
+    <!-- FileProvider used to share photos with other apps -->
+    <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="${applicationId}.provider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/file_paths"/>
+    </provider>
+  </application>
 </manifest>

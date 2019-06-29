@@ -34,8 +34,15 @@ public class GUIUtils {
     anim.start();
   }
 
-  public static void animateRevealShow(final Context ctx, final View view, final int startRadius,
-      final @ColorRes int color, int x, int y, final OnRevealAnimationListener listener) {
+  public static void animateRevealShow(
+      final Context ctx,
+      final View view,
+      final int startRadius,
+      final @ColorRes int color,
+      int x,
+      int y,
+      final OnRevealAnimationListener listener) {
+
     float finalRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
 
     Animator anim = ViewAnimationUtils.createCircularReveal(view, x, y, startRadius, finalRadius);
