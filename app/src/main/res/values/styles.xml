@@ -17,7 +17,7 @@
     <item name="android:windowIsTranslucent">false</item>
     <item name="android:windowBackground">@color/background</item>
     <item name="android:windowSharedElementEnterTransition">@transition/changebounds_with_arcmotion</item>
-    <item name="android:windowSharedElementReturnTransition">@transition/changebounds_with_arcmotion</item>
+    <item name="android:windowSharedElementReturnTransition">@transition/changebounds_with_arcmotion_return</item>
     <item name="android:windowAllowReturnTransitionOverlap">true</item>
   </style>
 </resources>
