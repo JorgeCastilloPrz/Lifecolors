@@ -105,10 +105,12 @@ class DetailActivity : AppCompatActivity() {
                 picture.setImageBitmap(bitmap)
                 picture.animate()
                   .alpha(1f)
+                  .setDuration(150)
                   .start()
                 overlay.generateRandomDots(bitmap)
                 overlay.animate()
                   .alpha(1f)
+                  .setDuration(150)
                   .start()
               }
             }
