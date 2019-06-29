@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.hardware.display.DisplayManager
 import android.os.Bundle
 import android.util.Rational
+import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraX
@@ -17,6 +18,7 @@ import androidx.camera.core.PreviewConfig
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import dev.jorgecastillo.lifecolors.detail.DetailActivity
+import kotlinx.android.synthetic.main.activity_main.bar
 import kotlinx.android.synthetic.main.activity_main.captureButton
 import kotlinx.android.synthetic.main.activity_main.viewFinder
 import java.io.File
@@ -51,6 +53,7 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+    setSupportActionBar(bar)
     handlePermissions()
   }
 
@@ -170,5 +173,11 @@ class MainActivity : AppCompatActivity() {
     ContextCompat.checkSelfPermission(
       baseContext, it
     ) == PackageManager.PERMISSION_GRANTED
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    val inflater = menuInflater
+    inflater.inflate(R.menu.menu, menu)
+    return true
   }
 }

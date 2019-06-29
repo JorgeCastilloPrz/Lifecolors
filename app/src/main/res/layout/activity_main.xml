@@ -21,7 +21,6 @@
       android:layout_gravity="bottom"
       app:backgroundTint="@color/colorPrimary"
       app:fabAlignmentMode="end"
-      app:navigationIcon="@drawable/ic_eye"
       />
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -32,13 +31,13 @@
       android:elevation="0dp"
       android:src="@drawable/ic_eye"
       android:tint="@color/white"
-      app:tint="@color/white"
       android:transitionName="transition_reveal_contact"
       app:backgroundTint="@color/colorAccent"
       app:elevation="0dp"
       app:layout_anchor="@id/bar"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
+      app:tint="@color/white"
       />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
