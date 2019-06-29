@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import androidx.annotation.ColorRes;
-import dev.jorgecastillo.lifecolors.R;
 
 public class GUIUtils {
 
@@ -30,7 +29,7 @@ public class GUIUtils {
         listener.onRevealHide();
       }
     });
-    anim.setDuration(ctx.getResources().getInteger(R.integer.animation_duration));
+    anim.setDuration(150);
     anim.start();
   }
 
@@ -40,8 +39,8 @@ public class GUIUtils {
     float finalRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
 
     Animator anim = ViewAnimationUtils.createCircularReveal(view, x, y, startRadius, finalRadius);
-    anim.setDuration(ctx.getResources().getInteger(R.integer.animation_duration));
-    anim.setStartDelay(100);
+    anim.setDuration(200);
+    anim.setStartDelay(50);
     anim.setInterpolator(new AccelerateDecelerateInterpolator());
     anim.addListener(new AnimatorListenerAdapter() {
       @Override public void onAnimationStart(Animator animation) {

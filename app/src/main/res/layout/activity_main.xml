@@ -32,6 +32,7 @@
       android:elevation="0dp"
       android:src="@drawable/ic_eye"
       android:tint="@color/white"
+      app:tint="@color/white"
       android:transitionName="transition_reveal_contact"
       app:backgroundTint="@color/colorAccent"
       app:elevation="0dp"

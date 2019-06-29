@@ -19,6 +19,7 @@
       android:layout_margin="24dp"
       android:src="@drawable/ic_eye"
       android:tint="@color/white"
+      app:tint="@color/white"
       android:transitionName="transition_reveal_contact"
       app:backgroundTint="@color/colorAccent"
       app:layout_constraintBottom_toBottomOf="parent"
