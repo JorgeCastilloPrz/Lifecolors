@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.AttributeSet
+import android.view.animation.BounceInterpolator
 import android.widget.FrameLayout
 import androidx.palette.graphics.Palette
 import dev.jorgecastillo.lifecolors.detail.view.Dot
@@ -19,7 +20,8 @@ internal class Overlay @JvmOverloads constructor(
     setWillNotDraw(true)
   }
 
-  private val dotRadius = resources.getDimensionPixelSize(R.dimen.dot_size) / 2
+  private val dotSize = resources.getDimensionPixelSize(R.dimen.dot_size)
+  private val dotRadius = dotSize / 2
   private var detectedObjects: List<Triple<Float, Float, Int>> = listOf()
     set(value) {
       field = value
@@ -28,7 +30,7 @@ internal class Overlay @JvmOverloads constructor(
     }
 
   fun generateRandomDots(bitmap: Bitmap) {
-    detectedObjects = (1..30).map {
+    detectedObjects = (1..25).map {
       val randomX = (dotRadius * 2..(width - dotRadius * 2))
         .fold(listOf<Int>()) { acc, i -> if (acc.none { abs(i - it) <= dotRadius * 3 }) acc + i else acc }
         .shuffled()
@@ -48,14 +50,31 @@ internal class Overlay @JvmOverloads constructor(
   }
 
   private fun addDots(dots: List<Triple<Float, Float, Int>>) {
-    val dotSize = resources.getDimensionPixelSize(R.dimen.dot_size)
-    dots.forEach {
+
+    dots.forEachIndexed { index, triple ->
       val dot = Dot(context).apply {
-        color = it.third
+        color = triple.third
       }
-      addView(dot, LayoutParams(dotSize, dotSize))
-      dot.x = it.first
-      dot.y = it.second
+      dot.alpha = 0f
+      addView(dot, LayoutParams(dotSize / 2, dotSize / 2))
+      dot.x = triple.first
+      dot.y = triple.second
+      animateDot(dot, index)
     }
+  }
+
+  private fun animateDot(
+    dot: Dot,
+    index: Int
+  ) {
+    dot.animate()
+      .alpha(1f)
+      .translationY(dot.y - dotSize / 2f)
+      .scaleX(2f)
+      .scaleY(2f)
+      .setStartDelay(index * 10L)
+      .setDuration(300)
+      .setInterpolator(BounceInterpolator())
+      .start()
   }
 }

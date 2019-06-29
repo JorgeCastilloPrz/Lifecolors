@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
+import dev.jorgecastillo.lifecolors.R
 
 internal class Dot @JvmOverloads constructor(
   context: Context,
@@ -15,7 +16,7 @@ internal class Dot @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
   companion object {
-    private const val STROKE_WIDTH = 8f
+    private const val STROKE_WIDTH = 4f
   }
 
   @ColorInt var color: Int = Color.WHITE
