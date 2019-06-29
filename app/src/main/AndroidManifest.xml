@@ -21,9 +21,11 @@
 
     <activity
         android:name=".detail.DetailActivity"
-        android:theme="@style/Transparent"/>
+        android:theme="@style/DetailActivity"/>
 
-    <activity android:name=".MainActivity">
+    <activity
+        android:name=".MainActivity"
+        android:theme="@style/MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 

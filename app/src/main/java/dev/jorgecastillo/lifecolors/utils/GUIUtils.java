@@ -12,7 +12,7 @@ import dev.jorgecastillo.lifecolors.R;
 public class GUIUtils {
 
   public static void animateRevealHide(final Context ctx, final View view, final @ColorRes int color,
-      final int finalRadius, final OnRevealAnimationListener listener) {
+      final @ColorRes int bgColor, final int finalRadius, final OnRevealAnimationListener listener) {
     int cx = (view.getLeft() + view.getRight()) / 2;
     int cy = (view.getTop() + view.getBottom()) / 2;
     int initialRadius = view.getWidth();
@@ -26,7 +26,7 @@ public class GUIUtils {
 
       @Override public void onAnimationEnd(Animator animation) {
         super.onAnimationEnd(animation);
-        view.setVisibility(View.INVISIBLE);
+        view.setBackgroundColor(ctx.getResources().getColor(bgColor));
         listener.onRevealHide();
       }
     });
@@ -34,14 +34,8 @@ public class GUIUtils {
     anim.start();
   }
 
-  public static void animateRevealShow(
-      final Context ctx,
-      final View view,
-      final int startRadius,
-      final @ColorRes int color,
-      int x,
-      int y,
-      final OnRevealAnimationListener listener) {
+  public static void animateRevealShow(final Context ctx, final View view, final int startRadius,
+      final @ColorRes int color, int x, int y, final OnRevealAnimationListener listener) {
 
     float finalRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
 

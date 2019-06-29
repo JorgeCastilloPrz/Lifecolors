@@ -8,11 +8,16 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
-  <!-- Base application theme. -->
-  <style name="Transparent" parent="AppTheme">
-    <!-- Customize your theme here. -->
-    <item name="android:windowIsTranslucent">false</item>
-    <item name="android:windowBackground">@color/background</item>
+  <style name="MainActivity" parent="AppTheme">
+    <item name="android:windowSharedElementExitTransition">@null</item>
+    <item name="android:windowSharedElementReenterTransition">@null</item>
   </style>
 
+  <style name="DetailActivity" parent="AppTheme">
+    <item name="android:windowIsTranslucent">false</item>
+    <item name="android:windowBackground">@color/background</item>
+    <item name="android:windowSharedElementEnterTransition">@transition/changebounds_with_arcmotion</item>
+    <item name="android:windowSharedElementReturnTransition">@transition/changebounds_with_arcmotion</item>
+    <item name="android:windowAllowReturnTransitionOverlap">true</item>
+  </style>
 </resources>

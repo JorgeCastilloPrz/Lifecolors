@@ -7,9 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.transition.Fade
 import android.transition.Transition
-import android.transition.TransitionInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -57,11 +55,7 @@ class DetailActivity : AppCompatActivity() {
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   private fun setupEnterAnimation() {
-    val transition = TransitionInflater.from(this)
-      .inflateTransition(R.transition.changebounds_with_arcmotion)
-    window.sharedElementEnterTransition = transition
-
-    transition.addListener(object : SimpleTransitionListener() {
+    window.sharedElementEnterTransition.addListener(object : SimpleTransitionListener() {
       override fun onTransitionEnd(transition: Transition) {
         transition.removeListener(this)
         animateRevealShow(activityRoot)
@@ -123,6 +117,7 @@ class DetailActivity : AppCompatActivity() {
       this,
       activityRoot,
       R.color.colorAccent,
+      R.color.background,
       fab.width / 2,
       object : OnRevealAnimationListener {
         override fun onRevealHide() {
@@ -135,10 +130,6 @@ class DetailActivity : AppCompatActivity() {
   }
 
   fun backPressed() {
-    val fade = Fade()
-    window.returnTransition = fade
-    fade.duration = resources.getInteger(R.integer.animation_duration)
-      .toLong()
     finishAfterTransition()
   }
 }
