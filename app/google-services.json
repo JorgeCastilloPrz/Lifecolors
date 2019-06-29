@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "60278618286",
+    "firebase_url": "https://lifecolors-9dd63.firebaseio.com",
+    "project_id": "lifecolors-9dd63",
+    "storage_bucket": "lifecolors-9dd63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60278618286:android:3a69b28ad3da1a64",
+        "android_client_info": {
+          "package_name": "dev.jorgecastillo.lifecolors"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60278618286-3vgi9vrp8m6vk9ns0og1dkjpuslg62et.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.jorgecastillo.lifecolors",
+            "certificate_hash": "15450494f48f3707ee52fe093eff24e3abee98af"
+          }
+        },
+        {
+          "client_id": "60278618286-d9id12g84rl7b6jdniijaoiv59ggn70h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtS8q6CyRtNAdf7SOqi9_YZIrtzIEas7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60278618286-d9id12g84rl7b6jdniijaoiv59ggn70h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
