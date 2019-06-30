@@ -96,6 +96,8 @@ class DetailActivity : AppCompatActivity() {
                 overlay.generateRandomDots(bitmap)
                 overlay.fadeIn(700)
                 bottomCutout.fadeIn()
+
+                bottomCutout.showPalette(bitmap)
               }
             }
           })

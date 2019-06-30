@@ -52,24 +52,12 @@
       app:layout_constraintTop_toTopOf="parent"
       />
 
-  <LinearLayout
+  <dev.jorgecastillo.lifecolors.detail.view.BottomCutout
       android:id="@+id/bottomCutout"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
+      android:alpha="0"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      android:background="@drawable/cutout_bottom_sheet_bg"
-      android:elevation="@dimen/cutout_bottom_sheet_elevation"
-      android:gravity="center_vertical"
-      android:padding="@dimen/spacing"
-      android:alpha="0"
-      >
-
-    <dev.jorgecastillo.lifecolors.detail.view.Dot
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        app:dotColor="#9C27B0"
-        />
-  </LinearLayout>
+      />
 </androidx.constraintlayout.widget.ConstraintLayout>
