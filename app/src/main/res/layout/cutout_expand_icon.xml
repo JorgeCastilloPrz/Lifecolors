@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/colorCount"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:drawableStart="@drawable/ic_color_lens_black_24dp"
+    android:text="6"
+    android:drawablePadding="@dimen/spacing_very_small"
+    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+    android:textColor="@color/white"
+    android:layout_marginEnd="@dimen/spacing_small"
+    />
