@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.palette.graphics.Palette
@@ -56,20 +57,24 @@ internal class BottomCutout @JvmOverloads constructor(
           addDot(lightVibrant)
           addDot(vibrant)
           addDot(darkVibrant)
-          // addDot(lightMuted)
-          // addDot(muted)
-          // addDot(darkMuted)
           animateIn()
         }
       }
   }
 
   private fun animateIn() {
-    // x += width
+    val dotSize = resources.getDimensionPixelSize(R.dimen.dot_size)
+    val endMargin = resources.getDimensionPixelSize(R.dimen.spacing_small)
+    val padding = resources.getDimensionPixelSize(R.dimen.spacing)
+    val paddingEnd = resources.getDimensionPixelSize(R.dimen.spacing_small)
+    val shift = getChildAt(0).width + endMargin + dotSize * 3 + endMargin * 3 + padding + paddingEnd
+
+    x += shift
     fadeIn()
-//    animate()
-//      .translationX(-width.toFloat())
-//      .setInterpolator(AccelerateDecelerateInterpolator())
-//      .start()
+    animate()
+      .translationX(0f)
+      .setDuration(300)
+      .setInterpolator(DecelerateInterpolator(1.5f))
+      .start()
   }
 }
