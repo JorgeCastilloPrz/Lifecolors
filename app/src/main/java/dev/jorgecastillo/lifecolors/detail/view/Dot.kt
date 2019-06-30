@@ -28,6 +28,12 @@ internal class Dot @JvmOverloads constructor(
     isAntiAlias = true
   }
 
+  init {
+    val attributes = context.obtainStyledAttributes(attrs, R.styleable.Dot)
+    color = attributes.getColor(R.styleable.Dot_dotColor, Color.WHITE)
+    attributes.recycle()
+  }
+
   override fun draw(canvas: Canvas) {
     super.draw(canvas)
     objectBoundaryPaint.color = color

@@ -16,10 +16,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.ImageViewTarget
 import dev.jorgecastillo.lifecolors.R
+import dev.jorgecastillo.lifecolors.fadeIn
+import dev.jorgecastillo.lifecolors.fadeOut
 import dev.jorgecastillo.lifecolors.utils.GUIUtils
 import dev.jorgecastillo.lifecolors.utils.OnRevealAnimationListener
 import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
 import kotlinx.android.synthetic.main.activity_detail.activityRoot
+import kotlinx.android.synthetic.main.activity_detail.bottomCutout
 import kotlinx.android.synthetic.main.activity_detail.fab
 import kotlinx.android.synthetic.main.activity_detail.overlay
 import kotlinx.android.synthetic.main.activity_detail.picture
@@ -89,15 +92,10 @@ class DetailActivity : AppCompatActivity() {
               resource?.let { drawable ->
                 val bitmap = (drawable as BitmapDrawable).bitmap
                 picture.setImageBitmap(bitmap)
-                picture.animate()
-                  .alpha(1f)
-                  .setDuration(150)
-                  .start()
+                picture.fadeIn()
                 overlay.generateRandomDots(bitmap)
-                overlay.animate()
-                  .alpha(1f)
-                  .setDuration(700)
-                  .start()
+                overlay.fadeIn(700)
+                bottomCutout.fadeIn()
               }
             }
           })
@@ -105,14 +103,10 @@ class DetailActivity : AppCompatActivity() {
   }
 
   override fun onBackPressed() {
-    picture.animate()
-      .alpha(0f)
-      .setDuration(150)
-      .start()
-    overlay.animate()
-      .alpha(0f)
-      .setDuration(150)
-      .start()
+    picture.fadeOut()
+    overlay.fadeOut()
+    bottomCutout.fadeOut()
+
     GUIUtils.animateRevealHide(
       this,
       activityRoot,
