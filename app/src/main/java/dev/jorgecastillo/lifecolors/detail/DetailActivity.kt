@@ -95,8 +95,6 @@ class DetailActivity : AppCompatActivity() {
                 picture.fadeIn()
                 overlay.showTouchPopup()
                 overlay.fadeIn(700)
-                bottomCutout.fadeIn()
-
                 bottomCutout.showPalette(bitmap)
               }
             }

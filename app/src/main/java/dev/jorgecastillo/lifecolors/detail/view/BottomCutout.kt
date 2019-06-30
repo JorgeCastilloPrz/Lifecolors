@@ -5,10 +5,12 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.palette.graphics.Palette
 import dev.jorgecastillo.lifecolors.R
+import dev.jorgecastillo.lifecolors.fadeIn
 
 internal class BottomCutout @JvmOverloads constructor(
   context: Context,
@@ -29,8 +31,6 @@ internal class BottomCutout @JvmOverloads constructor(
     val paddingEnd = resources.getDimensionPixelSize(R.dimen.spacing_small)
     setPadding(padding, padding, paddingEnd, padding)
     gravity = Gravity.CENTER_VERTICAL
-
-    addDot()
   }
 
   private fun addDot(@ColorInt color: Int = DEFAULT_COLOR) {
@@ -58,7 +58,17 @@ internal class BottomCutout @JvmOverloads constructor(
           addDot(lightMuted)
           addDot(muted)
           addDot(darkMuted)
+          animateIn()
         }
       }
+  }
+
+  private fun animateIn() {
+    // x += width
+    fadeIn()
+//    animate()
+//      .translationX(-width.toFloat())
+//      .setInterpolator(AccelerateDecelerateInterpolator())
+//      .start()
   }
 }
