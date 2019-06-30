@@ -93,7 +93,7 @@ class DetailActivity : AppCompatActivity() {
                 val bitmap = (drawable as BitmapDrawable).bitmap
                 picture.setImageBitmap(bitmap)
                 picture.fadeIn()
-                overlay.generateRandomDots(bitmap)
+                overlay.showTouchPopup()
                 overlay.fadeIn(700)
                 bottomCutout.fadeIn()
 

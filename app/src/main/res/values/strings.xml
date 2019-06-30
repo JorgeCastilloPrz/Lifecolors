@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Lifecolors</string>
+    <string name="overlay_popup_bubble_hint">Touch any point on screen to add the underlying color to your palette.</string>
 </resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/spacing_big"
+    android:background="@drawable/overlay_touch_popup_bubble_bg"
+    android:elevation="@dimen/cutout_bottom_sheet_elevation"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing"
+    android:text="@string/overlay_popup_bubble_hint"
+    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+    />
