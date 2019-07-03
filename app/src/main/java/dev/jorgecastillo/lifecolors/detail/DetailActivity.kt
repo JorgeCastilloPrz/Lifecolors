@@ -18,6 +18,7 @@ import com.bumptech.glide.request.target.ImageViewTarget
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.fadeIn
 import dev.jorgecastillo.lifecolors.fadeOut
+import dev.jorgecastillo.lifecolors.palettes.PalettesActivity
 import dev.jorgecastillo.lifecolors.utils.GUIUtils
 import dev.jorgecastillo.lifecolors.utils.OnRevealAnimationListener
 import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
@@ -56,7 +57,6 @@ class DetailActivity : AppCompatActivity() {
     setupEnterAnimation()
   }
 
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   private fun setupEnterAnimation() {
     window.sharedElementEnterTransition.addListener(object : SimpleTransitionListener() {
       override fun onTransitionEnd(transition: Transition) {
@@ -96,10 +96,15 @@ class DetailActivity : AppCompatActivity() {
                 overlay.showTouchPopup()
                 overlay.fadeIn(700)
                 bottomCutout.showPalette(bitmap)
+                bottomCutout.setOnClickListener { navigateToPalettesActivity() }
               }
             }
           })
       }
+  }
+
+  private fun navigateToPalettesActivity() {
+    PalettesActivity.launch(this, bottomCutout)
   }
 
   override fun onBackPressed() {

@@ -23,16 +23,25 @@ internal class BottomCutout @JvmOverloads constructor(
   }
 
   init {
+    val attributes = context.obtainStyledAttributes(attrs, R.styleable.BottomCutout)
+    val roundedCorners = attributes.getBoolean(R.styleable.BottomCutout_roundedCorners, true)
+    attributes.recycle()
+
+    if (roundedCorners) {
+      setBackgroundResource(R.drawable.cutout_bottom_sheet_bg)
+      inflate(context, R.layout.cutout_expand_icon, this)
+    } else {
+      setBackgroundResource(R.drawable.cutout_bottom_sheet_bg_squared)
+    }
+
     orientation = HORIZONTAL
-    setBackgroundResource(R.drawable.cutout_bottom_sheet_bg)
+
     elevation = resources.getDimensionPixelSize(R.dimen.cutout_bottom_sheet_elevation)
       .toFloat()
     val padding = resources.getDimensionPixelSize(R.dimen.spacing)
     val paddingEnd = resources.getDimensionPixelSize(R.dimen.spacing_small)
     setPadding(padding, padding, paddingEnd, padding)
     gravity = Gravity.CENTER_VERTICAL
-
-    inflate(context, R.layout.cutout_expand_icon, this)
   }
 
   private fun addDot(@ColorInt color: Int = DEFAULT_COLOR) {

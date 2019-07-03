@@ -3,4 +3,7 @@
   <declare-styleable name="Dot">
     <attr format="color" name="dotColor"/>
   </declare-styleable>
+  <declare-styleable name="BottomCutout">
+    <attr format="boolean" name="roundedCorners"/>
+  </declare-styleable>
 </resources>

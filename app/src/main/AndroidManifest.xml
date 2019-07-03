@@ -24,6 +24,10 @@
         android:theme="@style/DetailActivity"/>
 
     <activity
+        android:name=".palettes.PalettesActivity"
+        android:theme="@style/PalettesActivity"/>
+
+    <activity
         android:name=".MainActivity"
         android:theme="@style/MainActivity">
       <intent-filter>

@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#262833</color>
     <color name="colorPrimaryLight">#262833</color>
     <color name="colorAccent">#4caf50</color>
+    <color name="colorAccentDark">#357a38</color>
     <color name="white">#ffffff</color>
     <color name="background">#15161d</color>
     <color name="white_overlay">#55ffffff</color>
