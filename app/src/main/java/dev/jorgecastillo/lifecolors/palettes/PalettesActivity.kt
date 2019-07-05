@@ -1,20 +1,19 @@
 package dev.jorgecastillo.lifecolors.palettes
 
-import android.animation.Animator
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.transition.Transition
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import dev.jorgecastillo.lifecolors.R
-import dev.jorgecastillo.lifecolors.fadeOut
-import dev.jorgecastillo.lifecolors.utils.SimpleAnimatorListener
-import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
+import dev.jorgecastillo.lifecolors.R.color
 import kotlinx.android.synthetic.main.activity_palettes.bottomCutout
-import kotlinx.android.synthetic.main.activity_palettes.toolbar
 
 class PalettesActivity : AppCompatActivity() {
 
@@ -38,24 +37,61 @@ class PalettesActivity : AppCompatActivity() {
   }
 
   private fun setupEnterAnimation() {
-    window.sharedElementEnterTransition.addListener(object : SimpleTransitionListener() {
-      override fun onTransitionEnd(transition: Transition) {
-        transition.removeListener(this)
-        bottomCutout.fadeOut()
+    val totalDuration = window.sharedElementEnterTransition.duration
+    animateCutoutEnter(totalDuration)
+    animateStatusBarEnter(totalDuration)
+  }
+
+  private fun animateCutoutEnter(totalDuration: Long) {
+    val cornerAnimation = ValueAnimator.ofFloat(0f, 1f).apply {
+      duration = totalDuration
+      interpolator = window.sharedElementEnterTransition.interpolator
+      addUpdateListener {
+        bottomCutout.bindTransitionProcess(it.animatedValue as Float)
       }
-    })
+    }
+    cornerAnimation.start()
+  }
+
+  private fun animateStatusBarEnter(totalDuration: Long) {
+    val transparentColor = Color.TRANSPARENT
+    val accentColor = ContextCompat.getColor(this, R.color.colorAccent)
+    val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), transparentColor, accentColor).apply {
+      duration = totalDuration
+      interpolator = window.sharedElementEnterTransition.interpolator
+      addUpdateListener {
+        window.statusBarColor = it.animatedValue as Int
+      }
+    }
+    colorAnimation.start()
   }
 
   override fun onBackPressed() {
-    toolbar.animate().alpha(0f).setListener(object : SimpleAnimatorListener() {
-      override fun onAnimationStart(animation: Animator?) {
-        super.onAnimationStart(animation)
-        bottomCutout.alpha = 1f
-      }
+    val totalDuration = window.sharedElementReturnTransition.duration
+    animateStatusBarExit(totalDuration)
+    animateCutoutCornerExit(totalDuration)
+    finishAfterTransition()
+  }
 
-      override fun onAnimationEnd(animation: Animator?) {
-        finishAfterTransition()
+  private fun animateStatusBarExit(totalDuration: Long) {
+    val transparentColor = Color.TRANSPARENT
+    val accentColor = ContextCompat.getColor(this, color.colorAccent)
+    val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), accentColor, transparentColor).apply {
+      duration = totalDuration / 5
+      interpolator = window.sharedElementEnterTransition.interpolator
+      addUpdateListener {
+        window.statusBarColor = it.animatedValue as Int
       }
-    }).start()
+    }
+    colorAnimation.start()
+  }
+
+  private fun animateCutoutCornerExit(totalDuration: Long) {
+    val cornerAnimation = ValueAnimator.ofFloat(1f, 0f).apply {
+      duration = totalDuration
+      interpolator = window.sharedElementReturnTransition.interpolator
+      addUpdateListener { bottomCutout.bindTransitionProcess(it.animatedValue as Float) }
+    }
+    cornerAnimation.start()
   }
 }

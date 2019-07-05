@@ -1,11 +1,9 @@
 package dev.jorgecastillo.lifecolors.detail
 
-import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.transition.Transition
 import android.view.View
@@ -71,13 +69,13 @@ class DetailActivity : AppCompatActivity() {
     val cy = (viewRoot.top + viewRoot.bottom) / 2
     GUIUtils.animateRevealShow(this, activityRoot, fab.width / 2, R.color.colorAccent,
       cx, cy, object : OnRevealAnimationListener {
-      override fun onRevealHide() {
-      }
+        override fun onRevealHide() {
+        }
 
-      override fun onRevealShow() {
-        initViews()
-      }
-    })
+        override fun onRevealShow() {
+          initViews()
+        }
+      })
   }
 
   fun initViews() {

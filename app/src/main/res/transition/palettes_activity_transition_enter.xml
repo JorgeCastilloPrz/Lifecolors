@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:duration="3000"
+    android:duration="300"
     android:interpolator="@android:interpolator/accelerate_decelerate"
     >
   <changeClipBounds/>
   <changeBounds>
-    <targets>
-      <target android:excludeId="@android:id/statusBarBackground"/>
-      <target android:excludeId="@android:id/navigationBarBackground"/>
-      <target android:excludeId="@id/toolbar"/>
-    </targets>
     <pathMotion
         class="com.oeri.arcmotionplus.ArcMotionPlus"
         app:arcAngle="30"

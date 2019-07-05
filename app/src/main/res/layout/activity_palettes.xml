@@ -18,17 +18,4 @@
       app:roundedCorners="false"
       />
 
-  <androidx.appcompat.widget.Toolbar
-      android:id="@+id/toolbar"
-      android:layout_width="0dp"
-      android:layout_height="?attr/actionBarSize"
-      android:background="@color/colorAccent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:title="@string/app_name"
-      app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
-      app:theme="@style/ThemeOverlay.MaterialComponents.Dark"
-      />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

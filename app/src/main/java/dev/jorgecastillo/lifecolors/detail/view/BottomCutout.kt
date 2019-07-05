@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.palette.graphics.Palette
 import dev.jorgecastillo.lifecolors.R
+import dev.jorgecastillo.lifecolors.detail.view.drawable.CutoutDrawable
 import dev.jorgecastillo.lifecolors.fadeIn
 
 internal class BottomCutout @JvmOverloads constructor(
@@ -28,10 +29,10 @@ internal class BottomCutout @JvmOverloads constructor(
     attributes.recycle()
 
     if (roundedCorners) {
-      setBackgroundResource(R.drawable.cutout_bottom_sheet_bg)
+      background = CutoutDrawable(context)
       inflate(context, R.layout.cutout_expand_icon, this)
     } else {
-      setBackgroundResource(R.drawable.cutout_bottom_sheet_bg_squared)
+      background = CutoutDrawable(context)
     }
 
     orientation = HORIZONTAL
@@ -85,5 +86,9 @@ internal class BottomCutout @JvmOverloads constructor(
       .setDuration(300)
       .setInterpolator(DecelerateInterpolator(1.5f))
       .start()
+  }
+
+  fun bindTransitionProcess(progress: Float) {
+    (background as CutoutDrawable).bindProgress(progress)
   }
 }

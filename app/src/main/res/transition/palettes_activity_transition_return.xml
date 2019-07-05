@@ -5,10 +5,6 @@
     android:interpolator="@android:interpolator/accelerate_decelerate"
     >
   <changeBounds>
-    <targets>
-      <target android:excludeId="@android:id/statusBarBackground"/>
-      <target android:excludeId="@android:id/navigationBarBackground"/>
-    </targets>
     <pathMotion
         class="com.oeri.arcmotionplus.ArcMotionPlus"
         app:arcAngle="30"
