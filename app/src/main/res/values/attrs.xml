@@ -2,6 +2,7 @@
 <resources>
   <declare-styleable name="Dot">
     <attr format="color" name="dotColor"/>
+    <attr format="dimension" name="dotStrokeWidth"/>
   </declare-styleable>
   <declare-styleable name="BottomCutout">
     <attr format="boolean" name="roundedCorners"/>

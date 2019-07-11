@@ -9,6 +9,8 @@
   <dimen name="spacing_biggest">48dp</dimen>
 
   <dimen name="dot_size">32dp</dimen>
+  <dimen name="dot_size_big">56dp</dimen>
   <dimen name="cutout_bottom_sheet_elevation">8dp</dimen>
   <dimen name="cutout_bottom_sheet_radius">32dp</dimen>
+  <dimen name="toolbar_text_size">20sp</dimen>
 </resources>

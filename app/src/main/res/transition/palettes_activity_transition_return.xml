@@ -7,7 +7,7 @@
   <changeBounds>
     <pathMotion
         class="com.oeri.arcmotionplus.ArcMotionPlus"
-        app:arcAngle="30"
+        app:arcAngle="20"
         app:reflect="true">
       <targets>
         <target android:excludeId="@android:id/statusBarBackground"/>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:gravity="center_vertical"
+    tools:background="@color/colorAccent"
+    >
+
+  <ImageView
+      android:id="@+id/toolbarIcon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="?selectableItemBackgroundBorderless"
+      android:clickable="true"
+      android:focusable="true"
+      android:src="@drawable/ic_dropdown"
+      tools:ignore="ContentDescription"
+      />
+
+  <TextView
+      android:id="@+id/toolbarTitle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/spacing_small"
+      android:layout_marginStart="@dimen/spacing_big"
+      android:text="@string/palettes_generated"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+      android:textColor="@color/white"
+      />
+</LinearLayout>

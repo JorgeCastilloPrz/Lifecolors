@@ -12,6 +12,8 @@ import androidx.palette.graphics.Palette
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.detail.view.drawable.CutoutDrawable
 import dev.jorgecastillo.lifecolors.fadeIn
+import kotlinx.android.synthetic.main.cutout_content_palette_activity.view.toolbarIcon
+import kotlinx.android.synthetic.main.cutout_content_palette_activity.view.toolbarTitle
 
 internal class BottomCutout @JvmOverloads constructor(
   context: Context,
@@ -20,8 +22,10 @@ internal class BottomCutout @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
   companion object {
-    private val DEFAULT_COLOR = Color.parseColor("#FFE0B2")
+    val DEFAULT_COLOR = Color.parseColor("#FFE0B2")
   }
+
+  private val generatedColors = mutableListOf<Int>()
 
   init {
     val attributes = context.obtainStyledAttributes(attrs, R.styleable.BottomCutout)
@@ -33,6 +37,7 @@ internal class BottomCutout @JvmOverloads constructor(
       inflate(context, R.layout.cutout_expand_icon, this)
     } else {
       background = CutoutDrawable(context)
+      inflate(context, R.layout.cutout_content_palette_activity, this)
     }
 
     orientation = HORIZONTAL
@@ -64,9 +69,16 @@ internal class BottomCutout @JvmOverloads constructor(
           val muted = it.getMutedColor(DEFAULT_COLOR)
           val darkMuted = it.getDarkMutedColor(DEFAULT_COLOR)
 
-          addDot(lightVibrant)
+          generatedColors += vibrant
+          generatedColors += darkVibrant
+          generatedColors += lightVibrant
+          generatedColors += lightMuted
+          generatedColors += muted
+          generatedColors += darkMuted
+
           addDot(vibrant)
           addDot(darkVibrant)
+          addDot(lightVibrant)
           animateIn()
         }
       }
@@ -88,7 +100,14 @@ internal class BottomCutout @JvmOverloads constructor(
       .start()
   }
 
+  fun animateOut() {
+    toolbarIcon.animate().alpha(0f).setDuration(100).start()
+    toolbarTitle.animate().alpha(0f).setDuration(100).start()
+  }
+
   fun bindTransitionProcess(progress: Float) {
     (background as CutoutDrawable).bindProgress(progress)
   }
+
+  fun generatedColors(): List<Int> = generatedColors.toList()
 }

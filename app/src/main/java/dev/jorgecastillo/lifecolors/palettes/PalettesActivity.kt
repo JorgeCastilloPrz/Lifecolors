@@ -11,29 +11,48 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import dev.jorgecastillo.lifecolors.R
-import dev.jorgecastillo.lifecolors.R.color
 import kotlinx.android.synthetic.main.activity_palettes.bottomCutout
+import kotlinx.android.synthetic.main.activity_palettes.generatedColorsList
+import kotlinx.android.synthetic.main.cutout_content_palette_activity.toolbarIcon
 
 class PalettesActivity : AppCompatActivity() {
 
   companion object {
 
+    private const val GENERATED_COLORS = "GENERATED_COLORS"
+    private const val SELECTED_COLOR = "SELECTED_COLOR"
+
     fun launch(
       source: Activity,
-      sharedElement: View
+      sharedElement: View,
+      generatedColors: List<Int>,
+      selectedColor: String?
     ) {
+      val bundle = Bundle().apply {
+        putIntegerArrayList(GENERATED_COLORS, ArrayList(generatedColors))
+        putString(SELECTED_COLOR, selectedColor)
+      }
+
       val intent = Intent(source, PalettesActivity::class.java)
+      intent.putExtras(bundle)
+
       val options =
         ActivityOptionsCompat.makeSceneTransitionAnimation(source, sharedElement, sharedElement.transitionName)
       ActivityCompat.startActivity(source, intent, options.toBundle())
     }
   }
 
+  private lateinit var adapter: GeneratedColorsAdapter
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_palettes)
     setupEnterAnimation()
+    setupCutoutClicks()
+    setupGeneratedColorsList()
+    generateColors()
   }
 
   private fun setupEnterAnimation() {
@@ -66,16 +85,34 @@ class PalettesActivity : AppCompatActivity() {
     colorAnimation.start()
   }
 
+  private fun setupCutoutClicks() {
+    toolbarIcon.setOnClickListener { onBackPressed() }
+  }
+
+  private fun setupGeneratedColorsList() {
+    generatedColorsList.setHasFixedSize(true)
+    generatedColorsList.layoutManager = GridLayoutManager(this, 2)
+    adapter = GeneratedColorsAdapter()
+    generatedColorsList.adapter = adapter
+  }
+
+  private fun generateColors() {
+    intent?.extras?.getIntegerArrayList(GENERATED_COLORS)?.let { colors ->
+      adapter.colors = colors.toList().map { it.toColorDetails() }
+    }
+  }
+
   override fun onBackPressed() {
     val totalDuration = window.sharedElementReturnTransition.duration
     animateStatusBarExit(totalDuration)
     animateCutoutCornerExit(totalDuration)
+    animateCutoutContentExit()
     finishAfterTransition()
   }
 
   private fun animateStatusBarExit(totalDuration: Long) {
     val transparentColor = Color.TRANSPARENT
-    val accentColor = ContextCompat.getColor(this, color.colorAccent)
+    val accentColor = ContextCompat.getColor(this, R.color.colorAccent)
     val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), accentColor, transparentColor).apply {
       duration = totalDuration / 5
       interpolator = window.sharedElementEnterTransition.interpolator
@@ -93,5 +130,9 @@ class PalettesActivity : AppCompatActivity() {
       addUpdateListener { bottomCutout.bindTransitionProcess(it.animatedValue as Float) }
     }
     cornerAnimation.start()
+  }
+
+  private fun animateCutoutContentExit() {
+    bottomCutout.animateOut()
   }
 }

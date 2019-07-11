@@ -80,10 +80,10 @@ class DetailActivity : AppCompatActivity() {
 
   fun initViews() {
     intent?.extras?.getString(FILE_NAME_KEY)
-      ?.let { File(it) }
-      .let {
+      ?.let { fileName ->
+        val file = File(fileName)
         Glide.with(picture)
-          .load(it)
+          .load(file)
           .apply(RequestOptions().fitCenter())
           .into<ImageViewTarget<Drawable>>(object : ImageViewTarget<Drawable>(picture) {
             override fun setResource(resource: Drawable?) {
@@ -102,7 +102,7 @@ class DetailActivity : AppCompatActivity() {
   }
 
   private fun navigateToPalettesActivity() {
-    PalettesActivity.launch(this, bottomCutout)
+    PalettesActivity.launch(this, bottomCutout, bottomCutout.generatedColors(), null)
   }
 
   override fun onBackPressed() {
