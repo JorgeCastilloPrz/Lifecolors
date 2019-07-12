@@ -2,11 +2,13 @@ package dev.jorgecastillo.lifecolors
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.display.DisplayManager
 import android.os.Bundle
 import android.util.Rational
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraX
@@ -17,6 +19,7 @@ import androidx.camera.core.Preview
 import androidx.camera.core.PreviewConfig
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import dev.jorgecastillo.lifecolors.detail.DetailActivity
 import kotlinx.android.synthetic.main.activity_main.bar
 import kotlinx.android.synthetic.main.activity_main.captureButton
@@ -27,6 +30,10 @@ private const val REQUEST_CODE_PERMISSIONS = 10
 private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
 
 class MainActivity : AppCompatActivity() {
+
+  companion object {
+    private const val PICK_IMAGE_REQUEST_CODE = 9329
+  }
 
   private lateinit var displayManager: DisplayManager
   private var displayId = -1
@@ -141,7 +148,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onImageSaved(file: File) {
-          DetailActivity.launch(this@MainActivity, captureButton, file)
+          DetailActivity.launch(this@MainActivity, captureButton, file.toUri())
         }
       })
   }
@@ -179,5 +186,32 @@ class MainActivity : AppCompatActivity() {
     val inflater = menuInflater
     inflater.inflate(R.menu.menu, menu)
     return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.actionGallery -> true.also { selectPictureFromGallery() }
+      else -> super.onOptionsItemSelected(item)
+    }
+  }
+
+  private fun selectPictureFromGallery() {
+    val intent = Intent()
+    intent.type = "image/*"
+    intent.action = Intent.ACTION_PICK
+    startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST_CODE)
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == PICK_IMAGE_REQUEST_CODE) {
+      data?.let {
+        data.data?.let { uri ->
+          captureButton.post {
+            DetailActivity.launch(this@MainActivity, captureButton, uri)
+          }
+        }
+      }
+    }
   }
 }

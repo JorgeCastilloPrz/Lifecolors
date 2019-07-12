@@ -3,4 +3,5 @@
     <string name="overlay_popup_bubble_hint">Touch any point on screen to add the color to your palette and generate complimentary colors, shades, and much more! 🎨</string>
     <string name="palettes_generated">Suggested colors</string>
     <string name="detected_colors">Detected colors</string>
+    <string name="menu_gallery">Select from gallery</string>
 </resources>

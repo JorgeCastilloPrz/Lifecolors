@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.transition.Transition
 import android.view.View
@@ -30,20 +31,19 @@ import kotlinx.android.synthetic.main.activity_detail.dotAnimationContainer
 import kotlinx.android.synthetic.main.activity_detail.fab
 import kotlinx.android.synthetic.main.activity_detail.overlay
 import kotlinx.android.synthetic.main.activity_detail.picture
-import java.io.File
 
 class DetailActivity : AppCompatActivity(), OnDotSelectedListener {
 
   companion object {
-    const val FILE_NAME_KEY = "FILE_NAME_KEY"
+    const val FILE_URI_KEY = "FILE_URI_KEY"
 
     fun launch(
       source: Activity,
       sharedElement: View,
-      image: File
+      uri: Uri
     ) {
       val bundle = Bundle().apply {
-        putString(FILE_NAME_KEY, image.absolutePath)
+        putParcelable(FILE_URI_KEY, uri)
       }
 
       val intent = Intent(source, DetailActivity::class.java)
@@ -89,16 +89,15 @@ class DetailActivity : AppCompatActivity(), OnDotSelectedListener {
   }
 
   fun initViews() {
-    intent?.extras?.getString(FILE_NAME_KEY)
-      ?.let { fileName ->
-        val file = File(fileName)
-        loadPicture(file)
+    intent?.extras?.getParcelable<Uri>(FILE_URI_KEY)
+      ?.let { uri ->
+        loadPicture(uri)
       }
   }
 
-  private fun loadPicture(file: File): ImageViewTarget<Drawable> {
+  private fun loadPicture(url: Uri): ImageViewTarget<Drawable> {
     return Glide.with(picture)
-      .load(file)
+      .load(url)
       .apply(RequestOptions().fitCenter())
       .into<ImageViewTarget<Drawable>>(object : ImageViewTarget<Drawable>(picture) {
         override fun setResource(resource: Drawable?) {

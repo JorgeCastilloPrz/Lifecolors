@@ -15,8 +15,8 @@
       android:title="2"
       app:showAsAction="ifRoom"/>
   <item
-      android:id="@+id/app_bar_asd"
-      android:icon="@drawable/ic_favorite_border_black_24dp"
-      android:title="3"
+      android:id="@+id/actionGallery"
+      android:icon="@drawable/ic_gallery"
+      android:title="@string/menu_gallery"
       app:showAsAction="ifRoom"/>
 </menu>
