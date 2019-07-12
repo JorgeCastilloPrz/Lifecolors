@@ -12,6 +12,5 @@
       android:repeatCount="infinite"
       android:repeatMode="reverse"
       android:pivotX="50%"
-      android:pivotY="50%"
-      android:fillAfter="true"/>
+      android:pivotY="50%"/>
 </set>

@@ -1,5 +1,7 @@
 package dev.jorgecastillo.lifecolors.detail.view
 
+import android.animation.LayoutTransition
+import android.animation.LayoutTransition.APPEARING
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -10,6 +12,7 @@ import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.palette.graphics.Palette
 import dev.jorgecastillo.lifecolors.R
+import dev.jorgecastillo.lifecolors.common.view.Coordinates
 import dev.jorgecastillo.lifecolors.detail.view.drawable.CutoutDrawable
 import dev.jorgecastillo.lifecolors.fadeIn
 import kotlinx.android.synthetic.main.cutout_content_palette_activity.view.toolbarIcon
@@ -25,9 +28,16 @@ internal class BottomCutout @JvmOverloads constructor(
     val DEFAULT_COLOR = Color.parseColor("#FFE0B2")
   }
 
+  private val dotSize = resources.getDimensionPixelSize(R.dimen.dot_size)
   private val generatedColors = mutableListOf<Int>()
 
   init {
+    layoutTransition = LayoutTransition().apply {
+      this.disableTransitionType(APPEARING)
+    }
+    clipToPadding = false
+    clipChildren = false
+
     val attributes = context.obtainStyledAttributes(attrs, R.styleable.BottomCutout)
     val roundedCorners = attributes.getBoolean(R.styleable.BottomCutout_roundedCorners, true)
     attributes.recycle()
@@ -50,12 +60,20 @@ internal class BottomCutout @JvmOverloads constructor(
     gravity = Gravity.CENTER_VERTICAL
   }
 
-  private fun addDot(@ColorInt color: Int = DEFAULT_COLOR) {
+  private fun addDot(@ColorInt color: Int = DEFAULT_COLOR, addFirst: Boolean = false, delayedAlpha: Boolean = false) {
     val dot = Dot(context)
     val dotSize = resources.getDimensionPixelSize(R.dimen.dot_size)
     dot.color = color
     val endMargin = resources.getDimensionPixelSize(R.dimen.spacing_small)
-    addView(dot, LayoutParams(dotSize, dotSize).apply { marginEnd = endMargin })
+    if (addFirst) {
+      addView(dot, 1, LayoutParams(dotSize, dotSize).apply { marginEnd = endMargin })
+    } else {
+      addView(dot, LayoutParams(dotSize, dotSize).apply { marginEnd = endMargin })
+    }
+    if (delayedAlpha) {
+      dot.alpha = 0f
+      dot.postDelayed({ dot.alpha = 1f }, 280)
+    }
   }
 
   fun showPalette(bitmap: Bitmap) {
@@ -110,4 +128,17 @@ internal class BottomCutout @JvmOverloads constructor(
   }
 
   fun generatedColors(): List<Int> = generatedColors.toList()
+
+  fun getFirstCirclePosition(): Coordinates {
+    val endMargin = resources.getDimensionPixelSize(R.dimen.spacing_small)
+    val padding = resources.getDimensionPixelSize(R.dimen.spacing)
+    return Coordinates(
+      x = getChildAt(0).width + endMargin + padding + dotSize / 2f,
+      y = getChildAt(1).y + dotSize / 2
+    )
+  }
+
+  fun addDotFirst(dot: Dot) {
+    addDot(dot.color, addFirst = true, delayedAlpha = true)
+  }
 }

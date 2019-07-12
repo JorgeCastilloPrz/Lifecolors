@@ -7,13 +7,17 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.transition.Transition
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.ImageViewTarget
+import dev.jorgecastillo.lifecolors.OnDotSelectedListener
 import dev.jorgecastillo.lifecolors.R
+import dev.jorgecastillo.lifecolors.detail.view.Dot
 import dev.jorgecastillo.lifecolors.fadeIn
 import dev.jorgecastillo.lifecolors.fadeOut
 import dev.jorgecastillo.lifecolors.palettes.PalettesActivity
@@ -22,12 +26,13 @@ import dev.jorgecastillo.lifecolors.utils.OnRevealAnimationListener
 import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
 import kotlinx.android.synthetic.main.activity_detail.activityRoot
 import kotlinx.android.synthetic.main.activity_detail.bottomCutout
+import kotlinx.android.synthetic.main.activity_detail.dotAnimationContainer
 import kotlinx.android.synthetic.main.activity_detail.fab
 import kotlinx.android.synthetic.main.activity_detail.overlay
 import kotlinx.android.synthetic.main.activity_detail.picture
 import java.io.File
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), OnDotSelectedListener {
 
   companion object {
     const val FILE_NAME_KEY = "FILE_NAME_KEY"
@@ -53,6 +58,11 @@ class DetailActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_detail)
     setupEnterAnimation()
+    setupOverlay()
+  }
+
+  private fun setupOverlay() {
+    overlay.onDotSelectedListener = this
   }
 
   private fun setupEnterAnimation() {
@@ -82,23 +92,58 @@ class DetailActivity : AppCompatActivity() {
     intent?.extras?.getString(FILE_NAME_KEY)
       ?.let { fileName ->
         val file = File(fileName)
-        Glide.with(picture)
-          .load(file)
-          .apply(RequestOptions().fitCenter())
-          .into<ImageViewTarget<Drawable>>(object : ImageViewTarget<Drawable>(picture) {
-            override fun setResource(resource: Drawable?) {
-              resource?.let { drawable ->
-                val bitmap = (drawable as BitmapDrawable).bitmap
-                picture.setImageBitmap(bitmap)
-                picture.fadeIn()
-                overlay.showTouchPopup()
-                overlay.fadeIn(700)
-                bottomCutout.showPalette(bitmap)
-                bottomCutout.setOnClickListener { navigateToPalettesActivity() }
-              }
-            }
-          })
+        loadPicture(file)
       }
+  }
+
+  private fun loadPicture(file: File): ImageViewTarget<Drawable> {
+    return Glide.with(picture)
+      .load(file)
+      .apply(RequestOptions().fitCenter())
+      .into<ImageViewTarget<Drawable>>(object : ImageViewTarget<Drawable>(picture) {
+        override fun setResource(resource: Drawable?) {
+          resource?.let { drawable ->
+            val bitmap = (drawable as BitmapDrawable).bitmap
+            picture.setImageBitmap(bitmap)
+            picture.fadeIn()
+            overlay.showTouchPopup()
+            overlay.setBitmap(bitmap)
+            overlay.fadeIn(700)
+            bottomCutout.showPalette(bitmap)
+            bottomCutout.setOnClickListener { navigateToPalettesActivity() }
+          }
+        }
+      })
+  }
+
+  override fun onDotSelected(dot: Dot, x: Int, y: Int) {
+    val renderedDot = renderDot(x, y, dot.color)
+    animateDotToCutout(renderedDot, x, y)
+  }
+
+  private fun renderDot(x: Int, y: Int, dotColor: Int): Dot {
+    val dotSize = resources.getDimensionPixelSize(R.dimen.dot_size)
+    val dot = Dot(this).apply {
+      this.color = dotColor
+    }
+
+    dotAnimationContainer.addView(dot, ConstraintLayout.LayoutParams(dotSize, dotSize).apply {
+      topMargin = y - dotSize / 2
+      leftMargin = x - dotSize / 2
+    })
+    return dot
+  }
+
+  private fun animateDotToCutout(dot: Dot, x: Int, y: Int) {
+    val interpolator = AccelerateDecelerateInterpolator()
+    dot.animate().translationX(bottomCutout.x + bottomCutout.getFirstCirclePosition().x - x)
+      .setInterpolator(interpolator).start()
+    dot.animate().translationY(bottomCutout.y + bottomCutout.getFirstCirclePosition().y - y)
+      .setInterpolator(interpolator).withEndAction {
+        dot.alpha = 0f
+        dotAnimationContainer.removeView(dot)
+      }.start()
+    bottomCutout.addDotFirst(dot)
   }
 
   private fun navigateToPalettesActivity() {

@@ -9,7 +9,7 @@ import android.view.View
 import androidx.annotation.ColorInt
 import dev.jorgecastillo.lifecolors.R
 
-internal class Dot @JvmOverloads constructor(
+class Dot @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0

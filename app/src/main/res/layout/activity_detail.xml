@@ -54,11 +54,22 @@
 
   <dev.jorgecastillo.lifecolors.detail.view.BottomCutout
       android:id="@+id/bottomCutout"
-      android:layout_width="wrap_content"
+      android:layout_width="186dp"
       android:layout_height="wrap_content"
       android:transitionName="cutout"
       android:alpha="0"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
+      />
+
+  <FrameLayout
+      android:id="@+id/dotAnimationContainer"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:elevation="20dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
       />
 </androidx.constraintlayout.widget.ConstraintLayout>
