@@ -2,6 +2,7 @@ package dev.jorgecastillo.lifecolors.detail.view
 
 import android.animation.LayoutTransition
 import android.animation.LayoutTransition.APPEARING
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -9,6 +10,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.palette.graphics.Palette
 import dev.jorgecastillo.lifecolors.R
@@ -141,5 +143,12 @@ internal class BottomCutout @JvmOverloads constructor(
   fun addDotFirst(dot: Dot) {
     generatedColors.add(0, dot.color)
     addDot(dot.color, addFirst = true, delayedAlpha = true)
+    bumpCounter()
+  }
+
+  @SuppressLint("SetTextI18n")
+  private fun bumpCounter() {
+    val counterText = getChildAt(0) as TextView
+    counterText.text = "${Integer.parseInt(counterText.text.toString()) + 1}"
   }
 }
