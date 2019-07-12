@@ -139,6 +139,7 @@ internal class BottomCutout @JvmOverloads constructor(
   }
 
   fun addDotFirst(dot: Dot) {
+    generatedColors.add(0, dot.color)
     addDot(dot.color, addFirst = true, delayedAlpha = true)
   }
 }
