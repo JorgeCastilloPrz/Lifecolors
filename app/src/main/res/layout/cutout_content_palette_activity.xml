@@ -25,7 +25,7 @@
       android:layout_height="wrap_content"
       android:layout_marginEnd="@dimen/spacing_small"
       android:layout_marginStart="@dimen/spacing_big"
-      android:text="@string/palettes_generated"
+      android:text="@string/picture_colors"
       android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
       android:textColor="@color/white"
       />

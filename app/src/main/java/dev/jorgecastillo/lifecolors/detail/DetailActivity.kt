@@ -106,7 +106,7 @@ class DetailActivity : AppCompatActivity(), OnDotSelectedListener {
             picture.setImageBitmap(bitmap)
             picture.fadeIn()
             overlay.showTouchPopup()
-            overlay.setBitmap(bitmap)
+            overlay.adjustToBitmap(bitmap)
             overlay.fadeIn(700)
             bottomCutout.showPalette(bitmap)
             bottomCutout.setOnClickListener { navigateToPalettesActivity() }

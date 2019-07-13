@@ -50,8 +50,10 @@ internal class Overlay @JvmOverloads constructor(
     touchPopup.show(ContextCompat.getColor(context, R.color.white_overlay))
   }
 
-  fun setBitmap(bitmap: Bitmap) {
+  fun adjustToBitmap(bitmap: Bitmap) {
     this.bitmap = bitmap
+    layoutParams.width = bitmap.width
+    layoutParams.height = bitmap.height
   }
 
   @SuppressLint("ClickableViewAccessibility")
@@ -93,7 +95,7 @@ internal class Overlay @JvmOverloads constructor(
           val dot = renderDot(x, y, dotColor)
           animateDot(dot)
 
-          onDotSelectedListener?.onDotSelected(dot, x, y)
+          onDotSelectedListener?.onDotSelected(dot, x, y + top)
         }
     }
   }
