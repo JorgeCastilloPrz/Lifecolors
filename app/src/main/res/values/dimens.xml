@@ -4,6 +4,7 @@
   <dimen name="spacing_very_small">4dp</dimen>
   <dimen name="spacing_small">8dp</dimen>
   <dimen name="spacing">16dp</dimen>
+  <dimen name="spacing_medium">20dp</dimen>
   <dimen name="spacing_big">24dp</dimen>
   <dimen name="spacing_very_big">32dp</dimen>
   <dimen name="spacing_biggest">48dp</dimen>

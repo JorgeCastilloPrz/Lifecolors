@@ -14,7 +14,7 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.palette.graphics.Palette
 import dev.jorgecastillo.lifecolors.R
-import dev.jorgecastillo.lifecolors.common.view.Coordinates
+import dev.jorgecastillo.lifecolors.common.view.model.Coordinates
 import dev.jorgecastillo.lifecolors.common.view.model.ColorType.GENERATED
 import dev.jorgecastillo.lifecolors.common.view.model.ColorType.PICKED
 import dev.jorgecastillo.lifecolors.common.view.model.LifeColor

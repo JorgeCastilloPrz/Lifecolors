@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:paddingStart="@dimen/spacing_small"
-    android:paddingEnd="@dimen/spacing_small"
-    android:paddingTop="@dimen/spacing"
+    android:background="@drawable/item_list_bg"
+    android:clickable="true"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:focusable="true"
     android:paddingBottom="@dimen/spacing"
-    tools:background="@color/background"
+    android:paddingEnd="@dimen/spacing_medium"
+    android:paddingStart="@dimen/spacing_medium"
+    android:paddingTop="@dimen/spacing"
     >
 
   <dev.jorgecastillo.lifecolors.detail.view.Dot
@@ -18,9 +21,9 @@
       android:layout_width="@dimen/dot_size_big"
       android:layout_height="@dimen/dot_size_big"
       app:dotStrokeWidth="2dp"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
       />
 
   <TextView
@@ -28,12 +31,12 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/spacing"
-      tools:text="#FFFFFF"
       android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
       android:textColor="@color/white"
       android:textSize="16sp"
       app:layout_constraintStart_toEndOf="@id/colorDot"
       app:layout_constraintTop_toTopOf="parent"
+      tools:text="#FFFFFF"
       />
 
   <TextView
@@ -41,25 +44,25 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/spacing"
-      tools:text="255 / 255 / 0"
-      android:textColor="@color/white"
       android:layout_marginTop="@dimen/spacing_small"
       android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-      app:layout_constraintTop_toBottomOf="@id/hexCode"
+      android:textColor="@color/white"
       app:layout_constraintStart_toEndOf="@id/colorDot"
+      app:layout_constraintTop_toBottomOf="@id/hexCode"
+      tools:text="255 / 255 / 0"
       />
 
   <TextView
       android:id="@+id/cmyk"
-      android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/spacing"
-      tools:text="255 / 255 / 0"
-      android:textColor="@color/white"
       android:layout_marginTop="@dimen/spacing_small"
-      app:layout_constraintTop_toBottomOf="@id/rgb"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+      android:textColor="@color/white"
       app:layout_constraintStart_toEndOf="@id/colorDot"
+      app:layout_constraintTop_toBottomOf="@id/rgb"
+      tools:text="255 / 255 / 0"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
