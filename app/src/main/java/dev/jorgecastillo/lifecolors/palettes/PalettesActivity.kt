@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import kotlinx.android.synthetic.main.activity_palettes.bottomCutout
@@ -98,6 +99,10 @@ class PalettesActivity : AppCompatActivity() {
     pickedColorsList.layoutManager = LinearLayoutManager(this)
     pickedColorsAdapter = GeneratedColorsAdapter()
     pickedColorsList.adapter = pickedColorsAdapter
+    val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
+      setDrawable(ContextCompat.getDrawable(this@PalettesActivity, R.drawable.color_divider)!!)
+    }
+    pickedColorsList.addItemDecoration(dividerDecorator)
   }
 
   private fun setupGeneratedColorsList() {
@@ -105,6 +110,10 @@ class PalettesActivity : AppCompatActivity() {
     generatedColorsList.layoutManager = LinearLayoutManager(this)
     generatedColorsAdapter = GeneratedColorsAdapter()
     generatedColorsList.adapter = generatedColorsAdapter
+    val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
+      setDrawable(ContextCompat.getDrawable(this@PalettesActivity, R.drawable.color_divider)!!)
+    }
+    generatedColorsList.addItemDecoration(dividerDecorator)
   }
 
   private fun fillUpColors() {
