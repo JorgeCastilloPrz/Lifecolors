@@ -81,7 +81,7 @@ internal class Overlay @JvmOverloads constructor(
 
   private fun showDot(x: Int, y: Int) {
     bitmap?.let { bmp ->
-      Palette.from(bmp).setRegion(x - dotSize / 2, y - dotSize / 2, x + dotSize / 2, y + dotSize / 2)
+      Palette.from(bmp).setRegion(x - dotSize / 4, y - dotSize / 4, x + dotSize / 4, y + dotSize / 4)
         .generate { palette ->
 
           var dotColor = palette?.getDominantColor(0) ?: 0
