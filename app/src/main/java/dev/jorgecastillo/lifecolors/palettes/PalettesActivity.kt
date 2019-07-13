@@ -11,28 +11,30 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import kotlinx.android.synthetic.main.activity_palettes.bottomCutout
 import kotlinx.android.synthetic.main.activity_palettes.generatedColorsList
+import kotlinx.android.synthetic.main.activity_palettes.pickedColorsCard
+import kotlinx.android.synthetic.main.activity_palettes.pickedColorsList
 import kotlinx.android.synthetic.main.cutout_content_palette_activity.toolbarIcon
 
 class PalettesActivity : AppCompatActivity() {
 
   companion object {
 
+    private const val PICKED_COLORS = "PICKED_COLORS"
     private const val GENERATED_COLORS = "GENERATED_COLORS"
-    private const val SELECTED_COLOR = "SELECTED_COLOR"
 
     fun launch(
       source: Activity,
       sharedElement: View,
-      generatedColors: List<Int>,
-      selectedColor: String?
+      pickedColors: List<Int>,
+      generatedColors: List<Int>
     ) {
       val bundle = Bundle().apply {
+        putIntegerArrayList(PICKED_COLORS, ArrayList(pickedColors))
         putIntegerArrayList(GENERATED_COLORS, ArrayList(generatedColors))
-        putString(SELECTED_COLOR, selectedColor)
       }
 
       val intent = Intent(source, PalettesActivity::class.java)
@@ -44,15 +46,17 @@ class PalettesActivity : AppCompatActivity() {
     }
   }
 
-  private lateinit var adapter: GeneratedColorsAdapter
+  private lateinit var pickedColorsAdapter: GeneratedColorsAdapter
+  private lateinit var generatedColorsAdapter: GeneratedColorsAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_palettes)
     setupEnterAnimation()
     setupCutoutClicks()
+    setupPickedColorsList()
     setupGeneratedColorsList()
-    generateColors()
+    fillUpColors()
   }
 
   private fun setupEnterAnimation() {
@@ -89,16 +93,32 @@ class PalettesActivity : AppCompatActivity() {
     toolbarIcon.setOnClickListener { onBackPressed() }
   }
 
-  private fun setupGeneratedColorsList() {
-    generatedColorsList.setHasFixedSize(true)
-    generatedColorsList.layoutManager = GridLayoutManager(this, 2)
-    adapter = GeneratedColorsAdapter()
-    generatedColorsList.adapter = adapter
+  private fun setupPickedColorsList() {
+    pickedColorsList.setHasFixedSize(true)
+    pickedColorsList.layoutManager = LinearLayoutManager(this)
+    pickedColorsAdapter = GeneratedColorsAdapter()
+    pickedColorsList.adapter = pickedColorsAdapter
   }
 
-  private fun generateColors() {
+  private fun setupGeneratedColorsList() {
+    generatedColorsList.setHasFixedSize(true)
+    generatedColorsList.layoutManager = LinearLayoutManager(this)
+    generatedColorsAdapter = GeneratedColorsAdapter()
+    generatedColorsList.adapter = generatedColorsAdapter
+  }
+
+  private fun fillUpColors() {
+    intent?.extras?.getIntegerArrayList(PICKED_COLORS)?.let { colors ->
+      if (colors.isEmpty()) {
+        pickedColorsCard.visibility = View.GONE
+      } else {
+        pickedColorsCard.visibility = View.VISIBLE
+        pickedColorsAdapter.colors = colors.toList().map { it.toColorDetails() }
+      }
+    }
+
     intent?.extras?.getIntegerArrayList(GENERATED_COLORS)?.let { colors ->
-      adapter.colors = colors.toList().map { it.toColorDetails() }
+      generatedColorsAdapter.colors = colors.toList().map { it.toColorDetails() }
     }
   }
 

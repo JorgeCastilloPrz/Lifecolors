@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.jorgecastillo.lifecolors.R
+import dev.jorgecastillo.lifecolors.common.view.extensions.toCMYK
 import dev.jorgecastillo.lifecolors.detail.view.Dot
 import dev.jorgecastillo.lifecolors.palettes.GeneratedColorsAdapter.ViewHolder
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorDetails
@@ -43,7 +44,10 @@ class GeneratedColorsAdapter : RecyclerView.Adapter<ViewHolder>() {
       val rgbColor =
         "${Color.red(colorDetails.color)} / ${Color.green(colorDetails.color)} / ${Color.blue(colorDetails.color)}"
       val rgbColorView = itemView.findViewById<TextView>(R.id.rgb)
-      rgbColorView.text = rgbColor
+      rgbColorView.text = itemView.resources.getString(R.string.rgb, rgbColor)
+
+      val cmykColorView = itemView.findViewById<TextView>(R.id.cmyk)
+      cmykColorView.text = itemView.resources.getString(R.string.cmyk, colorDetails.color.toCMYK())
     }
   }
 }

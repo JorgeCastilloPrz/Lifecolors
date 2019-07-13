@@ -26,7 +26,9 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/spacing_small"
       tools:text="#FFFFFF"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
       android:textColor="@color/white"
+      android:textSize="16sp"
       app:layout_constraintStart_toEndOf="@id/colorDot"
       app:layout_constraintTop_toTopOf="parent"
       />
@@ -39,7 +41,21 @@
       tools:text="255 / 255 / 0"
       android:textColor="@color/white"
       android:layout_marginTop="@dimen/spacing_small"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
       app:layout_constraintTop_toBottomOf="@id/hexCode"
+      app:layout_constraintStart_toEndOf="@id/colorDot"
+      />
+
+  <TextView
+      android:id="@+id/cmyk"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/spacing_small"
+      tools:text="255 / 255 / 0"
+      android:textColor="@color/white"
+      android:layout_marginTop="@dimen/spacing_small"
+      app:layout_constraintTop_toBottomOf="@id/rgb"
       app:layout_constraintStart_toEndOf="@id/colorDot"
       />
 

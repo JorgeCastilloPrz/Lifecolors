@@ -146,7 +146,7 @@ class DetailActivity : AppCompatActivity(), OnDotSelectedListener {
   }
 
   private fun navigateToPalettesActivity() {
-    PalettesActivity.launch(this, bottomCutout, bottomCutout.generatedColors(), null)
+    PalettesActivity.launch(this, bottomCutout, bottomCutout.pickedColors(), bottomCutout.generatedColors())
   }
 
   override fun onBackPressed() {

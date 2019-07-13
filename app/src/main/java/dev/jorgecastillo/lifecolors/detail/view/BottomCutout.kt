@@ -15,6 +15,11 @@ import androidx.annotation.ColorInt
 import androidx.palette.graphics.Palette
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.common.view.Coordinates
+import dev.jorgecastillo.lifecolors.common.view.model.ColorType.GENERATED
+import dev.jorgecastillo.lifecolors.common.view.model.ColorType.PICKED
+import dev.jorgecastillo.lifecolors.common.view.model.LifeColor
+import dev.jorgecastillo.lifecolors.common.view.model.toGeneratedLifeColor
+import dev.jorgecastillo.lifecolors.common.view.model.toPickedLifeColor
 import dev.jorgecastillo.lifecolors.detail.view.drawable.CutoutDrawable
 import dev.jorgecastillo.lifecolors.fadeIn
 import kotlinx.android.synthetic.main.cutout_content_palette_activity.view.toolbarIcon
@@ -31,7 +36,7 @@ internal class BottomCutout @JvmOverloads constructor(
   }
 
   private val dotSize = resources.getDimensionPixelSize(R.dimen.dot_size)
-  private val generatedColors = mutableListOf<Int>()
+  private val generatedColors = mutableListOf<LifeColor>()
 
   init {
     layoutTransition = LayoutTransition().apply {
@@ -89,12 +94,12 @@ internal class BottomCutout @JvmOverloads constructor(
           val muted = it.getMutedColor(DEFAULT_COLOR)
           val darkMuted = it.getDarkMutedColor(DEFAULT_COLOR)
 
-          generatedColors += vibrant
-          generatedColors += darkVibrant
-          generatedColors += lightVibrant
-          generatedColors += lightMuted
-          generatedColors += muted
-          generatedColors += darkMuted
+          generatedColors += vibrant.toGeneratedLifeColor()
+          generatedColors += darkVibrant.toGeneratedLifeColor()
+          generatedColors += lightVibrant.toGeneratedLifeColor()
+          generatedColors += lightMuted.toGeneratedLifeColor()
+          generatedColors += muted.toGeneratedLifeColor()
+          generatedColors += darkMuted.toGeneratedLifeColor()
 
           addDot(vibrant)
           addDot(darkVibrant)
@@ -129,7 +134,8 @@ internal class BottomCutout @JvmOverloads constructor(
     (background as CutoutDrawable).bindProgress(progress)
   }
 
-  fun generatedColors(): List<Int> = generatedColors.toList()
+  fun pickedColors(): List<Int> = generatedColors.toList().filter { it.type == PICKED }.map { it.color }
+  fun generatedColors(): List<Int> = generatedColors.toList().filter { it.type == GENERATED }.map { it.color }
 
   fun getFirstCirclePosition(): Coordinates {
     val endMargin = resources.getDimensionPixelSize(R.dimen.spacing_small)
@@ -141,7 +147,7 @@ internal class BottomCutout @JvmOverloads constructor(
   }
 
   fun addDotFirst(dot: Dot) {
-    generatedColors.add(0, dot.color)
+    generatedColors.add(0, dot.color.toPickedLifeColor())
     addDot(dot.color, addFirst = true, delayedAlpha = true)
     bumpCounter()
   }
