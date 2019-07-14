@@ -18,6 +18,7 @@
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
         >
 
       <dev.jorgecastillo.lifecolors.detail.view.Dot
