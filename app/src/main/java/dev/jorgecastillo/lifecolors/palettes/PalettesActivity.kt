@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -14,6 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
+import dev.jorgecastillo.lifecolors.colorgeneration.view.GeneratedColorsActivity
+import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorDetails
 import kotlinx.android.synthetic.main.activity_palettes.bottomCutout
 import kotlinx.android.synthetic.main.activity_palettes.generatedColorsList
 import kotlinx.android.synthetic.main.activity_palettes.pickedColorsCard
@@ -60,6 +63,12 @@ class PalettesActivity : AppCompatActivity() {
     fillUpColors()
   }
 
+  override fun onResume() {
+    super.onResume()
+    window.enterTransition = TransitionInflater.from(this).inflateTransition(R.transition.slide_bottom)
+    window.exitTransition = TransitionInflater.from(this).inflateTransition(R.transition.slide_top)
+  }
+
   private fun setupEnterAnimation() {
     val totalDuration = window.sharedElementEnterTransition.duration
     animateCutoutEnter(totalDuration)
@@ -97,7 +106,7 @@ class PalettesActivity : AppCompatActivity() {
   private fun setupPickedColorsList() {
     pickedColorsList.setHasFixedSize(true)
     pickedColorsList.layoutManager = LinearLayoutManager(this)
-    pickedColorsAdapter = GeneratedColorsAdapter()
+    pickedColorsAdapter = GeneratedColorsAdapter(colorClickListener())
     pickedColorsList.adapter = pickedColorsAdapter
     val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
       setDrawable(ContextCompat.getDrawable(this@PalettesActivity, R.drawable.color_divider)!!)
@@ -108,12 +117,18 @@ class PalettesActivity : AppCompatActivity() {
   private fun setupGeneratedColorsList() {
     generatedColorsList.setHasFixedSize(true)
     generatedColorsList.layoutManager = LinearLayoutManager(this)
-    generatedColorsAdapter = GeneratedColorsAdapter()
+    generatedColorsAdapter = GeneratedColorsAdapter(colorClickListener())
     generatedColorsList.adapter = generatedColorsAdapter
     val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
       setDrawable(ContextCompat.getDrawable(this@PalettesActivity, R.drawable.color_divider)!!)
     }
     generatedColorsList.addItemDecoration(dividerDecorator)
+  }
+
+  private fun colorClickListener(): (View, ColorDetails, Int) -> Unit = { view, details, position ->
+    window.enterTransition = null
+    window.exitTransition = null
+    GeneratedColorsActivity.launch(this, view, details.color, position)
   }
 
   private fun fillUpColors() {

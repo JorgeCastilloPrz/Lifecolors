@@ -29,6 +29,10 @@
         android:theme="@style/PalettesActivity"/>
 
     <activity
+        android:name=".colorgeneration.view.GeneratedColorsActivity"
+        android:theme="@style/GeneratedColorsActivity"/>
+
+    <activity
         android:name=".MainActivity"
         android:theme="@style/MainActivity">
       <intent-filter>

@@ -12,7 +12,8 @@ import dev.jorgecastillo.lifecolors.detail.view.Dot
 import dev.jorgecastillo.lifecolors.palettes.GeneratedColorsAdapter.ViewHolder
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorDetails
 
-class GeneratedColorsAdapter : RecyclerView.Adapter<ViewHolder>() {
+class GeneratedColorsAdapter(private val onItemClick: (View, ColorDetails, Int) -> Unit) :
+  RecyclerView.Adapter<ViewHolder>() {
 
   var colors: List<ColorDetails> = listOf()
     set(value) {
@@ -28,12 +29,17 @@ class GeneratedColorsAdapter : RecyclerView.Adapter<ViewHolder>() {
   override fun getItemCount(): Int = colors.size
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    holder.bind(colors[position])
+    holder.bind(colors[position], onItemClick, position)
   }
 
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bind(colorDetails: ColorDetails) {
+    fun bind(
+      colorDetails: ColorDetails,
+      onItemClick: (View, ColorDetails, Int) -> Unit,
+      position: Int
+    ) {
       val dotView = itemView.findViewById<Dot>(R.id.colorDot)
+      dotView.transitionName = "${colorDetails.color}$position"
       dotView.color = colorDetails.color
       dotView.invalidate()
 
@@ -48,6 +54,8 @@ class GeneratedColorsAdapter : RecyclerView.Adapter<ViewHolder>() {
 
       val cmykColorView = itemView.findViewById<TextView>(R.id.cmyk)
       cmykColorView.text = itemView.resources.getString(R.string.cmyk, colorDetails.color.toCMYK())
+
+      itemView.setOnClickListener { onItemClick(dotView, colorDetails, position) }
     }
   }
 }
