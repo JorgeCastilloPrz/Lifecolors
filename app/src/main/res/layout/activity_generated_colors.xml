@@ -5,23 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/viewRoot"
     >
 
   <com.google.android.material.appbar.AppBarLayout
+      android:id="@+id/appBarLayout"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/generated_color_activity_header"
       >
 
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
 
       <dev.jorgecastillo.lifecolors.detail.view.Dot
           android:id="@+id/dot"
           android:layout_width="@dimen/dot_size_big"
           android:layout_height="@dimen/dot_size_big"
-          android:layout_gravity="center_horizontal"
+          android:layout_gravity="center"
           app:dotColor="@color/colorAccent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"

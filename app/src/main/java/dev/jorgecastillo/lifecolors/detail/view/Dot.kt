@@ -20,6 +20,7 @@ class Dot @JvmOverloads constructor(
   }
 
   @ColorInt var color: Int = Color.WHITE
+  @ColorInt var strokeColor: Int = Color.WHITE
 
   private val objectBoundaryPaint = Paint().apply {
     strokeWidth = STROKE_WIDTH
@@ -31,6 +32,7 @@ class Dot @JvmOverloads constructor(
   init {
     val attributes = context.obtainStyledAttributes(attrs, R.styleable.Dot)
     color = attributes.getColor(R.styleable.Dot_dotColor, Color.WHITE)
+    strokeColor = attributes.getColor(R.styleable.Dot_dotStrokeColor, Color.WHITE)
     objectBoundaryPaint.strokeWidth =
       attributes.getDimensionPixelSize(R.styleable.Dot_dotStrokeWidth, STROKE_WIDTH.toInt()).toFloat()
     attributes.recycle()
@@ -41,7 +43,7 @@ class Dot @JvmOverloads constructor(
     objectBoundaryPaint.color = color
     objectBoundaryPaint.style = Paint.Style.FILL
     canvas.drawCircle(width / 2f, height / 2f, width / 2f - STROKE_WIDTH, objectBoundaryPaint)
-    objectBoundaryPaint.color = Color.WHITE
+    objectBoundaryPaint.color = strokeColor
     objectBoundaryPaint.style = Paint.Style.STROKE
     canvas.drawCircle(width / 2f, height / 2f, width / 2f - STROKE_WIDTH, objectBoundaryPaint)
   }

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.ImageViewTarget
@@ -77,7 +78,7 @@ class DetailActivity : AppCompatActivity(), OnDotSelectedListener {
   private fun animateRevealShow(viewRoot: View) {
     val cx = (viewRoot.left + viewRoot.right) / 2
     val cy = (viewRoot.top + viewRoot.bottom) / 2
-    GUIUtils.animateRevealShow(this, activityRoot, fab.width / 2, R.color.colorAccent,
+    GUIUtils.animateRevealShow(activityRoot, fab.width / 2, ContextCompat.getColor(this, R.color.colorAccent),
       cx, cy, object : OnRevealAnimationListener {
         override fun onRevealHide() {
         }
@@ -155,10 +156,9 @@ class DetailActivity : AppCompatActivity(), OnDotSelectedListener {
     bottomCutout.fadeOut()
 
     GUIUtils.animateRevealHide(
-      this,
       activityRoot,
-      R.color.colorAccent,
-      R.color.background,
+      ContextCompat.getColor(this, R.color.colorAccent),
+      ContextCompat.getColor(this, R.color.background),
       fab.width / 2,
       object : OnRevealAnimationListener {
         override fun onRevealHide() {

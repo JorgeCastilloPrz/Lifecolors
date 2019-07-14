@@ -14,4 +14,5 @@
   <dimen name="cutout_bottom_sheet_elevation">8dp</dimen>
   <dimen name="cutout_bottom_sheet_radius">32dp</dimen>
   <dimen name="toolbar_text_size">20sp</dimen>
+  <dimen name="generated_color_activity_header">180dp</dimen>
 </resources>
