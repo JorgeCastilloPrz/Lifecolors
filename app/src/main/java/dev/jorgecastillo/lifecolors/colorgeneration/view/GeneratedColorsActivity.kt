@@ -1,5 +1,7 @@
 package dev.jorgecastillo.lifecolors.colorgeneration.view
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
@@ -13,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.detail.view.BottomCutout.Companion.DEFAULT_COLOR
+import dev.jorgecastillo.lifecolors.fadeOut
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorDetails
 import dev.jorgecastillo.lifecolors.palettes.toColorDetails
 import dev.jorgecastillo.lifecolors.utils.GUIUtils
@@ -25,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryCol
 import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryColorBaseHex
 import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryColorHex
 import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryColorTitle
+import kotlinx.android.synthetic.main.activity_generated_colors.content
 import kotlinx.android.synthetic.main.activity_generated_colors.dot
 import kotlinx.android.synthetic.main.activity_generated_colors.shadesTitle
 import kotlinx.android.synthetic.main.activity_generated_colors.tintsList
@@ -80,8 +84,22 @@ class GeneratedColorsActivity : AppCompatActivity() {
         transition.removeListener(this)
         dot.strokeColor = Color.TRANSPARENT
         animateRevealShow(selectedColor)
+        animateStatusBarEnter()
       }
     })
+  }
+
+  private fun animateStatusBarEnter() {
+    val totalDuration = window.sharedElementEnterTransition.duration
+    val transparentColor = Color.TRANSPARENT
+    val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), transparentColor, selectedColor()).apply {
+      duration = totalDuration
+      interpolator = window.sharedElementEnterTransition.interpolator
+      addUpdateListener {
+        window.statusBarColor = it.animatedValue as Int
+      }
+    }
+    colorAnimation.start()
   }
 
   private fun animateRevealShow(selectedColor: Int) {
@@ -142,6 +160,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
   }
 
   override fun onBackPressed() {
+    content.fadeOut()
     GUIUtils.animateRevealHide(
       appBarLayout,
       selectedColor(),
@@ -158,6 +177,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
   }
 
   fun backPressed() {
+    window.setBackgroundDrawable(null)
     finishAfterTransition()
   }
 }

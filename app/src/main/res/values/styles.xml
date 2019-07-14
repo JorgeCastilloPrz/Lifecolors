@@ -38,7 +38,7 @@
     <item name="android:windowBackground">@color/background</item>
     <!-- specify enter and exit transitions -->
     <item name="android:windowEnterTransition">@transition/slide_bottom</item>
-    <item name="android:windowExitTransition">@transition/slide_top</item>
+    <item name="android:windowReturnTransition">@transition/slide_top_fade</item>
     <!-- specify shared element transitions -->
     <item name="android:windowSharedElementEnterTransition">@transition/changebounds_with_arcmotion</item>
     <item name="android:windowSharedElementReturnTransition">@transition/changebounds_with_arcmotion_return</item>
