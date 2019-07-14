@@ -20,6 +20,11 @@ import dev.jorgecastillo.lifecolors.utils.OnRevealAnimationListener
 import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
 import kotlinx.android.synthetic.main.activity_generated_colors.appBarLayout
 import kotlinx.android.synthetic.main.activity_generated_colors.colorShadesList
+import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryColor
+import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryColorBase
+import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryColorBaseHex
+import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryColorHex
+import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryColorTitle
 import kotlinx.android.synthetic.main.activity_generated_colors.dot
 import kotlinx.android.synthetic.main.activity_generated_colors.shadesTitle
 import kotlinx.android.synthetic.main.activity_generated_colors.tintsList
@@ -94,6 +99,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
   }
 
   private fun generateColors(selectedColor: Int) {
+    generateComplimentary(selectedColor)
     generateShades(selectedColor)
     generateTints(selectedColor)
   }
@@ -118,6 +124,17 @@ class GeneratedColorsActivity : AppCompatActivity() {
 
     val hexColor = String.format("#%06X", 0xFFFFFF and selectedColor)
     tintsTitle.text = resources.getString(R.string.tints, hexColor)
+  }
+
+  private fun generateComplimentary(selectedColor: Int) {
+    val hexColor = String.format("#%06X", 0xFFFFFF and selectedColor)
+    complimentaryColorTitle.text = resources.getString(R.string.complimentary, hexColor)
+    complimentaryColorBase.setBackgroundColor(selectedColor)
+    complimentaryColor.setBackgroundColor(selectedColor.complimentary())
+
+    val hexColorComplimentary = String.format("#%06X", 0xFFFFFF and selectedColor.complimentary())
+    complimentaryColorBaseHex.text = hexColor
+    complimentaryColorHex.text = hexColorComplimentary
   }
 
   private fun onColorClickListener(): (View, ColorDetails, Int) -> Unit = { view, colorDetails, position ->

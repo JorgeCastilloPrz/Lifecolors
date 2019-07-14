@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/viewRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -46,6 +47,74 @@
         >
 
       <TextView
+          android:id="@+id/complimentaryColorTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing"
+          android:layout_marginTop="@dimen/spacing"
+          android:text="@string/complimentary"
+          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+          android:textColor="@color/colorAccent"
+          android:textSize="16sp"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/generated_color_activity_header"
+          android:orientation="horizontal"
+          >
+
+        <View
+            android:id="@+id/complimentaryColorBase"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_weight="1"
+            tools:color="@color/colorAccent"
+            />
+
+        <View
+            android:id="@+id/complimentaryColor"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_weight="1"
+            tools:color="@color/colorAccent"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:id="@+id/complimentaryColorBaseHex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/white"
+            tools:text="#38B0C8"
+            />
+
+        <TextView
+            android:id="@+id/complimentaryColorHex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/white"
+            tools:text="#38B0C8"
+            />
+      </LinearLayout>
+
+      <TextView
           android:id="@+id/shadesTitle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -82,7 +151,6 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/spacing"
           />
-
     </LinearLayout>
   </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
