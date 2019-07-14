@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.common.view.extensions.toCMYK
 import dev.jorgecastillo.lifecolors.detail.view.Dot
-import dev.jorgecastillo.lifecolors.palettes.GeneratedColorsAdapter.ViewHolder
+import dev.jorgecastillo.lifecolors.palettes.PaletteColorsAdapter.ViewHolder
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorDetails
 
-class GeneratedColorsAdapter(private val onItemClick: (View, ColorDetails, Int) -> Unit) :
+class PaletteColorsAdapter(private val onItemClick: (View, ColorDetails, Int) -> Unit) :
   RecyclerView.Adapter<ViewHolder>() {
 
   var colors: List<ColorDetails> = listOf()

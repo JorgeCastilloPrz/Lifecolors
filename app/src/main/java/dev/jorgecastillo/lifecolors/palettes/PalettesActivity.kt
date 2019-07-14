@@ -50,8 +50,8 @@ class PalettesActivity : AppCompatActivity() {
     }
   }
 
-  private lateinit var pickedColorsAdapter: GeneratedColorsAdapter
-  private lateinit var generatedColorsAdapter: GeneratedColorsAdapter
+  private lateinit var pickedColorsAdapter: PaletteColorsAdapter
+  private lateinit var paletteColorsAdapter: PaletteColorsAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -106,7 +106,7 @@ class PalettesActivity : AppCompatActivity() {
   private fun setupPickedColorsList() {
     pickedColorsList.setHasFixedSize(true)
     pickedColorsList.layoutManager = LinearLayoutManager(this)
-    pickedColorsAdapter = GeneratedColorsAdapter(colorClickListener())
+    pickedColorsAdapter = PaletteColorsAdapter(colorClickListener())
     pickedColorsList.adapter = pickedColorsAdapter
     val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
       setDrawable(ContextCompat.getDrawable(this@PalettesActivity, R.drawable.color_divider)!!)
@@ -117,8 +117,8 @@ class PalettesActivity : AppCompatActivity() {
   private fun setupGeneratedColorsList() {
     generatedColorsList.setHasFixedSize(true)
     generatedColorsList.layoutManager = LinearLayoutManager(this)
-    generatedColorsAdapter = GeneratedColorsAdapter(colorClickListener())
-    generatedColorsList.adapter = generatedColorsAdapter
+    paletteColorsAdapter = PaletteColorsAdapter(colorClickListener())
+    generatedColorsList.adapter = paletteColorsAdapter
     val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
       setDrawable(ContextCompat.getDrawable(this@PalettesActivity, R.drawable.color_divider)!!)
     }
@@ -142,7 +142,7 @@ class PalettesActivity : AppCompatActivity() {
     }
 
     intent?.extras?.getIntegerArrayList(GENERATED_COLORS)?.let { colors ->
-      generatedColorsAdapter.colors = colors.toList().map { it.toColorDetails() }
+      paletteColorsAdapter.colors = colors.toList().map { it.toColorDetails() }
     }
   }
 

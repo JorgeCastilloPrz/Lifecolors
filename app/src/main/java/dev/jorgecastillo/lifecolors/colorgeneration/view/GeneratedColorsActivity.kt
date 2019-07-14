@@ -10,13 +10,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.detail.view.BottomCutout.Companion.DEFAULT_COLOR
+import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorDetails
+import dev.jorgecastillo.lifecolors.palettes.toColorDetails
 import dev.jorgecastillo.lifecolors.utils.GUIUtils
 import dev.jorgecastillo.lifecolors.utils.OnRevealAnimationListener
 import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
 import kotlinx.android.synthetic.main.activity_generated_colors.appBarLayout
+import kotlinx.android.synthetic.main.activity_generated_colors.colorShadesList
 import kotlinx.android.synthetic.main.activity_generated_colors.dot
+import kotlinx.android.synthetic.main.activity_generated_colors.shadesTitle
 
 class GeneratedColorsActivity : AppCompatActivity() {
 
@@ -59,6 +64,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
 
     setupEnterAnimation(selectedColor)
     startPostponedEnterTransition()
+    generateColors(selectedColor)
   }
 
   private fun setupEnterAnimation(selectedColor: Int) {
@@ -83,6 +89,21 @@ class GeneratedColorsActivity : AppCompatActivity() {
           // initViews()
         }
       })
+  }
+
+  private fun generateColors(selectedColor: Int) {
+    val adapter = GeneratedColorsAdapter(onColorClickListener())
+    colorShadesList.adapter = adapter
+    colorShadesList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    colorShadesList.setHasFixedSize(true)
+    adapter.colors = selectedColor.getShades().map { it.toColorDetails() }
+
+    val hexColor = String.format("#%06X", 0xFFFFFF and selectedColor)
+    shadesTitle.text = resources.getString(R.string.shades, hexColor)
+  }
+
+  private fun onColorClickListener(): (View, ColorDetails, Int) -> Unit = { view, colorDetails, position ->
+    launch(this, view, colorDetails.color, position)
   }
 
   override fun onBackPressed() {

@@ -11,6 +11,7 @@
 
   <dimen name="dot_size">32dp</dimen>
   <dimen name="dot_size_big">72dp</dimen>
+  <dimen name="generated_color_size">92dp</dimen>
   <dimen name="cutout_bottom_sheet_elevation">8dp</dimen>
   <dimen name="cutout_bottom_sheet_radius">32dp</dimen>
   <dimen name="toolbar_text_size">20sp</dimen>
