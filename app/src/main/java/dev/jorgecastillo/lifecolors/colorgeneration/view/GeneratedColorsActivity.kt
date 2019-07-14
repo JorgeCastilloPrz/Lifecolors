@@ -22,6 +22,8 @@ import kotlinx.android.synthetic.main.activity_generated_colors.appBarLayout
 import kotlinx.android.synthetic.main.activity_generated_colors.colorShadesList
 import kotlinx.android.synthetic.main.activity_generated_colors.dot
 import kotlinx.android.synthetic.main.activity_generated_colors.shadesTitle
+import kotlinx.android.synthetic.main.activity_generated_colors.tintsList
+import kotlinx.android.synthetic.main.activity_generated_colors.tintsTitle
 
 class GeneratedColorsActivity : AppCompatActivity() {
 
@@ -92,6 +94,11 @@ class GeneratedColorsActivity : AppCompatActivity() {
   }
 
   private fun generateColors(selectedColor: Int) {
+    generateShades(selectedColor)
+    generateTints(selectedColor)
+  }
+
+  private fun generateShades(selectedColor: Int) {
     val adapter = GeneratedColorsAdapter(onColorClickListener())
     colorShadesList.adapter = adapter
     colorShadesList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -100,6 +107,17 @@ class GeneratedColorsActivity : AppCompatActivity() {
 
     val hexColor = String.format("#%06X", 0xFFFFFF and selectedColor)
     shadesTitle.text = resources.getString(R.string.shades, hexColor)
+  }
+
+  private fun generateTints(selectedColor: Int) {
+    val adapter = GeneratedColorsAdapter(onColorClickListener())
+    tintsList.adapter = adapter
+    tintsList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    tintsList.setHasFixedSize(true)
+    adapter.colors = selectedColor.getTints().map { it.toColorDetails() }
+
+    val hexColor = String.format("#%06X", 0xFFFFFF and selectedColor)
+    tintsTitle.text = resources.getString(R.string.tints, hexColor)
   }
 
   private fun onColorClickListener(): (View, ColorDetails, Int) -> Unit = { view, colorDetails, position ->

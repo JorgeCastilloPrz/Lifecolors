@@ -8,4 +8,5 @@
     <string name="rgb">RGB: %1$s</string>
     <string name="cmyk">CMYK: %1$s</string>
     <string name="shades">Shades of %1$s</string>
+    <string name="tints">Tints of %1$s</string>
 </resources>
