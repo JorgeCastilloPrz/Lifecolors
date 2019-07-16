@@ -41,6 +41,19 @@ class GeneratedColorsActivity : AppCompatActivity() {
     private const val PICKED_COLOR = "PICKED_COLORS"
     private const val PICKED_COLOR_POSITION = "PICKED_COLOR_POSITION"
 
+    fun launchWithNoTransition(
+      source: Activity,
+      pickedColor: Int
+    ) {
+      val bundle = Bundle().apply {
+        putInt(PICKED_COLOR, pickedColor)
+      }
+
+      val intent = Intent(source, GeneratedColorsActivity::class.java)
+      intent.putExtras(bundle)
+      source.startActivity(intent)
+    }
+
     fun launch(
       source: Activity,
       sharedElement: View,
@@ -63,19 +76,30 @@ class GeneratedColorsActivity : AppCompatActivity() {
 
   private fun selectedColor() = intent?.extras?.getInt(PICKED_COLOR, DEFAULT_COLOR) ?: DEFAULT_COLOR
 
+  private fun selectedPosition() = intent?.extras?.getInt(PICKED_COLOR_POSITION, -1) ?: -1
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_generated_colors)
     postponeEnterTransition()
 
     val selectedColor = selectedColor()
-    val position = intent?.extras?.getInt(PICKED_COLOR_POSITION, 0) ?: 0
+    val position = selectedPosition()
     dot.color = selectedColor
     dot.transitionName = "$selectedColor$position"
 
-    setupEnterAnimation(selectedColor)
-    startPostponedEnterTransition()
-    generateColors(selectedColor)
+    if (position == -1) {
+      dot.strokeColor = Color.TRANSPARENT
+      appBarLayout.post {
+        animateRevealShow(selectedColor)
+        animateStatusBarEnter()
+        generateColors(selectedColor)
+      }
+    } else {
+      setupEnterAnimation(selectedColor)
+      startPostponedEnterTransition()
+      generateColors(selectedColor)
+    }
   }
 
   private fun setupEnterAnimation(selectedColor: Int) {
@@ -156,24 +180,28 @@ class GeneratedColorsActivity : AppCompatActivity() {
   }
 
   private fun onColorClickListener(): (View, ColorDetails, Int) -> Unit = { view, colorDetails, position ->
-    launch(this, view, colorDetails.color, position)
+    launchWithNoTransition(this, colorDetails.color)
   }
 
   override fun onBackPressed() {
-    content.fadeOut()
-    GUIUtils.animateRevealHide(
-      appBarLayout,
-      selectedColor(),
-      ContextCompat.getColor(this, R.color.background),
-      dot.width / 2,
-      object : OnRevealAnimationListener {
-        override fun onRevealHide() {
-          backPressed()
-        }
+    if (selectedPosition() == -1) {
+      backPressed()
+    } else {
+      content.fadeOut()
+      GUIUtils.animateRevealHide(
+        appBarLayout,
+        selectedColor(),
+        ContextCompat.getColor(this, R.color.background),
+        dot.width / 2,
+        object : OnRevealAnimationListener {
+          override fun onRevealHide() {
+            backPressed()
+          }
 
-        override fun onRevealShow() {
-        }
-      })
+          override fun onRevealShow() {
+          }
+        })
+    }
   }
 
   fun backPressed() {
