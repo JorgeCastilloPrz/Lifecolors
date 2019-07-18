@@ -214,6 +214,9 @@ class GeneratedColorsActivity : AppCompatActivity() {
     analogousColor1.setBackgroundColor(analogousColors.first)
     analogousColor2.setBackgroundColor(analogousColors.second)
 
+    analogousColor1.setOnClickListener { launchWithNoTransition(this, analogousColors.first) }
+    analogousColor2.setOnClickListener { launchWithNoTransition(this, analogousColors.second) }
+
     analogousColorBaseHex.text = hexColor
     analogousColor1Hex.text = analogousColors.first.toHex()
     analogousColor2Hex.text = analogousColors.second.toHex()
@@ -226,6 +229,9 @@ class GeneratedColorsActivity : AppCompatActivity() {
     val triadicColors = selectedColor.triadic()
     triadicColor1.setBackgroundColor(triadicColors.first)
     triadicColor2.setBackgroundColor(triadicColors.second)
+
+    triadicColor1.setOnClickListener { launchWithNoTransition(this, triadicColors.first) }
+    triadicColor2.setOnClickListener { launchWithNoTransition(this, triadicColors.second) }
 
     triadicColorBaseHex.text = hexColor
     triadicColor1Hex.text = triadicColors.first.toHex()
