@@ -12,11 +12,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
+import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
+import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ScreenViewState
+import dev.jorgecastillo.lifecolors.common.view.extensions.isDark
 import dev.jorgecastillo.lifecolors.detail.view.BottomCutout.Companion.DEFAULT_COLOR
+import dev.jorgecastillo.lifecolors.fadeIn
 import dev.jorgecastillo.lifecolors.fadeOut
-import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorDetails
+import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 import dev.jorgecastillo.lifecolors.palettes.toColorDetails
 import dev.jorgecastillo.lifecolors.utils.GUIUtils
 import dev.jorgecastillo.lifecolors.utils.OnRevealAnimationListener
@@ -37,6 +42,8 @@ import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryCol
 import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryColorTitle
 import kotlinx.android.synthetic.main.activity_generated_colors.content
 import kotlinx.android.synthetic.main.activity_generated_colors.dot
+import kotlinx.android.synthetic.main.activity_generated_colors.selectedColorHex
+import kotlinx.android.synthetic.main.activity_generated_colors.selectedColorName
 import kotlinx.android.synthetic.main.activity_generated_colors.shadesTitle
 import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor1
 import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor1Hex
@@ -98,6 +105,8 @@ class GeneratedColorsActivity : AppCompatActivity() {
     }
   }
 
+  private lateinit var viewModel: ColorGenerationViewModel
+
   private fun selectedColor() = intent?.extras?.getInt(PICKED_COLOR, DEFAULT_COLOR) ?: DEFAULT_COLOR
 
   private fun selectedPosition() = intent?.extras?.getInt(PICKED_COLOR_POSITION, -1) ?: -1
@@ -108,6 +117,14 @@ class GeneratedColorsActivity : AppCompatActivity() {
     postponeEnterTransition()
 
     val selectedColor = selectedColor()
+    val headerTextColor = ContextCompat.getColor(
+      this,
+      if (selectedColor.isDark()) R.color.white else R.color.black
+    )
+    selectedColorHex.setTextColor(headerTextColor)
+    selectedColorName.setTextColor(headerTextColor)
+    selectedColorHex.text = selectedColor.toHex()
+
     val position = selectedPosition()
     dot.color = selectedColor
     dot.transitionName = "$selectedColor$position"
@@ -159,9 +176,36 @@ class GeneratedColorsActivity : AppCompatActivity() {
         }
 
         override fun onRevealShow() {
-          // initViews()
+          animateHeaderTextAlpha()
+          observeViewModelUpdates()
         }
       })
+  }
+
+  private fun observeViewModelUpdates() {
+    viewModel = ColorGenerationViewModel(selectedColor().toHexPureValue())
+    viewModel.state.observe(this, Observer { state ->
+      render(state)
+    })
+  }
+
+  private fun render(nullableState: ScreenViewState?) {
+    nullableState?.let { state ->
+      when (state) {
+        is ScreenViewState.Color -> {
+          selectedColorName.text = "\"${state.colorName}\""
+          selectedColorName.fadeIn()
+        }
+        is ScreenViewState.Error -> {
+          selectedColorName.text = ""
+          selectedColorName.fadeOut()
+        }
+      }
+    }
+  }
+
+  private fun animateHeaderTextAlpha() {
+    selectedColorHex.animate().alpha(1f).start()
   }
 
   private fun generateColors(selectedColor: Int) {
@@ -200,6 +244,8 @@ class GeneratedColorsActivity : AppCompatActivity() {
     complimentaryColorTitle.text = resources.getString(R.string.complimentary, hexColor)
     complimentaryColorBase.setBackgroundColor(selectedColor)
     complimentaryColor.setBackgroundColor(selectedColor.complimentary())
+
+    complimentaryColor.setOnClickListener { launchWithNoTransition(this, selectedColor.complimentary()) }
 
     val hexColorComplimentary = selectedColor.complimentary().toHex()
     complimentaryColorBaseHex.text = hexColor
@@ -257,7 +303,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
     tetradicColor3Hex.text = tetradicColors.third.toHex()
   }
 
-  private fun onColorClickListener(): (View, ColorDetails, Int) -> Unit = { view, colorDetails, position ->
+  private fun onColorClickListener(): (View, ColorViewState, Int) -> Unit = { _, colorDetails, _ ->
     launchWithNoTransition(this, colorDetails.color)
   }
 
@@ -266,6 +312,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
       backPressed()
     } else {
       content.fadeOut()
+      selectedColorHex.fadeOut()
       GUIUtils.animateRevealHide(
         appBarLayout,
         selectedColor(),

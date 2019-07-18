@@ -10,12 +10,12 @@ import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.common.view.extensions.toCMYK
 import dev.jorgecastillo.lifecolors.detail.view.Dot
 import dev.jorgecastillo.lifecolors.palettes.PaletteColorsAdapter.ViewHolder
-import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorDetails
+import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 
-class PaletteColorsAdapter(private val onItemClick: (View, ColorDetails, Int) -> Unit) :
+class PaletteColorsAdapter(private val onItemClick: (View, ColorViewState, Int) -> Unit) :
   RecyclerView.Adapter<ViewHolder>() {
 
-  var colors: List<ColorDetails> = listOf()
+  var colors: List<ColorViewState> = listOf()
     set(value) {
       field = value
       notifyDataSetChanged()
@@ -34,28 +34,28 @@ class PaletteColorsAdapter(private val onItemClick: (View, ColorDetails, Int) ->
 
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(
-      colorDetails: ColorDetails,
-      onItemClick: (View, ColorDetails, Int) -> Unit,
+      colorViewState: ColorViewState,
+      onItemClick: (View, ColorViewState, Int) -> Unit,
       position: Int
     ) {
       val dotView = itemView.findViewById<Dot>(R.id.colorDot)
-      dotView.transitionName = "${colorDetails.color}$position"
-      dotView.color = colorDetails.color
+      dotView.transitionName = "${colorViewState.color}$position"
+      dotView.color = colorViewState.color
       dotView.invalidate()
 
-      val hexColor = String.format("#%06X", 0xFFFFFF and colorDetails.color)
+      val hexColor = String.format("#%06X", 0xFFFFFF and colorViewState.color)
       val hexColorView = itemView.findViewById<TextView>(R.id.hexCode)
       hexColorView.text = hexColor
 
       val rgbColor =
-        "${Color.red(colorDetails.color)} / ${Color.green(colorDetails.color)} / ${Color.blue(colorDetails.color)}"
+        "${Color.red(colorViewState.color)} / ${Color.green(colorViewState.color)} / ${Color.blue(colorViewState.color)}"
       val rgbColorView = itemView.findViewById<TextView>(R.id.rgb)
       rgbColorView.text = itemView.resources.getString(R.string.rgb, rgbColor)
 
       val cmykColorView = itemView.findViewById<TextView>(R.id.cmyk)
-      cmykColorView.text = itemView.resources.getString(R.string.cmyk, colorDetails.color.toCMYK())
+      cmykColorView.text = itemView.resources.getString(R.string.cmyk, colorViewState.color.toCMYK())
 
-      itemView.setOnClickListener { onItemClick(dotView, colorDetails, position) }
+      itemView.setOnClickListener { onItemClick(dotView, colorViewState, position) }
     }
   }
 }

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.view.GeneratedColorsActivity
-import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorDetails
+import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 import kotlinx.android.synthetic.main.activity_palettes.bottomCutout
 import kotlinx.android.synthetic.main.activity_palettes.generatedColorsList
 import kotlinx.android.synthetic.main.activity_palettes.pickedColorsCard
@@ -125,7 +125,7 @@ class PalettesActivity : AppCompatActivity() {
     generatedColorsList.addItemDecoration(dividerDecorator)
   }
 
-  private fun colorClickListener(): (View, ColorDetails, Int) -> Unit = { view, details, position ->
+  private fun colorClickListener(): (View, ColorViewState, Int) -> Unit = { view, details, position ->
     window.enterTransition = null
     window.exitTransition = null
     GeneratedColorsActivity.launch(this, view, details.color, position)

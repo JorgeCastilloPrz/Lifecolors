@@ -7,12 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.view.GeneratedColorsAdapter.ViewHolder
-import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorDetails
+import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 
-class GeneratedColorsAdapter(private val onItemClick: (View, ColorDetails, Int) -> Unit) :
+class GeneratedColorsAdapter(private val onItemClick: (View, ColorViewState, Int) -> Unit) :
   RecyclerView.Adapter<ViewHolder>() {
 
-  var colors: List<ColorDetails> = listOf()
+  var colors: List<ColorViewState> = listOf()
     set(value) {
       field = value
       notifyDataSetChanged()
@@ -31,18 +31,18 @@ class GeneratedColorsAdapter(private val onItemClick: (View, ColorDetails, Int) 
 
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(
-      colorDetails: ColorDetails,
-      onItemClick: (View, ColorDetails, Int) -> Unit,
+      colorViewState: ColorViewState,
+      onItemClick: (View, ColorViewState, Int) -> Unit,
       position: Int
     ) {
       val colorSquare = itemView.findViewById<View>(R.id.colorSquare)
-      colorSquare.setBackgroundColor(colorDetails.color)
+      colorSquare.setBackgroundColor(colorViewState.color)
 
       val colorText = itemView.findViewById<TextView>(R.id.colorText)
-      val hexColor = String.format("#%06X", 0xFFFFFF and colorDetails.color)
+      val hexColor = String.format("#%06X", 0xFFFFFF and colorViewState.color)
       colorText.text = hexColor
 
-      itemView.setOnClickListener { onItemClick(colorText, colorDetails, position) }
+      itemView.setOnClickListener { onItemClick(colorText, colorViewState, position) }
     }
   }
 }

@@ -1,7 +1,13 @@
 package dev.jorgecastillo.lifecolors.common.view.extensions
 
 import android.graphics.Color
+import androidx.core.graphics.ColorUtils
 import kotlin.math.max
+
+/**
+ * Check if a color is dark (convert to XYZ & check Y component)
+ */
+fun Int.isDark(): Boolean = ColorUtils.calculateLuminance(this) < 0.5
 
 /**
  * Formula extracted from {@see https://www.rapidtables.com/convert/color/rgb-to-cmyk.html}.

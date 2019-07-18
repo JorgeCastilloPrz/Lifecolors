@@ -1,8 +1,8 @@
 package dev.jorgecastillo.lifecolors.palettes
 
-import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorDetails
+import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 
-fun Int.toColorDetails() = ColorDetails(
+fun Int.toColorDetails() = ColorViewState(
   color = this
 )
 
