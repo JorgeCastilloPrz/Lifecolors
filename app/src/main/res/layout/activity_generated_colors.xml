@@ -156,6 +156,294 @@
           android:layout_marginTop="@dimen/spacing"
           android:nestedScrollingEnabled="false"
           />
+
+      <TextView
+          android:id="@+id/analogousColorsTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing"
+          android:layout_marginTop="@dimen/spacing"
+          android:text="@string/analogous"
+          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+          android:textColor="@color/colorAccent"
+          android:textSize="16sp"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/generated_color_activity_header"
+          android:orientation="horizontal"
+          >
+
+        <View
+            android:id="@+id/analogousColorBase"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_weight="1"
+            tools:color="@color/colorAccent"
+            />
+
+        <View
+            android:id="@+id/analogousColor1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_weight="1"
+            tools:color="@color/colorAccent"
+            />
+
+        <View
+            android:id="@+id/analogousColor2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_weight="1"
+            tools:color="@color/colorAccent"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:id="@+id/analogousColorBaseHex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/white"
+            tools:text="#38B0C8"
+            />
+
+        <TextView
+            android:id="@+id/analogousColor1Hex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/white"
+            tools:text="#38B0C8"
+            />
+
+        <TextView
+            android:id="@+id/analogousColor2Hex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/white"
+            tools:text="#38B0C8"
+            />
+      </LinearLayout>
+
+      <TextView
+          android:id="@+id/triadicColorsTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing"
+          android:layout_marginTop="@dimen/spacing"
+          android:text="@string/triadic"
+          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+          android:textColor="@color/colorAccent"
+          android:textSize="16sp"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/generated_color_activity_header"
+          android:orientation="horizontal"
+          >
+
+        <View
+            android:id="@+id/triadicColorBase"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_weight="1"
+            tools:color="@color/colorAccent"
+            />
+
+        <View
+            android:id="@+id/triadicColor1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_weight="1"
+            tools:color="@color/colorAccent"
+            />
+
+        <View
+            android:id="@+id/triadicColor2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_weight="1"
+            tools:color="@color/colorAccent"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:id="@+id/triadicColorBaseHex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/white"
+            tools:text="#38B0C8"
+            />
+
+        <TextView
+            android:id="@+id/triadicColor1Hex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/white"
+            tools:text="#38B0C8"
+            />
+
+        <TextView
+            android:id="@+id/triadicColor2Hex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/white"
+            tools:text="#38B0C8"
+            />
+      </LinearLayout>
+
+      <TextView
+          android:id="@+id/tetradicColorsTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing"
+          android:layout_marginTop="@dimen/spacing"
+          android:text="@string/tetradic"
+          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+          android:textColor="@color/colorAccent"
+          android:textSize="16sp"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/generated_color_activity_header"
+          android:orientation="horizontal"
+          >
+
+        <View
+            android:id="@+id/tetradicColorBase"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_weight="1"
+            tools:color="@color/colorAccent"
+            />
+
+        <View
+            android:id="@+id/tetradicColor1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_weight="1"
+            tools:color="@color/colorAccent"
+            />
+
+        <View
+            android:id="@+id/tetradicColor2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_weight="1"
+            tools:color="@color/colorAccent"
+            />
+
+        <View
+            android:id="@+id/tetradicColor3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_weight="1"
+            tools:color="@color/colorAccent"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:id="@+id/tetradicColorBaseHex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/white"
+            tools:text="#38B0C8"
+            />
+
+        <TextView
+            android:id="@+id/tetradicColor1Hex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/white"
+            tools:text="#38B0C8"
+            />
+
+        <TextView
+            android:id="@+id/tetradicColor2Hex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/white"
+            tools:text="#38B0C8"
+            />
+
+        <TextView
+            android:id="@+id/tetradicColor3Hex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/white"
+            tools:text="#38B0C8"
+            />
+      </LinearLayout>
     </LinearLayout>
   </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

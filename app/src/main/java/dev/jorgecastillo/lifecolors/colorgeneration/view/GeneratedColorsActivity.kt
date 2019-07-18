@@ -21,6 +21,13 @@ import dev.jorgecastillo.lifecolors.palettes.toColorDetails
 import dev.jorgecastillo.lifecolors.utils.GUIUtils
 import dev.jorgecastillo.lifecolors.utils.OnRevealAnimationListener
 import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
+import kotlinx.android.synthetic.main.activity_generated_colors.analogousColor1
+import kotlinx.android.synthetic.main.activity_generated_colors.analogousColor1Hex
+import kotlinx.android.synthetic.main.activity_generated_colors.analogousColor2
+import kotlinx.android.synthetic.main.activity_generated_colors.analogousColor2Hex
+import kotlinx.android.synthetic.main.activity_generated_colors.analogousColorBase
+import kotlinx.android.synthetic.main.activity_generated_colors.analogousColorBaseHex
+import kotlinx.android.synthetic.main.activity_generated_colors.analogousColorsTitle
 import kotlinx.android.synthetic.main.activity_generated_colors.appBarLayout
 import kotlinx.android.synthetic.main.activity_generated_colors.colorShadesList
 import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryColor
@@ -31,8 +38,24 @@ import kotlinx.android.synthetic.main.activity_generated_colors.complimentaryCol
 import kotlinx.android.synthetic.main.activity_generated_colors.content
 import kotlinx.android.synthetic.main.activity_generated_colors.dot
 import kotlinx.android.synthetic.main.activity_generated_colors.shadesTitle
+import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor1
+import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor1Hex
+import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor2
+import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor2Hex
+import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor3
+import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor3Hex
+import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColorBase
+import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColorBaseHex
+import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColorsTitle
 import kotlinx.android.synthetic.main.activity_generated_colors.tintsList
 import kotlinx.android.synthetic.main.activity_generated_colors.tintsTitle
+import kotlinx.android.synthetic.main.activity_generated_colors.triadicColor1
+import kotlinx.android.synthetic.main.activity_generated_colors.triadicColor1Hex
+import kotlinx.android.synthetic.main.activity_generated_colors.triadicColor2
+import kotlinx.android.synthetic.main.activity_generated_colors.triadicColor2Hex
+import kotlinx.android.synthetic.main.activity_generated_colors.triadicColorBase
+import kotlinx.android.synthetic.main.activity_generated_colors.triadicColorBaseHex
+import kotlinx.android.synthetic.main.activity_generated_colors.triadicColorsTitle
 
 class GeneratedColorsActivity : AppCompatActivity() {
 
@@ -144,6 +167,9 @@ class GeneratedColorsActivity : AppCompatActivity() {
     generateComplimentary(selectedColor)
     generateShades(selectedColor)
     generateTints(selectedColor)
+    generateAnalogous(selectedColor)
+    generateTriadic(selectedColor)
+    generateTetradic(selectedColor)
   }
 
   private fun generateShades(selectedColor: Int) {
@@ -153,7 +179,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
     colorShadesList.setHasFixedSize(true)
     adapter.colors = selectedColor.getShades().map { it.toColorDetails() }
 
-    val hexColor = String.format("#%06X", 0xFFFFFF and selectedColor)
+    val hexColor = selectedColor.toHex()
     shadesTitle.text = resources.getString(R.string.shades, hexColor)
   }
 
@@ -164,19 +190,60 @@ class GeneratedColorsActivity : AppCompatActivity() {
     tintsList.setHasFixedSize(true)
     adapter.colors = selectedColor.getTints().map { it.toColorDetails() }
 
-    val hexColor = String.format("#%06X", 0xFFFFFF and selectedColor)
+    val hexColor = selectedColor.toHex()
     tintsTitle.text = resources.getString(R.string.tints, hexColor)
   }
 
   private fun generateComplimentary(selectedColor: Int) {
-    val hexColor = String.format("#%06X", 0xFFFFFF and selectedColor)
+    val hexColor = selectedColor.toHex()
     complimentaryColorTitle.text = resources.getString(R.string.complimentary, hexColor)
     complimentaryColorBase.setBackgroundColor(selectedColor)
     complimentaryColor.setBackgroundColor(selectedColor.complimentary())
 
-    val hexColorComplimentary = String.format("#%06X", 0xFFFFFF and selectedColor.complimentary())
+    val hexColorComplimentary = selectedColor.complimentary().toHex()
     complimentaryColorBaseHex.text = hexColor
     complimentaryColorHex.text = hexColorComplimentary
+  }
+
+  private fun generateAnalogous(selectedColor: Int) {
+    val hexColor = selectedColor.toHex()
+    analogousColorsTitle.text = resources.getString(R.string.analogous, hexColor)
+    analogousColorBase.setBackgroundColor(selectedColor)
+    val analogousColors = selectedColor.analogous()
+    analogousColor1.setBackgroundColor(analogousColors.first)
+    analogousColor2.setBackgroundColor(analogousColors.second)
+
+    analogousColorBaseHex.text = hexColor
+    analogousColor1Hex.text = analogousColors.first.toHex()
+    analogousColor2Hex.text = analogousColors.second.toHex()
+  }
+
+  private fun generateTriadic(selectedColor: Int) {
+    val hexColor = selectedColor.toHex()
+    triadicColorsTitle.text = resources.getString(R.string.triadic, hexColor)
+    triadicColorBase.setBackgroundColor(selectedColor)
+    val triadicColors = selectedColor.triadic()
+    triadicColor1.setBackgroundColor(triadicColors.first)
+    triadicColor2.setBackgroundColor(triadicColors.second)
+
+    triadicColorBaseHex.text = hexColor
+    triadicColor1Hex.text = triadicColors.first.toHex()
+    triadicColor2Hex.text = triadicColors.second.toHex()
+  }
+
+  private fun generateTetradic(selectedColor: Int) {
+    val hexColor = selectedColor.toHex()
+    tetradicColorsTitle.text = resources.getString(R.string.tetradic, hexColor)
+    tetradicColorBase.setBackgroundColor(selectedColor)
+    val tetradicColors = selectedColor.tetradic()
+    tetradicColor1.setBackgroundColor(tetradicColors.first)
+    tetradicColor2.setBackgroundColor(tetradicColors.second)
+    tetradicColor3.setBackgroundColor(tetradicColors.third)
+
+    tetradicColorBaseHex.text = hexColor
+    tetradicColor1Hex.text = tetradicColors.first.toHex()
+    tetradicColor2Hex.text = tetradicColors.second.toHex()
+    tetradicColor3Hex.text = tetradicColors.third.toHex()
   }
 
   private fun onColorClickListener(): (View, ColorDetails, Int) -> Unit = { view, colorDetails, position ->

@@ -10,4 +10,7 @@
     <string name="shades">Shades of %1$s</string>
     <string name="tints">Tints of %1$s</string>
     <string name="complimentary">Complimentary color of %1$s</string>
+    <string name="triadic">Triadic colors of %1$s</string>
+    <string name="tetradic">Tetradic colors of %1$s</string>
+    <string name="analogous">Analogous colors of %1$s</string>
 </resources>
