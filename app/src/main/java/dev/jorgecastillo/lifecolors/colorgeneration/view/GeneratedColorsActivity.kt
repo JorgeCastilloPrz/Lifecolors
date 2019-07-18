@@ -74,6 +74,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
 
       val intent = Intent(source, GeneratedColorsActivity::class.java)
       intent.putExtras(bundle)
+      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
       source.startActivity(intent)
     }
 
@@ -239,6 +240,10 @@ class GeneratedColorsActivity : AppCompatActivity() {
     tetradicColor1.setBackgroundColor(tetradicColors.first)
     tetradicColor2.setBackgroundColor(tetradicColors.second)
     tetradicColor3.setBackgroundColor(tetradicColors.third)
+
+    tetradicColor1.setOnClickListener { launchWithNoTransition(this, tetradicColors.first) }
+    tetradicColor2.setOnClickListener { launchWithNoTransition(this, tetradicColors.second) }
+    tetradicColor3.setOnClickListener { launchWithNoTransition(this, tetradicColors.third) }
 
     tetradicColorBaseHex.text = hexColor
     tetradicColor1Hex.text = tetradicColors.first.toHex()
