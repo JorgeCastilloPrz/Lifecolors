@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
+      android:id="@+id/favColor"
+      android:icon="@drawable/ic_favorite_border_black_24dp"
+      android:title="@string/action_copy_to_clipboard"
+      app:showAsAction="ifRoom"/>
+
+  <item
       android:id="@+id/copyToClipBoard"
       android:icon="@drawable/ic_content_copy_black_24dp"
       android:title="@string/action_copy_to_clipboard"

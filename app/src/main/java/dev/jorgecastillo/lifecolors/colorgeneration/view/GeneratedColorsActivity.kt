@@ -159,25 +159,31 @@ class GeneratedColorsActivity : AppCompatActivity() {
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.generated_colors_menu, menu)
+    val favIcon = menu.findItem(R.id.favColor)
     val copyToClipboardItem = menu.findItem(R.id.copyToClipBoard)
-    copyToClipboardItem.icon = ContextCompat.getDrawable(
-      this, if (selectedColor().isDark()) {
-        R.drawable.ic_content_copy_white_24dp
-      } else {
-        R.drawable.ic_content_copy_black_24dp
-      }
-    )
+    if (selectedColor().isDark()) {
+      favIcon.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white_24dp)
+      copyToClipboardItem.icon = ContextCompat.getDrawable(this, R.drawable.ic_content_copy_white_24dp)
+    } else {
+      favIcon.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_black_24dp)
+      copyToClipboardItem.icon = ContextCompat.getDrawable(this, R.drawable.ic_content_copy_black_24dp)
+    }
+
     this.menu = menu
     return true
   }
 
   override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+    menu.hideAction(R.id.favColor)
     menu.hideAction(R.id.copyToClipBoard)
     return true
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
+      R.id.favColor -> {
+        true
+      }
       R.id.copyToClipBoard -> {
         val anchorView = findViewById<View>(R.id.copyToClipBoard)
         val popup = PopupMenu(this, anchorView)
@@ -242,6 +248,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
   }
 
   private fun showMenuOptions() {
+    menu.showAction(R.id.favColor)
     menu.showAction(R.id.copyToClipBoard)
   }
 
@@ -374,6 +381,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
     if (selectedPosition() == -1) {
       backPressed()
     } else {
+      menu.hideAction(R.id.favColor)
       menu.hideAction(R.id.copyToClipBoard)
       content.fadeOut()
       selectedColorHex.fadeOut()
