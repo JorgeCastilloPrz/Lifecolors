@@ -7,8 +7,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.transition.Transition
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
@@ -17,7 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ScreenViewState
+import dev.jorgecastillo.lifecolors.common.view.extensions.hideAction
 import dev.jorgecastillo.lifecolors.common.view.extensions.isDark
+import dev.jorgecastillo.lifecolors.common.view.extensions.showAction
 import dev.jorgecastillo.lifecolors.detail.view.BottomCutout.Companion.DEFAULT_COLOR
 import dev.jorgecastillo.lifecolors.fadeIn
 import dev.jorgecastillo.lifecolors.fadeOut
@@ -56,6 +61,7 @@ import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColorBas
 import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColorsTitle
 import kotlinx.android.synthetic.main.activity_generated_colors.tintsList
 import kotlinx.android.synthetic.main.activity_generated_colors.tintsTitle
+import kotlinx.android.synthetic.main.activity_generated_colors.toolbar
 import kotlinx.android.synthetic.main.activity_generated_colors.triadicColor1
 import kotlinx.android.synthetic.main.activity_generated_colors.triadicColor1Hex
 import kotlinx.android.synthetic.main.activity_generated_colors.triadicColor2
@@ -106,6 +112,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
   }
 
   private lateinit var viewModel: ColorGenerationViewModel
+  private lateinit var menu: Menu
 
   private fun selectedColor() = intent?.extras?.getInt(PICKED_COLOR, DEFAULT_COLOR) ?: DEFAULT_COLOR
 
@@ -115,6 +122,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_generated_colors)
     postponeEnterTransition()
+    setupStatusBar()
 
     val selectedColor = selectedColor()
     val headerTextColor = ContextCompat.getColor(
@@ -140,6 +148,46 @@ class GeneratedColorsActivity : AppCompatActivity() {
       setupEnterAnimation(selectedColor)
       startPostponedEnterTransition()
       generateColors(selectedColor)
+    }
+  }
+
+  private fun setupStatusBar() {
+    title = ""
+    setSupportActionBar(toolbar)
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    menuInflater.inflate(R.menu.generated_colors_menu, menu)
+    val copyToClipboardItem = menu.findItem(R.id.copyToClipBoard)
+    copyToClipboardItem.icon = ContextCompat.getDrawable(
+      this, if (selectedColor().isDark()) {
+        R.drawable.ic_content_copy_white_24dp
+      } else {
+        R.drawable.ic_content_copy_black_24dp
+      }
+    )
+    this.menu = menu
+    return true
+  }
+
+  override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+    menu.hideAction(R.id.copyToClipBoard)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.copyToClipBoard -> {
+        val anchorView = findViewById<View>(R.id.copyToClipBoard)
+        val myPopup = PopupMenu(this, anchorView)
+        val options = resources.getStringArray(R.array.copy_modes)
+        options.forEachIndexed { index, action ->
+          myPopup.menu.add(0, index, index, action)
+        }
+        myPopup.show()
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
     }
   }
 
@@ -176,10 +224,15 @@ class GeneratedColorsActivity : AppCompatActivity() {
         }
 
         override fun onRevealShow() {
+          showMenuOptions()
           animateHeaderTextAlpha()
           observeViewModelUpdates()
         }
       })
+  }
+
+  private fun showMenuOptions() {
+    menu.showAction(R.id.copyToClipBoard)
   }
 
   private fun observeViewModelUpdates() {
@@ -193,7 +246,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
     nullableState?.let { state ->
       when (state) {
         is ScreenViewState.Color -> {
-          selectedColorName.text = "\"${state.colorName}\""
+          selectedColorName.text = resources.getString(R.string.color_name, state.colorName)
           selectedColorName.fadeIn()
         }
         is ScreenViewState.Error -> {
@@ -311,8 +364,10 @@ class GeneratedColorsActivity : AppCompatActivity() {
     if (selectedPosition() == -1) {
       backPressed()
     } else {
+      menu.hideAction(R.id.copyToClipBoard)
       content.fadeOut()
       selectedColorHex.fadeOut()
+      selectedColorName.fadeOut()
       GUIUtils.animateRevealHide(
         appBarLayout,
         selectedColor(),
