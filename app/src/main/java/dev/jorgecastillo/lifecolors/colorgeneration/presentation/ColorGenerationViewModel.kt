@@ -61,6 +61,11 @@ class ColorGenerationViewModel(
   }
 
   fun onFavClick(color: Int) {
-    toggleColorFav.execute(color)
+    toggleColorFav.execute(
+      color,
+      onFailure = {},
+      onSuccess = { res ->
+        res
+      })
   }
 }
