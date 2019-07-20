@@ -14,4 +14,5 @@
   <string name="tetradic">Tetradic colors of %1$s</string>
   <string name="analogous">Analogous colors of %1$s</string>
   <string name="feedback_copy_to_clipboard">Color copied to clipboard.</string>
+  <string name="successful_login">Login successful.</string>
 </resources>

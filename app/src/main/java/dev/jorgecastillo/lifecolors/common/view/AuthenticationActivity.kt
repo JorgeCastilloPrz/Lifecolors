@@ -80,7 +80,7 @@ abstract class AuthenticationActivity : AppCompatActivity() {
         // Successfully signed in
         val user = FirebaseAuth.getInstance().currentUser!!
         onUserAuthenticated(user)
-        Toast.makeText(this, R.string.auth_error, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.successful_login, Toast.LENGTH_SHORT).show()
         // ...
       } else {
         // If response is null the user canceled the sign-in flow using the back button.
