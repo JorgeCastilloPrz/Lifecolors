@@ -9,8 +9,6 @@ import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
-import androidx.palette.graphics.Palette
-import dev.jorgecastillo.lifecolors.detail.view.BottomCutout.Companion.DEFAULT_COLOR
 import dev.jorgecastillo.lifecolors.detail.view.Dot
 import dev.jorgecastillo.lifecolors.detail.view.OverlayTouchPopup
 
@@ -26,7 +24,7 @@ internal class Overlay @JvmOverloads constructor(
 
   private val dotSize = resources.getDimensionPixelSize(R.dimen.dot_size)
   private var bitmap: Bitmap? = null
-  var onDotSelectedListener : OnDotSelectedListener? = null
+  var onDotSelectedListener: OnDotSelectedListener? = null
 
   init {
     setWillNotDraw(true)
@@ -81,22 +79,11 @@ internal class Overlay @JvmOverloads constructor(
 
   private fun showDot(x: Int, y: Int) {
     bitmap?.let { bmp ->
-      Palette.from(bmp).setRegion(x - dotSize / 4, y - dotSize / 4, x + dotSize / 4, y + dotSize / 4)
-        .generate { palette ->
+      val dotColor = bmp.getPixel(x, y)
+      val dot = renderDot(x, y, dotColor)
+      animateDot(dot)
 
-          var dotColor = palette?.getDominantColor(0) ?: 0
-          if (dotColor == 0) {
-            dotColor = palette?.getVibrantColor(0) ?: 0
-          }
-          if (dotColor == 0) {
-            dotColor = palette?.getLightVibrantColor(DEFAULT_COLOR) ?: DEFAULT_COLOR
-          }
-
-          val dot = renderDot(x, y, dotColor)
-          animateDot(dot)
-
-          onDotSelectedListener?.onDotSelected(dot, x, y + top)
-        }
+      onDotSelectedListener?.onDotSelected(dot, x, y + top)
     }
   }
 

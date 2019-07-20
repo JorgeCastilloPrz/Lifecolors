@@ -8,7 +8,9 @@ fun Int.getShades(): List<Int> {
   ColorUtils.colorToHSL(this, colorHSL)
 
   val start = (colorHSL[2] * 10000000).roundToInt()
-  val step = if (start > 0) { -1 * start / 10 } else 1
+  val step = if (start > 0) {
+    -1 * start / 10
+  } else 1
   return IntProgression.fromClosedRange(start, 0, step).map { i ->
     colorHSL[2] = i / 10000000f
     ColorUtils.HSLToColor(colorHSL)
