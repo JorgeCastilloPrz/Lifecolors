@@ -4,7 +4,6 @@
   <string name="picture_colors">Picture colors</string>
   <string name="picked_colors">Picked colors</string>
   <string name="detected_colors">Detected colors</string>
-  <string name="menu_gallery">Select from gallery</string>
   <string name="rgb">RGB: %1$s</string>
   <string name="cmyk">CMYK: %1$s</string>
   <string name="color_name">\"%1$s\"</string>
@@ -14,13 +13,5 @@
   <string name="triadic">Triadic colors of %1$s</string>
   <string name="tetradic">Tetradic colors of %1$s</string>
   <string name="analogous">Analogous colors of %1$s</string>
-  <string name="action_copy_to_clipboard">Copy to clipboard</string>
   <string name="feedback_copy_to_clipboard">Color copied to clipboard.</string>
-
-  <string-array name="copy_modes">
-    <item>Copy as RGB</item>
-    <item>Copy as Hex</item>
-    <item>Copy as CMYK</item>
-    <item>Copy as HSL</item>
-  </string-array>
 </resources>

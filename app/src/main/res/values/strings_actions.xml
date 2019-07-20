@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_copy_to_clipboard">Copy to clipboard</string>
+  <string-array name="copy_modes">
+    <item>Copy as RGB</item>
+    <item>Copy as Hex</item>
+    <item>Copy as CMYK</item>
+    <item>Copy as HSL</item>
+  </string-array>
+
+  <string name="action_gallery">Select from gallery</string>
+</resources>
