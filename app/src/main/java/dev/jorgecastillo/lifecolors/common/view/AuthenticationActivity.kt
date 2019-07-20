@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig
@@ -19,6 +20,9 @@ abstract class AuthenticationActivity : AppCompatActivity() {
   companion object {
     const val RC_SIGN_IN = 991
   }
+
+  private lateinit var onAuthenticationFailed: () -> Unit
+  private lateinit var onAuthenticationSuccess: () -> Unit
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -58,7 +62,25 @@ abstract class AuthenticationActivity : AppCompatActivity() {
     }
   }
 
-  fun authenticate() {
+  fun authenticate(onAuthenticationFailed: () -> Unit = {}, onAuthenticationSuccess: () -> Unit = {}) {
+    this.onAuthenticationFailed = onAuthenticationFailed
+    this.onAuthenticationSuccess = onAuthenticationSuccess
+
+    if (FirebaseAuth.getInstance().currentUser == null) {
+      AlertDialog.Builder(this)
+        .setTitle(R.string.firebase_auth_confirmation_title)
+        .setMessage(R.string.firebase_auth_confirmation_msg)
+        .setNegativeButton(android.R.string.cancel) { _, _ -> }
+        .setPositiveButton(android.R.string.ok) { _, _ ->
+          performAuthentication()
+        }
+        .show()
+    } else {
+      onAuthenticationSuccess()
+    }
+  }
+
+  private fun performAuthentication() {
     startActivityForResult(
       AuthUI.getInstance()
         .createSignInIntentBuilder()
@@ -79,20 +101,18 @@ abstract class AuthenticationActivity : AppCompatActivity() {
       if (resultCode == Activity.RESULT_OK) {
         // Successfully signed in
         val user = FirebaseAuth.getInstance().currentUser!!
-        onUserAuthenticated(user)
+        onAuthenticationSuccess()
+
         Toast.makeText(this, R.string.successful_login, Toast.LENGTH_SHORT).show()
         // ...
       } else {
         // If response is null the user canceled the sign-in flow using the back button.
         if (response != null) {
           Toast.makeText(this, R.string.auth_error, Toast.LENGTH_SHORT).show()
-          onFailedAuthentication()
+          onAuthenticationFailed()
           // Can check response.getError().getErrorCode() to handle the error.
         }
       }
     }
   }
-
-  abstract fun onUserAuthenticated(user: FirebaseUser)
-  abstract fun onFailedAuthentication()
 }

@@ -16,7 +16,6 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseUser
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ScreenViewState
@@ -183,7 +182,9 @@ class GeneratedColorsActivity : AuthenticationActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.favColor -> {
-        authenticate()
+        authenticate(
+          onAuthenticationSuccess = {}
+        )
         true
       }
       R.id.copyToClipBoard -> {
@@ -407,11 +408,5 @@ class GeneratedColorsActivity : AuthenticationActivity() {
   fun backPressed() {
     window.setBackgroundDrawable(null)
     finishAfterTransition()
-  }
-
-  override fun onUserAuthenticated(user: FirebaseUser) {
-  }
-
-  override fun onFailedAuthentication() {
   }
 }

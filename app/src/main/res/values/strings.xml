@@ -15,4 +15,6 @@
   <string name="analogous">Analogous colors of %1$s</string>
   <string name="feedback_copy_to_clipboard">Color copied to clipboard.</string>
   <string name="successful_login">Login successful.</string>
+  <string name="firebase_auth_confirmation_title">Login required</string>
+  <string name="firebase_auth_confirmation_msg">This feature requires you to be logged in. Please create an account to enjoy a better user experience.</string>
 </resources>
