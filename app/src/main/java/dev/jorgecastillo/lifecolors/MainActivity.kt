@@ -9,8 +9,9 @@ import android.os.Bundle
 import android.util.Rational
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.camera.core.CameraX
 import androidx.camera.core.CameraX.LensFacing
 import androidx.camera.core.ImageCapture
@@ -20,6 +21,7 @@ import androidx.camera.core.PreviewConfig
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.detail.DetailActivity
 import kotlinx.android.synthetic.main.activity_main.bar
 import kotlinx.android.synthetic.main.activity_main.captureButton
@@ -29,7 +31,7 @@ import java.io.File
 private const val REQUEST_CODE_PERMISSIONS = 10
 private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AuthenticationActivity() {
 
   companion object {
     private const val PICK_IMAGE_REQUEST_CODE = 9329
@@ -190,9 +192,28 @@ class MainActivity : AppCompatActivity() {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
+      R.id.actionSettings -> true.also { showSettingsPopup() }
       R.id.actionGallery -> true.also { selectPictureFromGallery() }
       else -> super.onOptionsItemSelected(item)
     }
+  }
+
+  private fun showSettingsPopup() {
+    val anchorView = findViewById<View>(R.id.actionSettings)
+    val popup = PopupMenu(this, anchorView)
+    val options = resources.getStringArray(R.array.main_menu_actions)
+    options.forEachIndexed { index, action ->
+      popup.menu.add(0, index, index, action)
+    }
+    popup.setOnMenuItemClickListener {
+      when (it.itemId) {
+        0 -> {
+        }
+        1 -> logout()
+      }
+      true
+    }
+    popup.show()
   }
 
   private fun selectPictureFromGallery() {

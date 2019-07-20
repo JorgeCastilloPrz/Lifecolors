@@ -183,7 +183,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     return when (item.itemId) {
       R.id.favColor -> {
         authenticate(
-          onAuthenticationSuccess = {}
+          onAuthenticationSuccess = { viewModel.onFavClick(selectedColor()) }
         )
         true
       }

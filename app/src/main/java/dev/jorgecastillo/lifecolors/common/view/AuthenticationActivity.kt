@@ -12,7 +12,6 @@ import com.firebase.ui.auth.IdpResponse
 import com.firebase.ui.auth.util.ExtraConstants
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import dev.jorgecastillo.lifecolors.R
 
 abstract class AuthenticationActivity : AppCompatActivity() {
@@ -60,6 +59,14 @@ abstract class AuthenticationActivity : AppCompatActivity() {
         )
       }
     }
+  }
+
+  fun logout() {
+    AuthUI.getInstance()
+      .signOut(this)
+      .addOnCompleteListener {
+        Toast.makeText(this, R.string.successful_logout, Toast.LENGTH_SHORT).show()
+      }
   }
 
   fun authenticate(onAuthenticationFailed: () -> Unit = {}, onAuthenticationSuccess: () -> Unit = {}) {

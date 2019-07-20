@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string-array name="main_menu_actions">
+    <item>Settings</item>
+    <item>Logout</item>
+  </string-array>
+
   <string name="action_copy_to_clipboard">Copy to clipboard</string>
   <string-array name="copy_modes">
     <item>Copy as RGB</item>

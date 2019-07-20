@@ -14,7 +14,7 @@
       android:icon="@drawable/ic_favorite_white_24dp"
       android:title="1"
       app:showAsAction="ifRoom"/>
-  
+
   <item
       android:id="@+id/actionGallery"
       android:icon="@drawable/ic_gallery"
