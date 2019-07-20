@@ -1,13 +1,14 @@
 package dev.jorgecastillo.lifecolors.palettes
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.jorgecastillo.lifecolors.R
-import dev.jorgecastillo.lifecolors.common.view.extensions.toCMYK
+import dev.jorgecastillo.lifecolors.colorgeneration.view.toCMYK
+import dev.jorgecastillo.lifecolors.colorgeneration.view.toHex
+import dev.jorgecastillo.lifecolors.colorgeneration.view.toRGB
 import dev.jorgecastillo.lifecolors.detail.view.Dot
 import dev.jorgecastillo.lifecolors.palettes.PaletteColorsAdapter.ViewHolder
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
@@ -43,12 +44,11 @@ class PaletteColorsAdapter(private val onItemClick: (View, ColorViewState, Int) 
       dotView.color = colorViewState.color
       dotView.invalidate()
 
-      val hexColor = String.format("#%06X", 0xFFFFFF and colorViewState.color)
+      val hexColor = colorViewState.color.toHex()
       val hexColorView = itemView.findViewById<TextView>(R.id.hexCode)
       hexColorView.text = hexColor
 
-      val rgbColor =
-        "${Color.red(colorViewState.color)} / ${Color.green(colorViewState.color)} / ${Color.blue(colorViewState.color)}"
+      val rgbColor = colorViewState.color.toRGB()
       val rgbColorView = itemView.findViewById<TextView>(R.id.rgb)
       rgbColorView.text = itemView.resources.getString(R.string.rgb, rgbColor)
 

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ScreenViewState
+import dev.jorgecastillo.lifecolors.common.view.extensions.copyToClipboard
 import dev.jorgecastillo.lifecolors.common.view.extensions.hideAction
 import dev.jorgecastillo.lifecolors.common.view.extensions.isDark
 import dev.jorgecastillo.lifecolors.common.view.extensions.showAction
@@ -179,12 +180,21 @@ class GeneratedColorsActivity : AppCompatActivity() {
     return when (item.itemId) {
       R.id.copyToClipBoard -> {
         val anchorView = findViewById<View>(R.id.copyToClipBoard)
-        val myPopup = PopupMenu(this, anchorView)
+        val popup = PopupMenu(this, anchorView)
         val options = resources.getStringArray(R.array.copy_modes)
         options.forEachIndexed { index, action ->
-          myPopup.menu.add(0, index, index, action)
+          popup.menu.add(0, index, index, action)
         }
-        myPopup.show()
+        popup.setOnMenuItemClickListener {
+          when (it.itemId) {
+            0 -> copyToClipboard(selectedColor().toRGB())
+            1 -> copyToClipboard(selectedColor().toHex())
+            2 -> copyToClipboard(selectedColor().toCMYK())
+            3 -> copyToClipboard(selectedColor().toHSL())
+          }
+          true
+        }
+        popup.show()
         true
       }
       else -> super.onOptionsItemSelected(item)
