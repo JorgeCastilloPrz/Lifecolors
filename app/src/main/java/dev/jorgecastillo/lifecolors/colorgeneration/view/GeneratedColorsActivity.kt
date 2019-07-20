@@ -10,16 +10,17 @@ import android.transition.Transition
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseUser
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ScreenViewState
+import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.common.view.extensions.copyToClipboard
 import dev.jorgecastillo.lifecolors.common.view.extensions.hideAction
 import dev.jorgecastillo.lifecolors.common.view.extensions.isDark
@@ -71,7 +72,7 @@ import kotlinx.android.synthetic.main.activity_generated_colors.triadicColorBase
 import kotlinx.android.synthetic.main.activity_generated_colors.triadicColorBaseHex
 import kotlinx.android.synthetic.main.activity_generated_colors.triadicColorsTitle
 
-class GeneratedColorsActivity : AppCompatActivity() {
+class GeneratedColorsActivity : AuthenticationActivity() {
 
   companion object {
 
@@ -182,6 +183,7 @@ class GeneratedColorsActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.favColor -> {
+        authenticate()
         true
       }
       R.id.copyToClipBoard -> {
@@ -405,5 +407,11 @@ class GeneratedColorsActivity : AppCompatActivity() {
   fun backPressed() {
     window.setBackgroundDrawable(null)
     finishAfterTransition()
+  }
+
+  override fun onUserAuthenticated(user: FirebaseUser) {
+  }
+
+  override fun onFailedAuthentication() {
   }
 }

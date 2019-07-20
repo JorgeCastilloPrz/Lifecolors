@@ -31,6 +31,18 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     implementation 'com.google.firebase:firebase-core:17.0.1'
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+    implementation 'com.google.firebase:firebase-auth:18.1.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+
+    // Required only if Facebook login support is required
+    // Find the latest Facebook SDK releases here: https://goo.gl/Ce5L94
+    implementation 'com.facebook.android:facebook-android-sdk:5.1.1'
+    implementation 'com.facebook.android:facebook-login:5.1.1'
+
+    // Required only if Twitter login support is required
+    // Find the latest Twitter SDK releases here: https://goo.gl/E5wZvQ
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
 
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha02'

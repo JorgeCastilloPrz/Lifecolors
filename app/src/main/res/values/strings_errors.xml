@@ -1,0 +1,3 @@
+<resources>
+  <string name="auth_error">There was a problem during authentication.</string>
+</resources>

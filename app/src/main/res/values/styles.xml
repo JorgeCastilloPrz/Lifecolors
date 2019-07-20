@@ -44,4 +44,11 @@
     <item name="android:windowSharedElementReturnTransition">@transition/changebounds_with_arcmotion_return</item>
     <item name="android:windowAllowReturnTransitionOverlap">false</item>
   </style>
+
+  <style name="AuthenticationScreen" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:windowBackground">@color/colorAccent</item>
+  </style>
 </resources>
