@@ -11,9 +11,12 @@ import dev.jorgecastillo.lifecolors.colorgeneration.view.toHex
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toHexPureValue
 import dev.jorgecastillo.lifecolors.common.domain.model.ColorDetails
 import dev.jorgecastillo.lifecolors.common.usecase.IsColorFav
+import dev.jorgecastillo.lifecolors.common.usecase.IsColorFavResult
 import dev.jorgecastillo.lifecolors.common.usecase.ToggleColorFav
+import dev.jorgecastillo.lifecolors.common.usecase.ToggleColorFavResult
 import dev.jorgecastillo.lifecolors.common.view.NonNullMutableLiveData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -44,22 +47,27 @@ class ColorGenerationViewModel(
   }
 
   private fun loadColorFavState() {
-    isColorFav.execute(
-      selectedColor,
-      onFailure = {},
-      onSuccess = { newValue ->
-        updateViewState { state ->
-          when (state) {
-            Idle -> Color("", newValue)
-            Error -> Color("", newValue)
-            is Color -> state.copy(isFavorite = newValue)
+    viewModelScope.async(Dispatchers.IO) {
+      when (val isColorFav = isColorFav.execute(selectedColor)) {
+        is IsColorFavResult.Error -> {
+        }
+        is IsColorFavResult.Success -> {
+          updateViewState { state ->
+            when (state) {
+              Idle -> Color("", isColorFav.isFavorite)
+              Error -> Color("", isColorFav.isFavorite)
+              is Color -> state.copy(isFavorite = isColorFav.isFavorite)
+            }
           }
         }
-      })
+      }
+    }
   }
 
-  private fun updateViewState(transform: (ColorGenerationViewState) -> ColorGenerationViewState) {
-    _state.postValue(transform(_state.value))
+  private suspend fun updateViewState(transform: (ColorGenerationViewState) -> ColorGenerationViewState) {
+    withContext(Main) {
+      _state.value = transform(_state.value)
+    }
   }
 
   private fun loadColorDetails() {
@@ -71,7 +79,7 @@ class ColorGenerationViewModel(
       try {
         val response = client.newCall(request).execute()
         val body = response.body!!.string()
-        withContext(Dispatchers.Main) {
+        withContext(Main) {
           val moshi = Moshi.Builder().build()
           val jsonAdapter = moshi.adapter(ColorDetails::class.java)
           val colorDetails = jsonAdapter.fromJson(body)
@@ -90,17 +98,20 @@ class ColorGenerationViewModel(
   }
 
   fun onFavClick(color: Int) {
-    toggleColorFav.execute(
-      color,
-      onFailure = {},
-      onSuccess = { newValue ->
-        updateViewState { state ->
-          when (state) {
-            Idle -> Color(color.toHex(), newValue)
-            Error -> Color(color.toHex(), newValue)
-            is Color -> state.copy(isFavorite = newValue)
+    viewModelScope.async(Dispatchers.IO) {
+      when (val result = toggleColorFav.execute(color)) {
+        is ToggleColorFavResult.Error -> {
+        }
+        is ToggleColorFavResult.Success -> {
+          updateViewState { state ->
+            when (state) {
+              Idle -> Color(color.toHex(), result.newFavState)
+              Error -> Color(color.toHex(), result.newFavState)
+              is Color -> state.copy(isFavorite = result.newFavState)
+            }
           }
         }
-      })
+      }
+    }
   }
 }

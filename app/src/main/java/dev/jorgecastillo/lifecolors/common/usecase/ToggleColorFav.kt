@@ -2,46 +2,47 @@ package dev.jorgecastillo.lifecolors.common.usecase
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import dev.jorgecastillo.lifecolors.common.data.FirebaseTables.USER_FAVED_COLORS_TABLE
+import kotlinx.coroutines.tasks.await
 
-class ToggleColorFav {
+sealed class ToggleColorFavResult {
+  data class Success(val newFavState: Boolean) : ToggleColorFavResult()
+  object Error : ToggleColorFavResult()
+}
 
-  fun execute(color: Int, onFailure: () -> Unit, onSuccess: (Boolean) -> Unit) {
+class ToggleColorFav : UseCase<Int, ToggleColorFavResult> {
+
+  override suspend fun execute(input: Int): ToggleColorFavResult {
     val userId = FirebaseAuth.getInstance().currentUser?.uid
-    if (userId == null) {
-      onFailure()
+    return if (userId == null) {
+      ToggleColorFavResult.Error
     } else {
       val db = FirebaseFirestore.getInstance()
-      db.collection(USER_FAVED_COLORS_TABLE).document(userId)
-        .get()
-        .addOnSuccessListener { result ->
-          val colorMap = result.data ?: mutableMapOf()
-          val currentValueForColor = colorMap[color.toString()] as? Boolean ?: false
+      try {
+        val result = db.collection(USER_FAVED_COLORS_TABLE).document(userId).get().await()
+        val colorMap = result.data ?: mutableMapOf()
+        val currentValueForColor = colorMap[input.toString()] as? Boolean ?: false
 
-          colorMap[color.toString()] = !currentValueForColor
-          storeColors(userId, colorMap, !currentValueForColor, onFailure, onSuccess)
+        colorMap[input.toString()] = !currentValueForColor
+        if (storeColors(userId, colorMap)) {
+          ToggleColorFavResult.Success(!currentValueForColor)
+        } else {
+          ToggleColorFavResult.Error
         }
-        .addOnFailureListener { exception ->
-          onFailure()
-        }
+      } catch (e: FirebaseFirestoreException) {
+        ToggleColorFavResult.Error
+      }
     }
   }
 
-  private fun storeColors(
-    userId: String,
-    colorMap: Map<String, Any>,
-    result: Boolean,
-    onFailure: () -> Unit,
-    onSuccess: (Boolean) -> Unit
-  ) {
+  private suspend fun storeColors(userId: String, colorMap: Map<String, Any>): Boolean {
     val db = FirebaseFirestore.getInstance()
-    db.collection(USER_FAVED_COLORS_TABLE).document(userId)
-      .set(colorMap)
-      .addOnSuccessListener { documentReference ->
-        onSuccess(result)
-      }
-      .addOnFailureListener { e ->
-        onFailure()
-      }
+    return try {
+      db.collection(USER_FAVED_COLORS_TABLE).document(userId).set(colorMap).await()
+      true
+    } catch (e: FirebaseFirestoreException) {
+      false
+    }
   }
 }

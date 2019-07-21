@@ -2,30 +2,36 @@ package dev.jorgecastillo.lifecolors.common.usecase
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import dev.jorgecastillo.lifecolors.common.data.FirebaseTables.USER_FAVED_COLORS_TABLE
+import kotlinx.coroutines.tasks.await
 
-class AreColorsFav {
+sealed class AreColorsFavResult {
+  data class Success(val colorsWithFavStatus: Map<Int, Boolean>) : AreColorsFavResult()
+  object Error : AreColorsFavResult()
+}
 
-  fun execute(colors: List<Int>, onFailure: () -> Unit, onSuccess: (Map<Int, Boolean>) -> Unit) {
+class AreColorsFav : UseCase<List<Int>, AreColorsFavResult> {
+  
+  override suspend fun execute(input: List<Int>): AreColorsFavResult {
     val userId = FirebaseAuth.getInstance().currentUser?.uid
     if (userId == null) {
-      onFailure()
+      return AreColorsFavResult.Error
     } else {
       val db = FirebaseFirestore.getInstance()
-      db.collection(USER_FAVED_COLORS_TABLE).document(userId)
-        .get()
-        .addOnSuccessListener { result ->
-          val colorMap = result.data ?: mutableMapOf()
-          val resultsMap: MutableMap<Int, Boolean> = mutableMapOf()
-          colors.forEach {
-            resultsMap[it] = colorMap[it.toString()] as? Boolean ?: false
-          }
+      return try {
+        val favedColors = db.collection(USER_FAVED_COLORS_TABLE).document(userId).get().await()
+        val colorMap = favedColors.data ?: mutableMapOf()
+        val resultsMap: MutableMap<Int, Boolean> = mutableMapOf()
 
-          onSuccess(resultsMap)
+        input.forEach {
+          resultsMap[it] = colorMap[it.toString()] as? Boolean ?: false
         }
-        .addOnFailureListener { exception ->
-          onFailure()
-        }
+
+        AreColorsFavResult.Success(resultsMap)
+      } catch (e: FirebaseFirestoreException) {
+        AreColorsFavResult.Error
+      }
     }
   }
 }
