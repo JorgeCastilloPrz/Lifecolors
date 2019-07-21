@@ -18,4 +18,5 @@
   <string name="successful_logout">Account logged out.</string>
   <string name="firebase_auth_confirmation_title">Login required</string>
   <string name="firebase_auth_confirmation_msg">This feature requires you to be logged in. Please create an account to enjoy a better user experience.</string>
+  <string name="favorite_colors_screen_title">Favorite colors</string>
 </resources>

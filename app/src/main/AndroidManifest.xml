@@ -30,6 +30,10 @@
         android:theme="@style/PalettesActivity"/>
 
     <activity
+        android:name=".favoritecolors.FavoriteColorsActivity"
+        android:theme="@style/FavoriteColorsActivity"/>
+
+    <activity
         android:name=".colorgeneration.view.GeneratedColorsActivity"
         android:theme="@style/GeneratedColorsActivity"/>
 

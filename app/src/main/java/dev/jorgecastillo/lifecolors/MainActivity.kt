@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.detail.DetailActivity
+import dev.jorgecastillo.lifecolors.favoritecolors.FavoriteColorsActivity
 import kotlinx.android.synthetic.main.activity_main.bar
 import kotlinx.android.synthetic.main.activity_main.captureButton
 import kotlinx.android.synthetic.main.activity_main.viewFinder
@@ -193,6 +194,7 @@ class MainActivity : AuthenticationActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.actionSettings -> true.also { showSettingsPopup() }
+      R.id.actionFavoriteColors -> true.also { navigateToFavoriteColorsScreen() }
       R.id.actionGallery -> true.also { selectPictureFromGallery() }
       else -> super.onOptionsItemSelected(item)
     }
@@ -214,6 +216,10 @@ class MainActivity : AuthenticationActivity() {
       true
     }
     popup.show()
+  }
+
+  private fun navigateToFavoriteColorsScreen() {
+    FavoriteColorsActivity.launch(this)
   }
 
   private fun selectPictureFromGallery() {
