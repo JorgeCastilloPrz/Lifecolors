@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.squareup.moshi.Moshi
-import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ScreenViewState.Color
-import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ScreenViewState.Error
-import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ScreenViewState.Idle
+import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewState.Color
+import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewState.Error
+import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewState.Idle
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toHex
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toHexPureValue
 import dev.jorgecastillo.lifecolors.common.domain.model.ColorDetails
@@ -20,10 +20,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
 
-sealed class ScreenViewState {
-  object Idle : ScreenViewState()
-  object Error : ScreenViewState()
-  data class Color(val colorName: String, val isFavorite: Boolean) : ScreenViewState()
+sealed class ColorGenerationViewState {
+  object Idle : ColorGenerationViewState()
+  object Error : ColorGenerationViewState()
+  data class Color(val colorName: String, val isFavorite: Boolean) : ColorGenerationViewState()
 }
 
 @Suppress("DeferredResultUnused")
@@ -33,10 +33,10 @@ class ColorGenerationViewModel(
   private val toggleColorFav: ToggleColorFav = ToggleColorFav()
 ) : ViewModel() {
 
-  private val _state: NonNullMutableLiveData<ScreenViewState> =
+  private val _state: NonNullMutableLiveData<ColorGenerationViewState> =
     NonNullMutableLiveData(Idle)
 
-  val state: LiveData<ScreenViewState> = _state
+  val state: LiveData<ColorGenerationViewState> = _state
 
   init {
     loadColorFavState()
@@ -58,7 +58,7 @@ class ColorGenerationViewModel(
       })
   }
 
-  private fun updateViewState(transform: (ScreenViewState) -> ScreenViewState) {
+  private fun updateViewState(transform: (ColorGenerationViewState) -> ColorGenerationViewState) {
     _state.postValue(transform(_state.value))
   }
 

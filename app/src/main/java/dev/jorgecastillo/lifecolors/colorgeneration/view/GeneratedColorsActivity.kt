@@ -19,7 +19,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
-import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ScreenViewState
+import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewState
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.common.view.extensions.copyToClipboard
 import dev.jorgecastillo.lifecolors.common.view.extensions.hideAction
@@ -184,8 +184,8 @@ class GeneratedColorsActivity : AuthenticationActivity() {
 
   @Suppress("SENSELESS_COMPARISON")
   private fun renderFavIcon(favIcon: MenuItem, @DrawableRes favedIconRes: Int, @DrawableRes unfavedIconRes: Int) {
-    if (::viewModel.isInitialized && viewModel.state.value is ScreenViewState.Color) {
-      val state = viewModel.state.value as ScreenViewState.Color
+    if (::viewModel.isInitialized && viewModel.state.value is ColorGenerationViewState.Color) {
+      val state = viewModel.state.value as ColorGenerationViewState.Color
       favIcon.icon = ContextCompat.getDrawable(
         this,
         if (state.isFavorite) favedIconRes else unfavedIconRes
@@ -278,10 +278,10 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     })
   }
 
-  private fun render(nullableState: ScreenViewState?) {
+  private fun render(nullableState: ColorGenerationViewState?) {
     nullableState?.let { state ->
       when (state) {
-        is ScreenViewState.Color -> {
+        is ColorGenerationViewState.Color -> {
           invalidateOptionsMenu()
           if (state.colorName.isEmpty()) {
             selectedColorName.text = ""
@@ -290,7 +290,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
           }
           selectedColorName.fadeIn()
         }
-        is ScreenViewState.Error -> {
+        is ColorGenerationViewState.Error -> {
           selectedColorName.text = ""
           selectedColorName.fadeOut()
         }

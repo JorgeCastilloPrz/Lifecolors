@@ -12,11 +12,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.view.GeneratedColorsActivity
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
+import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewModel
+import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState
+import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Colors
+import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Error
+import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Idle
+import dev.jorgecastillo.lifecolors.palettes.presentation.generatedColors
+import dev.jorgecastillo.lifecolors.palettes.presentation.hasNoPickedColors
+import dev.jorgecastillo.lifecolors.palettes.presentation.pickedColors
 import kotlinx.android.synthetic.main.activity_palettes.bottomCutout
 import kotlinx.android.synthetic.main.activity_palettes.generatedColorsList
 import kotlinx.android.synthetic.main.activity_palettes.pickedColorsCard
@@ -52,15 +61,22 @@ class PalettesActivity : AppCompatActivity() {
 
   private lateinit var pickedColorsAdapter: PaletteColorsAdapter
   private lateinit var paletteColorsAdapter: PaletteColorsAdapter
+  private lateinit var palettesViewModel: PalettesViewModel
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_palettes)
     setupEnterAnimation()
+    setupViewModel()
     setupCutoutClicks()
     setupPickedColorsList()
     setupGeneratedColorsList()
+    observeViewStateChanges()
     fillUpColors()
+  }
+
+  private fun setupViewModel() {
+    palettesViewModel = PalettesViewModel()
   }
 
   override fun onResume() {
@@ -132,22 +148,36 @@ class PalettesActivity : AppCompatActivity() {
   }
 
   private fun favClickListener(): (View, ColorViewState, Int) -> Unit = { view, details, position ->
-    
+
+  }
+
+  private fun observeViewStateChanges() {
+    palettesViewModel.state.observe(this, Observer { state -> render(state) })
+  }
+
+  private fun render(state: PalettesViewState) {
+    when (state) {
+      is Idle -> {
+      }
+      is Error -> {
+      }
+      is Colors -> {
+        if (state.hasNoPickedColors()) {
+          pickedColorsCard.visibility = View.GONE
+        } else {
+          pickedColorsCard.visibility = View.VISIBLE
+          pickedColorsAdapter.colors = state.pickedColors()
+        }
+        paletteColorsAdapter.colors = state.generatedColors()
+      }
+    }
   }
 
   private fun fillUpColors() {
-    intent?.extras?.getIntegerArrayList(PICKED_COLORS)?.let { colors ->
-      if (colors.isEmpty()) {
-        pickedColorsCard.visibility = View.GONE
-      } else {
-        pickedColorsCard.visibility = View.VISIBLE
-        pickedColorsAdapter.colors = colors.toList().map { it.toColorDetails() }
-      }
-    }
+    val pickedColors = intent?.extras?.getIntegerArrayList(PICKED_COLORS) ?: arrayListOf()
+    val generatedColors = intent?.extras?.getIntegerArrayList(GENERATED_COLORS) ?: arrayListOf()
 
-    intent?.extras?.getIntegerArrayList(GENERATED_COLORS)?.let { colors ->
-      paletteColorsAdapter.colors = colors.toList().map { it.toColorDetails() }
-    }
+    palettesViewModel.onGeneratedColorsAvailable(pickedColors, generatedColors)
   }
 
   override fun onBackPressed() {

@@ -3,6 +3,7 @@ package dev.jorgecastillo.lifecolors.palettes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.jorgecastillo.lifecolors.R
@@ -59,7 +60,15 @@ class PaletteColorsAdapter(
       cmykColorView.text = itemView.resources.getString(R.string.cmyk, colorViewState.color.toCMYK())
 
       itemView.setOnClickListener { onItemClick(dotView, colorViewState, position) }
-      val favButton = itemView.findViewById<View>(R.id.favButton)
+
+      val favButton = itemView.findViewById<ImageButton>(R.id.favButton)
+      favButton.setImageResource(
+        if (colorViewState.isFavorite) {
+          R.drawable.ic_favorite_white_24dp
+        } else {
+          R.drawable.ic_favorite_border_white_24dp
+        }
+      )
       favButton.setOnClickListener { onFavItemClick(dotView, colorViewState, position) }
     }
   }
