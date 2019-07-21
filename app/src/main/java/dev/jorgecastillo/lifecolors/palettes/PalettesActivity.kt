@@ -106,7 +106,7 @@ class PalettesActivity : AppCompatActivity() {
   private fun setupPickedColorsList() {
     pickedColorsList.setHasFixedSize(true)
     pickedColorsList.layoutManager = LinearLayoutManager(this)
-    pickedColorsAdapter = PaletteColorsAdapter(colorClickListener())
+    pickedColorsAdapter = PaletteColorsAdapter(colorClickListener(), favClickListener())
     pickedColorsList.adapter = pickedColorsAdapter
     val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
       setDrawable(ContextCompat.getDrawable(this@PalettesActivity, R.drawable.color_divider)!!)
@@ -117,7 +117,7 @@ class PalettesActivity : AppCompatActivity() {
   private fun setupGeneratedColorsList() {
     generatedColorsList.setHasFixedSize(true)
     generatedColorsList.layoutManager = LinearLayoutManager(this)
-    paletteColorsAdapter = PaletteColorsAdapter(colorClickListener())
+    paletteColorsAdapter = PaletteColorsAdapter(colorClickListener(), favClickListener())
     generatedColorsList.adapter = paletteColorsAdapter
     val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
       setDrawable(ContextCompat.getDrawable(this@PalettesActivity, R.drawable.color_divider)!!)
@@ -129,6 +129,10 @@ class PalettesActivity : AppCompatActivity() {
     window.enterTransition = null
     window.exitTransition = null
     GeneratedColorsActivity.launch(this, view, details.color, position)
+  }
+
+  private fun favClickListener(): (View, ColorViewState, Int) -> Unit = { view, details, position ->
+    
   }
 
   private fun fillUpColors() {

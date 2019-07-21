@@ -13,8 +13,10 @@ import dev.jorgecastillo.lifecolors.detail.view.Dot
 import dev.jorgecastillo.lifecolors.palettes.PaletteColorsAdapter.ViewHolder
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 
-class PaletteColorsAdapter(private val onItemClick: (View, ColorViewState, Int) -> Unit) :
-  RecyclerView.Adapter<ViewHolder>() {
+class PaletteColorsAdapter(
+  private val onItemClick: (View, ColorViewState, Int) -> Unit,
+  private val onFavItemClick: (View, ColorViewState, Int) -> Unit
+) : RecyclerView.Adapter<ViewHolder>() {
 
   var colors: List<ColorViewState> = listOf()
     set(value) {
@@ -30,13 +32,14 @@ class PaletteColorsAdapter(private val onItemClick: (View, ColorViewState, Int) 
   override fun getItemCount(): Int = colors.size
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    holder.bind(colors[position], onItemClick, position)
+    holder.bind(colors[position], onItemClick, onFavItemClick, position)
   }
 
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(
       colorViewState: ColorViewState,
       onItemClick: (View, ColorViewState, Int) -> Unit,
+      onFavItemClick: (View, ColorViewState, Int) -> Unit,
       position: Int
     ) {
       val dotView = itemView.findViewById<Dot>(R.id.colorDot)
@@ -56,6 +59,8 @@ class PaletteColorsAdapter(private val onItemClick: (View, ColorViewState, Int) 
       cmykColorView.text = itemView.resources.getString(R.string.cmyk, colorViewState.color.toCMYK())
 
       itemView.setOnClickListener { onItemClick(dotView, colorViewState, position) }
+      val favButton = itemView.findViewById<View>(R.id.favButton)
+      favButton.setOnClickListener { onFavItemClick(dotView, colorViewState, position) }
     }
   }
 }
