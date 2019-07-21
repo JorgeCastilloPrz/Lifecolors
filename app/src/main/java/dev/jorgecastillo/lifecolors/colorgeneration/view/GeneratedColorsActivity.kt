@@ -158,6 +158,14 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     setSupportActionBar(toolbar)
   }
 
+  override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+    if (!::viewModel.isInitialized) {
+      menu.hideAction(R.id.favColor)
+      menu.hideAction(R.id.copyToClipBoard)
+    }
+    return super.onPrepareOptionsMenu(menu)
+  }
+
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.generated_colors_menu, menu)
     val favIcon = menu.findItem(R.id.favColor)
