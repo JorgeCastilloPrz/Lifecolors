@@ -10,6 +10,7 @@ import android.transition.Transition
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
@@ -161,22 +162,37 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     menuInflater.inflate(R.menu.generated_colors_menu, menu)
     val favIcon = menu.findItem(R.id.favColor)
     val copyToClipboardItem = menu.findItem(R.id.copyToClipBoard)
-    if (selectedColor().isDark()) {
-      favIcon.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white_24dp)
-      copyToClipboardItem.icon = ContextCompat.getDrawable(this, R.drawable.ic_content_copy_white_24dp)
-    } else {
-      favIcon.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_black_24dp)
-      copyToClipboardItem.icon = ContextCompat.getDrawable(this, R.drawable.ic_content_copy_black_24dp)
-    }
+    renderMenuIcons(favIcon, copyToClipboardItem)
 
     this.menu = menu
     return true
   }
 
-  override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-    menu.hideAction(R.id.favColor)
-    menu.hideAction(R.id.copyToClipBoard)
-    return true
+  private fun renderMenuIcons(favIcon: MenuItem, copyToClipboardItem: MenuItem) {
+    if (selectedColor().isDark()) {
+      renderClipboardIcon(copyToClipboardItem, R.drawable.ic_content_copy_white_24dp)
+      renderFavIcon(favIcon, R.drawable.ic_favorite_white_24dp, R.drawable.ic_favorite_border_white_24dp)
+    } else {
+      renderClipboardIcon(copyToClipboardItem, R.drawable.ic_content_copy_black_24dp)
+      renderFavIcon(favIcon, R.drawable.ic_favorite_black_24dp, R.drawable.ic_favorite_border_black_24dp)
+    }
+  }
+
+  private fun renderClipboardIcon(clipboardItem: MenuItem, @DrawableRes iconRes: Int) {
+    clipboardItem.icon = ContextCompat.getDrawable(this, iconRes)
+  }
+
+  @Suppress("SENSELESS_COMPARISON")
+  private fun renderFavIcon(favIcon: MenuItem, @DrawableRes favedIconRes: Int, @DrawableRes unfavedIconRes: Int) {
+    if (::viewModel.isInitialized && viewModel.state.value is ScreenViewState.Color) {
+      val state = viewModel.state.value as ScreenViewState.Color
+      favIcon.icon = ContextCompat.getDrawable(
+        this,
+        if (state.isFavorite) favedIconRes else unfavedIconRes
+      )
+    } else {
+      favIcon.icon = ContextCompat.getDrawable(this, unfavedIconRes)
+    }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -256,7 +272,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
   }
 
   private fun observeViewModelUpdates() {
-    viewModel = ColorGenerationViewModel(selectedColor().toHexPureValue())
+    viewModel = ColorGenerationViewModel(selectedColor())
     viewModel.state.observe(this, Observer { state ->
       render(state)
     })
@@ -266,7 +282,12 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     nullableState?.let { state ->
       when (state) {
         is ScreenViewState.Color -> {
-          selectedColorName.text = resources.getString(R.string.color_name, state.colorName)
+          invalidateOptionsMenu()
+          if (state.colorName.isEmpty()) {
+            selectedColorName.text = ""
+          } else {
+            selectedColorName.text = resources.getString(R.string.color_name, state.colorName)
+          }
           selectedColorName.fadeIn()
         }
         is ScreenViewState.Error -> {
