@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.transition.Transition
 import android.transition.TransitionInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -17,17 +18,21 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.view.GeneratedColorsActivity
+import dev.jorgecastillo.lifecolors.fadeIn
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewModel
 import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState
 import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Colors
 import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Error
-import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Idle
+import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Loading
 import dev.jorgecastillo.lifecolors.palettes.presentation.generatedColors
 import dev.jorgecastillo.lifecolors.palettes.presentation.hasNoPickedColors
 import dev.jorgecastillo.lifecolors.palettes.presentation.pickedColors
+import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
 import kotlinx.android.synthetic.main.activity_palettes.bottomCutout
+import kotlinx.android.synthetic.main.activity_palettes.content
 import kotlinx.android.synthetic.main.activity_palettes.generatedColorsList
+import kotlinx.android.synthetic.main.activity_palettes.loading
 import kotlinx.android.synthetic.main.activity_palettes.pickedColorsCard
 import kotlinx.android.synthetic.main.activity_palettes.pickedColorsList
 import kotlinx.android.synthetic.main.cutout_content_palette_activity.toolbarIcon
@@ -71,8 +76,6 @@ class PalettesActivity : AppCompatActivity() {
     setupCutoutClicks()
     setupPickedColorsList()
     setupGeneratedColorsList()
-    observeViewStateChanges()
-    fillUpColors()
   }
 
   private fun setupViewModel() {
@@ -86,6 +89,13 @@ class PalettesActivity : AppCompatActivity() {
   }
 
   private fun setupEnterAnimation() {
+    window.sharedElementEnterTransition.addListener(object : SimpleTransitionListener() {
+      override fun onTransitionEnd(transition: Transition) {
+        observeViewStateChanges()
+        fillUpColors()
+      }
+    })
+
     val totalDuration = window.sharedElementEnterTransition.duration
     animateCutoutEnter(totalDuration)
     animateStatusBarEnter(totalDuration)
@@ -157,11 +167,16 @@ class PalettesActivity : AppCompatActivity() {
 
   private fun render(state: PalettesViewState) {
     when (state) {
-      is Idle -> {
+      is Loading -> {
+        loading.visibility = View.VISIBLE
+        content.alpha = 0f
       }
       is Error -> {
+        loading.visibility = View.GONE
+        content.alpha = 0f
       }
       is Colors -> {
+        loading.visibility = View.GONE
         if (state.hasNoPickedColors()) {
           pickedColorsCard.visibility = View.GONE
         } else {
@@ -169,6 +184,7 @@ class PalettesActivity : AppCompatActivity() {
           pickedColorsAdapter.colors = state.pickedColors()
         }
         paletteColorsAdapter.colors = state.generatedColors()
+        content.fadeIn()
       }
     }
   }
