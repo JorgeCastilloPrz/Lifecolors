@@ -90,13 +90,13 @@ class PalettesActivity : AppCompatActivity() {
     super.onResume()
     window.enterTransition = TransitionInflater.from(this).inflateTransition(R.transition.slide_bottom)
     window.exitTransition = TransitionInflater.from(this).inflateTransition(R.transition.slide_top)
+    fillUpFavStates()
   }
 
   private fun setupEnterAnimation() {
     window.sharedElementEnterTransition.addListener(object : SimpleTransitionListener() {
       override fun onTransitionEnd(transition: Transition) {
         observeViewStateChanges()
-        fillUpFavStates()
       }
     })
 
