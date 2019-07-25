@@ -4,12 +4,14 @@ import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.transition.Transition
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ProgressBar
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
@@ -19,12 +21,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
-import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewState
+import dev.jorgecastillo.lifecolors.colorgeneration.presentation.GeneratedColorsScreenViewState
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.common.view.extensions.copyToClipboard
 import dev.jorgecastillo.lifecolors.common.view.extensions.hideAction
 import dev.jorgecastillo.lifecolors.common.view.extensions.isDark
 import dev.jorgecastillo.lifecolors.common.view.extensions.showAction
+import dev.jorgecastillo.lifecolors.common.view.menu.MenuItemProgressCircle
 import dev.jorgecastillo.lifecolors.detail.view.BottomCutout.Companion.DEFAULT_COLOR
 import dev.jorgecastillo.lifecolors.fadeIn
 import dev.jorgecastillo.lifecolors.fadeOut
@@ -179,10 +182,22 @@ class GeneratedColorsActivity : AuthenticationActivity() {
   private fun renderMenuIcons(favIcon: MenuItem, copyToClipboardItem: MenuItem) {
     if (selectedColor().isDark()) {
       renderClipboardIcon(copyToClipboardItem, R.drawable.ic_content_copy_white_24dp)
-      renderFavIcon(favIcon, R.drawable.ic_favorite_white_24dp, R.drawable.ic_favorite_border_white_24dp)
+      renderFavIcon(
+        favIcon,
+        R.drawable.ic_favorite_white_24dp,
+        R.drawable.ic_favorite_border_white_24dp,
+        MenuItemProgressCircle(this).apply {
+          this.indeterminateTintList = ColorStateList.valueOf(Color.WHITE)
+        })
     } else {
       renderClipboardIcon(copyToClipboardItem, R.drawable.ic_content_copy_black_24dp)
-      renderFavIcon(favIcon, R.drawable.ic_favorite_black_24dp, R.drawable.ic_favorite_border_black_24dp)
+      renderFavIcon(
+        favIcon,
+        R.drawable.ic_favorite_black_24dp,
+        R.drawable.ic_favorite_border_black_24dp,
+        MenuItemProgressCircle(this).apply {
+          this.indeterminateTintList = ColorStateList.valueOf(Color.BLACK)
+        })
     }
   }
 
@@ -191,15 +206,20 @@ class GeneratedColorsActivity : AuthenticationActivity() {
   }
 
   @Suppress("SENSELESS_COMPARISON")
-  private fun renderFavIcon(favIcon: MenuItem, @DrawableRes favedIconRes: Int, @DrawableRes unfavedIconRes: Int) {
-    if (::viewModel.isInitialized && viewModel.state.value is ColorGenerationViewState.Color) {
-      val state = viewModel.state.value as ColorGenerationViewState.Color
-      favIcon.icon = ContextCompat.getDrawable(
-        this,
-        if (state.isFavorite) favedIconRes else unfavedIconRes
-      )
-    } else {
-      favIcon.icon = ContextCompat.getDrawable(this, unfavedIconRes)
+  private fun renderFavIcon(
+    favIcon: MenuItem,
+    @DrawableRes favedIconRes: Int,
+    @DrawableRes unfavedIconRes: Int,
+    loadingProgressBar: ProgressBar
+  ) {
+    if (::viewModel.isInitialized) {
+      if (viewModel.state.value!!.isLoadingFavState) {
+        favIcon.actionView = loadingProgressBar
+      } else {
+        favIcon.actionView = null
+        val state = viewModel.state.value!!
+        favIcon.icon = ContextCompat.getDrawable(this, if (state.isFavorite) favedIconRes else unfavedIconRes)
+      }
     }
   }
 
@@ -286,22 +306,20 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     })
   }
 
-  private fun render(nullableState: ColorGenerationViewState?) {
-    nullableState?.let { state ->
-      when (state) {
-        is ColorGenerationViewState.Color -> {
-          invalidateOptionsMenu()
-          if (state.colorName.isEmpty()) {
-            selectedColorName.text = ""
-          } else {
-            selectedColorName.text = resources.getString(R.string.color_name, state.colorName)
-          }
-          selectedColorName.fadeIn()
-        }
-        is ColorGenerationViewState.Error -> {
+  private fun render(state: GeneratedColorsScreenViewState) {
+    when {
+      state.isShowingError -> {
+        selectedColorName.text = ""
+        selectedColorName.fadeOut()
+      }
+      else -> {
+        invalidateOptionsMenu()
+        if (state.colorName.isEmpty()) {
           selectedColorName.text = ""
-          selectedColorName.fadeOut()
+        } else {
+          selectedColorName.text = resources.getString(R.string.color_name, state.colorName)
         }
+        selectedColorName.fadeIn()
       }
     }
   }
