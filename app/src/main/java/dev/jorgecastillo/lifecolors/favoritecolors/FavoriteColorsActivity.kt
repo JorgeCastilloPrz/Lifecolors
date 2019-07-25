@@ -77,8 +77,8 @@ class FavoriteColorsActivity : AuthenticationActivity() {
     GeneratedColorsActivity.launch(this, view, details.color, position)
   }
 
-  private fun favClickListener(): (View, ColorViewState, Int) -> Unit = { view, details, position ->
-
+  private fun favClickListener(): (View, ColorViewState, Int) -> Unit = { _, details, position ->
+    viewModel.onColorFavClick(details, position)
   }
 
   override fun onResume() {

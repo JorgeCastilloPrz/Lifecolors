@@ -167,7 +167,7 @@ class PalettesActivity : AppCompatActivity() {
     GeneratedColorsActivity.launch(this, view, details.color, position)
   }
 
-  private fun favClickListener(): (View, ColorViewState, Int) -> Unit = { view, details, position ->
+  private fun favClickListener(): (View, ColorViewState, Int) -> Unit = { _, details, position ->
     palettesViewModel.onColorFavClick(details, position)
   }
 

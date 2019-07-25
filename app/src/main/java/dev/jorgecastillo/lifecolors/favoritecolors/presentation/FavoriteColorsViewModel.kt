@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dev.jorgecastillo.lifecolors.common.usecase.GetFavColors
 import dev.jorgecastillo.lifecolors.common.usecase.GetFavColorsResult
 import dev.jorgecastillo.lifecolors.common.usecase.ToggleColorFav
+import dev.jorgecastillo.lifecolors.common.usecase.ToggleColorFavResult
 import dev.jorgecastillo.lifecolors.common.usecase.execute
 import dev.jorgecastillo.lifecolors.common.view.NonNullMutableLiveData
 import dev.jorgecastillo.lifecolors.common.view.model.ColorType.GENERATED
@@ -58,6 +59,37 @@ class FavoriteColorsViewModel(
   private suspend fun updateViewState(transform: (FavoriteColorsViewState) -> FavoriteColorsViewState) {
     withContext(Dispatchers.Main) {
       _state.value = transform(_state.value)
+    }
+  }
+
+  fun onColorFavClick(details: ColorViewState, position: Int) {
+    viewModelScope.async(Dispatchers.IO) {
+      when (val result = toggleColorFav.execute(details.color)) {
+        is ToggleColorFavResult.Error -> {
+        }
+        is ToggleColorFavResult.Success -> {
+          updateViewState { state ->
+            when (state) {
+              Loading, Error -> Colors(
+                listOf(
+                  ColorViewState(
+                    details.color,
+                    details.type,
+                    result.newFavState
+                  )
+                )
+              )
+              is Colors -> state.copy(colors = state.colors.foldIndexed(listOf()) { pos, acc, item ->
+                if (pos != position) {
+                  acc + item
+                } else {
+                  acc
+                }
+              })
+            }
+          }
+        }
+      }
     }
   }
 }
