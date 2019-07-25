@@ -69,7 +69,11 @@ class FavoriteColorsViewModel(
   fun onColorFavClick(details: ColorViewState, position: Int) {
     updateViewState {
       (it as Colors).let { viewState ->
-        viewState.copy(colors = it.colors.map { color -> color.copy(isLoading = true) })
+        viewState.copy(colors = it.colors.map { color ->
+          if (color == details) {
+            color.copy(isLoading = true)
+          } else color
+        })
       }
     }
 
