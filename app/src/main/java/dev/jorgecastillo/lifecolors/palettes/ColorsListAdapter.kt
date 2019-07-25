@@ -1,5 +1,7 @@
 package dev.jorgecastillo.lifecolors.palettes
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import dev.jorgecastillo.lifecolors.colorgeneration.view.toCMYK
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toHex
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toRGB
 import dev.jorgecastillo.lifecolors.common.view.listadapter.ColorViewStateDiffCallback
+import dev.jorgecastillo.lifecolors.common.view.menu.MenuItemProgressCircle
 import dev.jorgecastillo.lifecolors.detail.view.Dot
 import dev.jorgecastillo.lifecolors.palettes.ColorsListAdapter.ViewHolder
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
@@ -54,6 +57,9 @@ class ColorsListAdapter(
 
       itemView.setOnClickListener { onItemClick(dotView, colorViewState, adapterPosition) }
 
+      val loading = itemView.findViewById<MenuItemProgressCircle>(R.id.loading)
+      loading.indeterminateTintList = ColorStateList.valueOf(Color.WHITE)
+
       val favButton = itemView.findViewById<ImageButton>(R.id.favButton)
       favButton.setImageResource(
         if (colorViewState.isFavorite) {
@@ -63,6 +69,14 @@ class ColorsListAdapter(
         }
       )
       favButton.setOnClickListener { onFavItemClick(dotView, colorViewState, adapterPosition) }
+
+      if (colorViewState.isLoading) {
+        loading.visibility = View.VISIBLE
+        favButton.visibility = View.GONE
+      } else {
+        loading.visibility = View.GONE
+        favButton.visibility = View.VISIBLE
+      }
     }
   }
 }

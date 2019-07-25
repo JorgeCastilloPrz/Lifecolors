@@ -45,26 +45,35 @@ class PalettesViewModel(
     pickedColors: ArrayList<Int>,
     generatedColors: ArrayList<Int>
   ) {
+    updateViewState {
+      when (it) {
+        is Colors -> it.copy(colors = it.colors.map { color -> color.copy(isLoading = true) })
+        else -> it
+      }
+    }
+
     viewModelScope.async(Dispatchers.IO) {
 
       when (val colorsWithFavStatus = areColorsFav.execute(pickedColors + generatedColors)) {
         is AreColorsFavResult.Error -> {
         }
         is AreColorsFavResult.Success -> {
-          updateViewState { state ->
+          updateViewStateSuspend { state ->
             when (state) {
               Idle, Error -> Colors(colorsWithFavStatus.colorsWithFavStatus.toList().map {
                 ColorViewState(
                   it.first,
                   if (pickedColors.contains(it.first)) PICKED else GENERATED,
-                  it.second
+                  it.second,
+                  false
                 )
               })
               is Colors -> state.copy(colors = colorsWithFavStatus.colorsWithFavStatus.toList().map {
                 ColorViewState(
                   it.first,
                   if (pickedColors.contains(it.first)) PICKED else GENERATED,
-                  it.second
+                  it.second,
+                  false
                 )
               })
             }
@@ -74,26 +83,41 @@ class PalettesViewModel(
     }
   }
 
-  private suspend fun updateViewState(transform: (PalettesViewState) -> PalettesViewState) {
+  private fun updateViewState(transform: (PalettesViewState) -> PalettesViewState) {
+    _state.value = transform(_state.value)
+  }
+
+  private suspend fun updateViewStateSuspend(transform: (PalettesViewState) -> PalettesViewState) {
     withContext(Main) {
       _state.value = transform(_state.value)
     }
   }
 
   fun onColorFavClick(details: ColorViewState, position: Int) {
+    updateViewState {
+      (it as Colors).let { viewState ->
+        viewState.copy(colors = it.colors.map { color ->
+          if (color == details) {
+            color.copy(isLoading = true)
+          } else color
+        })
+      }
+    }
+
     viewModelScope.async(Dispatchers.IO) {
       when (val result = toggleColorFav.execute(details.color)) {
         is ToggleColorFavResult.Error -> {
         }
         is ToggleColorFavResult.Success -> {
-          updateViewState { state ->
+          updateViewStateSuspend { state ->
             when (state) {
               Idle, Error -> Colors(
                 listOf(
                   ColorViewState(
                     details.color,
                     details.type,
-                    result.newFavState
+                    result.newFavState,
+                    false
                   )
                 )
               )
@@ -105,7 +129,8 @@ class PalettesViewModel(
                     result.newFavState
                   } else {
                     colorViewState.isFavorite
-                  }
+                  },
+                  false
                 )
               })
             }

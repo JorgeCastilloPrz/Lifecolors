@@ -6,6 +6,7 @@ import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 fun Int.toColorDetails() = ColorViewState(
   color = this,
   type = PICKED,
-  isFavorite = false
+  isFavorite = false,
+  isLoading = false
 )
 

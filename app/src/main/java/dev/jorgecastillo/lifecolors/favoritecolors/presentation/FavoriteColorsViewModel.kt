@@ -41,13 +41,13 @@ class FavoriteColorsViewModel(
         is GetFavColorsResult.Error -> {
         }
         is GetFavColorsResult.Success -> {
-          updateViewState { state ->
+          updateViewStateSuspend { state ->
             when (state) {
               Loading, Error -> Colors(favColors.colors.toList().map {
-                ColorViewState(it, GENERATED, true)
+                ColorViewState(it, GENERATED, isFavorite = true, isLoading = false)
               })
               is Colors -> state.copy(colors = favColors.colors.toList().map {
-                ColorViewState(it, GENERATED, true)
+                ColorViewState(it, GENERATED, isFavorite = true, isLoading = false)
               })
             }
           }
@@ -56,32 +56,48 @@ class FavoriteColorsViewModel(
     }
   }
 
-  private suspend fun updateViewState(transform: (FavoriteColorsViewState) -> FavoriteColorsViewState) {
+  private fun updateViewState(transform: (FavoriteColorsViewState) -> FavoriteColorsViewState) {
+    _state.value = transform(_state.value)
+  }
+
+  private suspend fun updateViewStateSuspend(transform: (FavoriteColorsViewState) -> FavoriteColorsViewState) {
     withContext(Dispatchers.Main) {
       _state.value = transform(_state.value)
     }
   }
 
   fun onColorFavClick(details: ColorViewState, position: Int) {
+    updateViewState {
+      (it as Colors).let { viewState ->
+        viewState.copy(colors = it.colors.map { color -> color.copy(isLoading = true) })
+      }
+    }
+
     viewModelScope.async(Dispatchers.IO) {
       when (val result = toggleColorFav.execute(details.color)) {
         is ToggleColorFavResult.Error -> {
+          updateViewState {
+            (it as Colors).let { viewState ->
+              viewState.copy(colors = it.colors.map { color -> color.copy(isLoading = false) })
+            }
+          }
         }
         is ToggleColorFavResult.Success -> {
-          updateViewState { state ->
+          updateViewStateSuspend { state ->
             when (state) {
               Loading, Error -> Colors(
                 listOf(
                   ColorViewState(
                     details.color,
                     details.type,
-                    result.newFavState
+                    result.newFavState,
+                    false
                   )
                 )
               )
               is Colors -> state.copy(colors = state.colors.foldIndexed(listOf()) { pos, acc, item ->
                 if (pos != position) {
-                  acc + item
+                  acc + item.copy(isLoading = false)
                 } else {
                   acc
                 }

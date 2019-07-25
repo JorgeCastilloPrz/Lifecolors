@@ -77,4 +77,16 @@
       tools:ignore="ContentDescription"
       />
 
+  <dev.jorgecastillo.lifecolors.common.view.menu.MenuItemProgressCircle
+      android:id="@+id/loading"
+      android:layout_width="@dimen/icon_button_size"
+      android:layout_height="@dimen/icon_button_size"
+      android:src="@drawable/ic_favorite_border_white_24dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:ignore="ContentDescription"
+      android:visibility="gone"
+      />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
