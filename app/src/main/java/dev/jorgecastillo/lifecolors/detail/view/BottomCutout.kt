@@ -24,6 +24,7 @@ import dev.jorgecastillo.lifecolors.detail.view.drawable.CutoutDrawable
 import dev.jorgecastillo.lifecolors.fadeIn
 import kotlinx.android.synthetic.main.cutout_content_palette_activity.view.toolbarIcon
 import kotlinx.android.synthetic.main.cutout_content_palette_activity.view.toolbarTitle
+import kotlinx.android.synthetic.main.cutout_expand_icon.view.colorCount
 
 internal class BottomCutout @JvmOverloads constructor(
   context: Context,
@@ -36,7 +37,7 @@ internal class BottomCutout @JvmOverloads constructor(
   }
 
   private val dotSize = resources.getDimensionPixelSize(R.dimen.dot_size)
-  private val generatedColors = mutableListOf<LifeColor>()
+  private var generatedColors = setOf<LifeColor>()
 
   init {
     layoutTransition = LayoutTransition().apply {
@@ -94,17 +95,18 @@ internal class BottomCutout @JvmOverloads constructor(
           val muted = it.getMutedColor(DEFAULT_COLOR)
           val darkMuted = it.getDarkMutedColor(DEFAULT_COLOR)
 
-          generatedColors += vibrant.toGeneratedLifeColor()
-          generatedColors += darkVibrant.toGeneratedLifeColor()
-          generatedColors += lightVibrant.toGeneratedLifeColor()
-          generatedColors += lightMuted.toGeneratedLifeColor()
-          generatedColors += muted.toGeneratedLifeColor()
-          generatedColors += darkMuted.toGeneratedLifeColor()
+          generatedColors = generatedColors + vibrant.toGeneratedLifeColor()
+          generatedColors = generatedColors + darkVibrant.toGeneratedLifeColor()
+          generatedColors = generatedColors + lightVibrant.toGeneratedLifeColor()
+          generatedColors = generatedColors + lightMuted.toGeneratedLifeColor()
+          generatedColors = generatedColors + muted.toGeneratedLifeColor()
+          generatedColors = generatedColors + darkMuted.toGeneratedLifeColor()
 
-          addDot(vibrant)
-          addDot(darkVibrant)
-          addDot(lightVibrant)
+          addDot(generatedColors.toList()[0].color)
+          addDot(generatedColors.toList()[1].color)
+          addDot(generatedColors.toList()[2].color)
           animateIn()
+          colorCount.text = generatedColors.size.toString()
         }
       }
   }
@@ -147,7 +149,7 @@ internal class BottomCutout @JvmOverloads constructor(
   }
 
   fun addDotFirst(dot: Dot) {
-    generatedColors.add(0, dot.color.toPickedLifeColor())
+    generatedColors = setOf(dot.color.toPickedLifeColor()) + generatedColors
     addDot(dot.color, addFirst = true, delayedAlpha = true)
     bumpCounter()
   }

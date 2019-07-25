@@ -80,7 +80,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
   companion object {
 
     private const val PICKED_COLOR = "PICKED_COLORS"
-    private const val PICKED_COLOR_POSITION = "PICKED_COLOR_POSITION"
+    private const val OPEN_FROM_ITSELF = "OPEN_FROM_ITSELF"
 
     fun launchWithNoTransition(
       source: Activity,
@@ -88,6 +88,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     ) {
       val bundle = Bundle().apply {
         putInt(PICKED_COLOR, pickedColor)
+        putBoolean(OPEN_FROM_ITSELF, true)
       }
 
       val intent = Intent(source, GeneratedColorsActivity::class.java)
@@ -99,12 +100,11 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     fun launch(
       source: Activity,
       sharedElement: View,
-      pickedColor: Int,
-      position: Int
+      pickedColor: Int
     ) {
       val bundle = Bundle().apply {
         putInt(PICKED_COLOR, pickedColor)
-        putInt(PICKED_COLOR_POSITION, position)
+        putBoolean(OPEN_FROM_ITSELF, false)
       }
 
       val intent = Intent(source, GeneratedColorsActivity::class.java)
@@ -121,7 +121,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
 
   private fun selectedColor() = intent?.extras?.getInt(PICKED_COLOR, DEFAULT_COLOR) ?: DEFAULT_COLOR
 
-  private fun selectedPosition() = intent?.extras?.getInt(PICKED_COLOR_POSITION, -1) ?: -1
+  private fun openFromItself() = intent?.extras?.getBoolean(OPEN_FROM_ITSELF, false) ?: false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -138,11 +138,10 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     selectedColorName.setTextColor(headerTextColor)
     selectedColorHex.text = selectedColor.toHex()
 
-    val position = selectedPosition()
     dot.color = selectedColor
-    dot.transitionName = "$selectedColor$position"
+    dot.transitionName = "$selectedColor"
 
-    if (position == -1) {
+    if (openFromItself()) {
       dot.strokeColor = Color.TRANSPARENT
       appBarLayout.post {
         animateRevealShow(selectedColor)
@@ -428,7 +427,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
   }
 
   override fun onBackPressed() {
-    if (selectedPosition() == -1) {
+    if (openFromItself()) {
       backPressed()
     } else {
       menu.hideAction(R.id.favColor)

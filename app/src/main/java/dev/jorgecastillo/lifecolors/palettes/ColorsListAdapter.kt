@@ -40,7 +40,7 @@ class ColorsListAdapter(
       onFavItemClick: (View, ColorViewState, Int) -> Unit
     ) {
       val dotView = itemView.findViewById<Dot>(R.id.colorDot)
-      dotView.transitionName = "${colorViewState.color}$adapterPosition"
+      dotView.transitionName = "${colorViewState.color}"
       dotView.color = colorViewState.color
       dotView.invalidate()
 

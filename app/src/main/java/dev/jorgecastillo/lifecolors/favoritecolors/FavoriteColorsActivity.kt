@@ -15,6 +15,7 @@ import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.view.GeneratedColorsActivity
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.fadeIn
+import dev.jorgecastillo.lifecolors.fadeOut
 import dev.jorgecastillo.lifecolors.favoritecolors.presentation.FavoriteColorsViewModel
 import dev.jorgecastillo.lifecolors.favoritecolors.presentation.FavoriteColorsViewState
 import dev.jorgecastillo.lifecolors.favoritecolors.presentation.FavoriteColorsViewState.Colors
@@ -22,6 +23,7 @@ import dev.jorgecastillo.lifecolors.favoritecolors.presentation.FavoriteColorsVi
 import dev.jorgecastillo.lifecolors.palettes.ColorsListAdapter
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 import kotlinx.android.synthetic.main.activity_favorite_colors.colorList
+import kotlinx.android.synthetic.main.activity_favorite_colors.emptyState
 import kotlinx.android.synthetic.main.activity_favorite_colors.loading
 import kotlinx.android.synthetic.main.activity_favorite_colors.toolbar
 
@@ -71,10 +73,10 @@ class FavoriteColorsActivity : AuthenticationActivity() {
     colorList.addItemDecoration(dividerDecorator)
   }
 
-  private fun colorClickListener(): (View, ColorViewState, Int) -> Unit = { view, details, position ->
+  private fun colorClickListener(): (View, ColorViewState, Int) -> Unit = { view, details, _ ->
     window.enterTransition = null
     window.exitTransition = null
-    GeneratedColorsActivity.launch(this, view, details.color, position)
+    GeneratedColorsActivity.launch(this, view, details.color)
   }
 
   private fun favClickListener(): (View, ColorViewState, Int) -> Unit = { _, details, position ->
@@ -97,8 +99,14 @@ class FavoriteColorsActivity : AuthenticationActivity() {
       }
       is Colors -> {
         loading.visibility = View.GONE
-        adapter.submitList(state.colors)
-        colorList.fadeIn()
+        if (state.colors.isEmpty()) {
+          colorList.fadeOut()
+          emptyState.fadeIn()
+        } else {
+          adapter.submitList(state.colors)
+          emptyState.fadeOut()
+          colorList.fadeIn()
+        }
       }
     }
   }

@@ -161,10 +161,10 @@ class PalettesActivity : AppCompatActivity() {
     paletteColorsAdapter.submitList(generatedColors().toList().map { it.toColorDetails() })
   }
 
-  private fun colorClickListener(): (View, ColorViewState, Int) -> Unit = { view, details, position ->
+  private fun colorClickListener(): (View, ColorViewState, Int) -> Unit = { view, details, _ ->
     window.enterTransition = null
     window.exitTransition = null
-    GeneratedColorsActivity.launch(this, view, details.color, position)
+    GeneratedColorsActivity.launch(this, view, details.color)
   }
 
   private fun favClickListener(): (View, ColorViewState, Int) -> Unit = { _, details, position ->
