@@ -3,6 +3,7 @@ package dev.jorgecastillo.lifecolors.colorgeneration.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.squareup.moshi.Moshi
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toHexPureValue
 import dev.jorgecastillo.lifecolors.common.domain.model.ColorDetails
@@ -38,7 +39,7 @@ class ColorGenerationViewModel(
       GeneratedColorsScreenViewState(
         "",
         isFavorite = false,
-        isLoadingFavState = true,
+        isLoadingFavState = false,
         isShowingError = false
       )
     )
@@ -51,15 +52,17 @@ class ColorGenerationViewModel(
   }
 
   private fun loadColorFavState() {
-    updateViewState { it.copy(isLoadingFavState = true) }
+    if (FirebaseAuth.getInstance().currentUser != null) {
+      updateViewState { it.copy(isLoadingFavState = true) }
 
-    viewModelScope.async(Dispatchers.IO) {
-      when (val isColorFav = isColorFav.execute(selectedColor)) {
-        is IsColorFavResult.Error -> {
-          updateViewStateSuspend { it.copy(isShowingError = true, isLoadingFavState = false) }
-        }
-        is IsColorFavResult.Success -> {
-          updateViewStateSuspend { it.copy(isFavorite = isColorFav.isFavorite, isLoadingFavState = false) }
+      viewModelScope.async(Dispatchers.IO) {
+        when (val isColorFav = isColorFav.execute(selectedColor)) {
+          is IsColorFavResult.Error -> {
+            updateViewStateSuspend { it.copy(isShowingError = true, isLoadingFavState = false) }
+          }
+          is IsColorFavResult.Success -> {
+            updateViewStateSuspend { it.copy(isFavorite = isColorFav.isFavorite, isLoadingFavState = false) }
+          }
         }
       }
     }
