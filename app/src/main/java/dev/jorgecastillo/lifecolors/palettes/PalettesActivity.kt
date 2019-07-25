@@ -168,7 +168,7 @@ class PalettesActivity : AppCompatActivity() {
   }
 
   private fun favClickListener(): (View, ColorViewState, Int) -> Unit = { view, details, position ->
-
+    palettesViewModel.onColorFavClick(details, position)
   }
 
   private fun observeViewStateChanges() {

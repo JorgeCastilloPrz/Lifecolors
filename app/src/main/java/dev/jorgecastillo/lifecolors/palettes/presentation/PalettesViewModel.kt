@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dev.jorgecastillo.lifecolors.common.usecase.AreColorsFav
 import dev.jorgecastillo.lifecolors.common.usecase.AreColorsFavResult
 import dev.jorgecastillo.lifecolors.common.usecase.ToggleColorFav
+import dev.jorgecastillo.lifecolors.common.usecase.ToggleColorFavResult
 import dev.jorgecastillo.lifecolors.common.view.NonNullMutableLiveData
 import dev.jorgecastillo.lifecolors.common.view.model.ColorType.GENERATED
 import dev.jorgecastillo.lifecolors.common.view.model.ColorType.PICKED
@@ -76,6 +77,41 @@ class PalettesViewModel(
   private suspend fun updateViewState(transform: (PalettesViewState) -> PalettesViewState) {
     withContext(Main) {
       _state.value = transform(_state.value)
+    }
+  }
+
+  fun onColorFavClick(details: ColorViewState, position: Int) {
+    viewModelScope.async(Dispatchers.IO) {
+      when (val result = toggleColorFav.execute(details.color)) {
+        is ToggleColorFavResult.Error -> {
+        }
+        is ToggleColorFavResult.Success -> {
+          updateViewState { state ->
+            when (state) {
+              Idle, Error -> Colors(
+                listOf(
+                  ColorViewState(
+                    details.color,
+                    details.type,
+                    result.newFavState
+                  )
+                )
+              )
+              is Colors -> state.copy(colors = state.colors.map { colorViewState ->
+                ColorViewState(
+                  colorViewState.color,
+                  colorViewState.type,
+                  if (state.colors.filter { it.type == details.type }.indexOf(colorViewState) == position) {
+                    result.newFavState
+                  } else {
+                    colorViewState.isFavorite
+                  }
+                )
+              })
+            }
+          }
+        }
+      }
     }
   }
 }
