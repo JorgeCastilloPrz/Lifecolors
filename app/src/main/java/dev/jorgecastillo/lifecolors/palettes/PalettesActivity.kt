@@ -65,8 +65,8 @@ class PalettesActivity : AppCompatActivity() {
     }
   }
 
-  private lateinit var pickedColorsAdapter: PaletteColorsAdapter
-  private lateinit var paletteColorsAdapter: PaletteColorsAdapter
+  private lateinit var pickedColorsAdapter: ColorsListAdapter
+  private lateinit var paletteColorsAdapter: ColorsListAdapter
   private lateinit var palettesViewModel: PalettesViewModel
 
   private fun pickedColors() = intent?.extras?.getIntegerArrayList(PICKED_COLORS) ?: arrayListOf()
@@ -136,14 +136,14 @@ class PalettesActivity : AppCompatActivity() {
   private fun setupPickedColorsList() {
     pickedColorsList.setHasFixedSize(true)
     pickedColorsList.layoutManager = LinearLayoutManager(this)
-    pickedColorsAdapter = PaletteColorsAdapter(colorClickListener(), favClickListener())
+    pickedColorsAdapter = ColorsListAdapter(colorClickListener(), favClickListener())
     pickedColorsList.adapter = pickedColorsAdapter
     val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
       setDrawable(ContextCompat.getDrawable(this@PalettesActivity, R.drawable.color_divider)!!)
     }
     pickedColorsList.addItemDecoration(dividerDecorator)
     val pickedColors = pickedColors()
-    pickedColorsAdapter.colors = pickedColors.toList().map { it.toColorDetails() }
+    pickedColorsAdapter.submitList(pickedColors.toList().map { it.toColorDetails() })
     if (pickedColors.isEmpty()) {
       pickedColorsCard.visibility = GONE
     }
@@ -152,13 +152,13 @@ class PalettesActivity : AppCompatActivity() {
   private fun setupGeneratedColorsList() {
     generatedColorsList.setHasFixedSize(true)
     generatedColorsList.layoutManager = LinearLayoutManager(this)
-    paletteColorsAdapter = PaletteColorsAdapter(colorClickListener(), favClickListener())
+    paletteColorsAdapter = ColorsListAdapter(colorClickListener(), favClickListener())
     generatedColorsList.adapter = paletteColorsAdapter
     val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
       setDrawable(ContextCompat.getDrawable(this@PalettesActivity, R.drawable.color_divider)!!)
     }
     generatedColorsList.addItemDecoration(dividerDecorator)
-    paletteColorsAdapter.colors = generatedColors().toList().map { it.toColorDetails() }
+    paletteColorsAdapter.submitList(generatedColors().toList().map { it.toColorDetails() })
   }
 
   private fun colorClickListener(): (View, ColorViewState, Int) -> Unit = { view, details, position ->
@@ -187,9 +187,9 @@ class PalettesActivity : AppCompatActivity() {
           pickedColorsCard.visibility = GONE
         } else {
           pickedColorsCard.visibility = VISIBLE
-          pickedColorsAdapter.colors = state.pickedColors()
+          pickedColorsAdapter.submitList(state.pickedColors())
         }
-        paletteColorsAdapter.colors = state.generatedColors()
+        paletteColorsAdapter.submitList(state.generatedColors())
       }
     }
   }

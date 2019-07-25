@@ -5,35 +5,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toCMYK
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toHex
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toRGB
+import dev.jorgecastillo.lifecolors.common.view.listadapter.ColorViewStateDiffCallback
 import dev.jorgecastillo.lifecolors.detail.view.Dot
-import dev.jorgecastillo.lifecolors.palettes.PaletteColorsAdapter.ViewHolder
+import dev.jorgecastillo.lifecolors.palettes.ColorsListAdapter.ViewHolder
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 
-class PaletteColorsAdapter(
+class ColorsListAdapter(
   private val onItemClick: (View, ColorViewState, Int) -> Unit,
   private val onFavItemClick: (View, ColorViewState, Int) -> Unit
-) : RecyclerView.Adapter<ViewHolder>() {
-
-  var colors: List<ColorViewState> = listOf()
-    set(value) {
-      field = value
-      notifyDataSetChanged()
-    }
+) : ListAdapter<ColorViewState, ViewHolder>(ColorViewStateDiffCallback()) {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val view = LayoutInflater.from(parent.context).inflate(R.layout.item_color_list, parent, false)
     return ViewHolder(view)
   }
 
-  override fun getItemCount(): Int = colors.size
-
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    holder.bind(colors[position], onItemClick, onFavItemClick, position)
+    holder.bind(getItem(position), onItemClick, onFavItemClick, position)
   }
 
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -19,7 +19,7 @@ import dev.jorgecastillo.lifecolors.favoritecolors.presentation.FavoriteColorsVi
 import dev.jorgecastillo.lifecolors.favoritecolors.presentation.FavoriteColorsViewState
 import dev.jorgecastillo.lifecolors.favoritecolors.presentation.FavoriteColorsViewState.Colors
 import dev.jorgecastillo.lifecolors.favoritecolors.presentation.FavoriteColorsViewState.Loading
-import dev.jorgecastillo.lifecolors.palettes.PaletteColorsAdapter
+import dev.jorgecastillo.lifecolors.palettes.ColorsListAdapter
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 import kotlinx.android.synthetic.main.activity_favorite_colors.colorList
 import kotlinx.android.synthetic.main.activity_favorite_colors.loading
@@ -33,7 +33,7 @@ class FavoriteColorsActivity : AuthenticationActivity() {
     }
   }
 
-  private lateinit var adapter: PaletteColorsAdapter
+  private lateinit var adapter: ColorsListAdapter
   private val viewModel: FavoriteColorsViewModel = FavoriteColorsViewModel()
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +63,7 @@ class FavoriteColorsActivity : AuthenticationActivity() {
   private fun setupColorList() {
     colorList.setHasFixedSize(true)
     colorList.layoutManager = LinearLayoutManager(this)
-    adapter = PaletteColorsAdapter(colorClickListener(), favClickListener())
+    adapter = ColorsListAdapter(colorClickListener(), favClickListener())
     colorList.adapter = adapter
     val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
       setDrawable(ContextCompat.getDrawable(this@FavoriteColorsActivity, R.drawable.color_divider)!!)
@@ -97,7 +97,7 @@ class FavoriteColorsActivity : AuthenticationActivity() {
       }
       is Colors -> {
         loading.visibility = View.GONE
-        adapter.colors = state.colors
+        adapter.submitList(state.colors)
         colorList.fadeIn()
       }
     }
