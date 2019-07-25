@@ -27,18 +27,17 @@ class ColorsListAdapter(
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    holder.bind(getItem(position), onItemClick, onFavItemClick, position)
+    holder.bind(getItem(position), onItemClick, onFavItemClick)
   }
 
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(
       colorViewState: ColorViewState,
       onItemClick: (View, ColorViewState, Int) -> Unit,
-      onFavItemClick: (View, ColorViewState, Int) -> Unit,
-      position: Int
+      onFavItemClick: (View, ColorViewState, Int) -> Unit
     ) {
       val dotView = itemView.findViewById<Dot>(R.id.colorDot)
-      dotView.transitionName = "${colorViewState.color}$position"
+      dotView.transitionName = "${colorViewState.color}$adapterPosition"
       dotView.color = colorViewState.color
       dotView.invalidate()
 
@@ -53,7 +52,7 @@ class ColorsListAdapter(
       val cmykColorView = itemView.findViewById<TextView>(R.id.cmyk)
       cmykColorView.text = itemView.resources.getString(R.string.cmyk, colorViewState.color.toCMYK())
 
-      itemView.setOnClickListener { onItemClick(dotView, colorViewState, position) }
+      itemView.setOnClickListener { onItemClick(dotView, colorViewState, adapterPosition) }
 
       val favButton = itemView.findViewById<ImageButton>(R.id.favButton)
       favButton.setImageResource(
@@ -63,7 +62,7 @@ class ColorsListAdapter(
           R.drawable.ic_favorite_border_white_24dp
         }
       )
-      favButton.setOnClickListener { onFavItemClick(dotView, colorViewState, position) }
+      favButton.setOnClickListener { onFavItemClick(dotView, colorViewState, adapterPosition) }
     }
   }
 }
