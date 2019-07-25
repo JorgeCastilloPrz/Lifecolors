@@ -77,7 +77,8 @@ abstract class AuthenticationActivity : AppCompatActivity() {
       AlertDialog.Builder(this)
         .setTitle(R.string.firebase_auth_confirmation_title)
         .setMessage(R.string.firebase_auth_confirmation_msg)
-        .setNegativeButton(android.R.string.cancel) { _, _ -> }
+        .setOnCancelListener { onAuthenticationFailed() }
+        .setNegativeButton(android.R.string.cancel) { _, _ -> onAuthenticationFailed() }
         .setPositiveButton(android.R.string.ok) { _, _ ->
           performAuthentication()
         }

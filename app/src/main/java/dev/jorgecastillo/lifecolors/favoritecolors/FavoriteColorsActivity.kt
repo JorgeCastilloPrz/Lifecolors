@@ -85,8 +85,14 @@ class FavoriteColorsActivity : AuthenticationActivity() {
 
   override fun onResume() {
     super.onResume()
-    viewModel.state.observe(this, Observer { state -> render(state) })
-    viewModel.onScreenResumed()
+    authenticate(
+      onAuthenticationFailed = {
+        finish()
+      },
+      onAuthenticationSuccess = {
+        viewModel.state.observe(this, Observer { state -> render(state) })
+        viewModel.onScreenResumed()
+      })
   }
 
   private fun render(state: FavoriteColorsViewState) {
