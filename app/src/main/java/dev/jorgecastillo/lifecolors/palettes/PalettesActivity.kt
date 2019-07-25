@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.transition.Transition
 import android.transition.TransitionInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
@@ -16,15 +18,15 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.view.GeneratedColorsActivity
-import dev.jorgecastillo.lifecolors.fadeIn
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewModel
 import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState
 import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Colors
 import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Error
-import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Loading
+import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Idle
 import dev.jorgecastillo.lifecolors.palettes.presentation.generatedColors
 import dev.jorgecastillo.lifecolors.palettes.presentation.hasNoPickedColors
 import dev.jorgecastillo.lifecolors.palettes.presentation.pickedColors
@@ -32,7 +34,6 @@ import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
 import kotlinx.android.synthetic.main.activity_palettes.bottomCutout
 import kotlinx.android.synthetic.main.activity_palettes.content
 import kotlinx.android.synthetic.main.activity_palettes.generatedColorsList
-import kotlinx.android.synthetic.main.activity_palettes.loading
 import kotlinx.android.synthetic.main.activity_palettes.pickedColorsCard
 import kotlinx.android.synthetic.main.activity_palettes.pickedColorsList
 import kotlinx.android.synthetic.main.cutout_content_palette_activity.toolbarIcon
@@ -68,6 +69,9 @@ class PalettesActivity : AppCompatActivity() {
   private lateinit var paletteColorsAdapter: PaletteColorsAdapter
   private lateinit var palettesViewModel: PalettesViewModel
 
+  private fun pickedColors() = intent?.extras?.getIntegerArrayList(PICKED_COLORS) ?: arrayListOf()
+  private fun generatedColors() = intent?.extras?.getIntegerArrayList(GENERATED_COLORS) ?: arrayListOf()
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_palettes)
@@ -92,7 +96,7 @@ class PalettesActivity : AppCompatActivity() {
     window.sharedElementEnterTransition.addListener(object : SimpleTransitionListener() {
       override fun onTransitionEnd(transition: Transition) {
         observeViewStateChanges()
-        fillUpColors()
+        fillUpFavStates()
       }
     })
 
@@ -138,6 +142,11 @@ class PalettesActivity : AppCompatActivity() {
       setDrawable(ContextCompat.getDrawable(this@PalettesActivity, R.drawable.color_divider)!!)
     }
     pickedColorsList.addItemDecoration(dividerDecorator)
+    val pickedColors = pickedColors()
+    pickedColorsAdapter.colors = pickedColors.toList().map { it.toColorDetails() }
+    if (pickedColors.isEmpty()) {
+      pickedColorsCard.visibility = GONE
+    }
   }
 
   private fun setupGeneratedColorsList() {
@@ -149,6 +158,7 @@ class PalettesActivity : AppCompatActivity() {
       setDrawable(ContextCompat.getDrawable(this@PalettesActivity, R.drawable.color_divider)!!)
     }
     generatedColorsList.addItemDecoration(dividerDecorator)
+    paletteColorsAdapter.colors = generatedColors().toList().map { it.toColorDetails() }
   }
 
   private fun colorClickListener(): (View, ColorViewState, Int) -> Unit = { view, details, position ->
@@ -167,33 +177,25 @@ class PalettesActivity : AppCompatActivity() {
 
   private fun render(state: PalettesViewState) {
     when (state) {
-      is Loading -> {
-        loading.visibility = View.VISIBLE
-        content.alpha = 0f
+      is Idle -> {
       }
       is Error -> {
-        loading.visibility = View.GONE
-        content.alpha = 0f
+        Snackbar.make(content, R.string.loading_fav_statuses_error, Snackbar.LENGTH_SHORT).show()
       }
       is Colors -> {
-        loading.visibility = View.GONE
         if (state.hasNoPickedColors()) {
-          pickedColorsCard.visibility = View.GONE
+          pickedColorsCard.visibility = GONE
         } else {
-          pickedColorsCard.visibility = View.VISIBLE
+          pickedColorsCard.visibility = VISIBLE
           pickedColorsAdapter.colors = state.pickedColors()
         }
         paletteColorsAdapter.colors = state.generatedColors()
-        content.fadeIn()
       }
     }
   }
 
-  private fun fillUpColors() {
-    val pickedColors = intent?.extras?.getIntegerArrayList(PICKED_COLORS) ?: arrayListOf()
-    val generatedColors = intent?.extras?.getIntegerArrayList(GENERATED_COLORS) ?: arrayListOf()
-
-    palettesViewModel.onGeneratedColorsAvailable(pickedColors, generatedColors)
+  private fun fillUpFavStates() {
+    palettesViewModel.onColorsFavStateRequired(pickedColors(), generatedColors())
   }
 
   override fun onBackPressed() {

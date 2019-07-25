@@ -12,7 +12,7 @@ import dev.jorgecastillo.lifecolors.common.view.model.ColorType.PICKED
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Colors
 import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Error
-import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Loading
+import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Idle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.async
@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 import java.util.ArrayList
 
 sealed class PalettesViewState {
-  object Loading : PalettesViewState()
+  object Idle : PalettesViewState()
   object Error : PalettesViewState()
   data class Colors(val colors: List<ColorViewState>) : PalettesViewState()
 }
@@ -36,11 +36,11 @@ class PalettesViewModel(
 ) : ViewModel() {
 
   private val _state: NonNullMutableLiveData<PalettesViewState> =
-    NonNullMutableLiveData(Loading)
+    NonNullMutableLiveData(Idle)
 
   val state: LiveData<PalettesViewState> = _state
 
-  fun onGeneratedColorsAvailable(
+  fun onColorsFavStateRequired(
     pickedColors: ArrayList<Int>,
     generatedColors: ArrayList<Int>
   ) {
@@ -52,7 +52,7 @@ class PalettesViewModel(
         is AreColorsFavResult.Success -> {
           updateViewState { state ->
             when (state) {
-              Loading, Error -> Colors(colorsWithFavStatus.colorsWithFavStatus.toList().map {
+              Idle, Error -> Colors(colorsWithFavStatus.colorsWithFavStatus.toList().map {
                 ColorViewState(
                   it.first,
                   if (pickedColors.contains(it.first)) PICKED else GENERATED,
