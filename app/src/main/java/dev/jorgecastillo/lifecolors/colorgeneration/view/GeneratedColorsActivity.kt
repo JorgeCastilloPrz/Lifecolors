@@ -433,11 +433,11 @@ class GeneratedColorsActivity : AuthenticationActivity() {
 
   private fun setupSuggestedClothesLists() {
     suggestedClothesList.adapter = suggestedClothesAdapter
-    suggestedClothesList.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.HORIZONTAL, false)
+    suggestedClothesList.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
     suggestedClothesList.setHasFixedSize(true)
 
     suggestedComplimentaryClothesList.adapter = suggestedComplimentaryClothesAdapter
-    suggestedComplimentaryClothesList.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.HORIZONTAL, false)
+    suggestedComplimentaryClothesList.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
     suggestedComplimentaryClothesList.setHasFixedSize(true)
   }
 

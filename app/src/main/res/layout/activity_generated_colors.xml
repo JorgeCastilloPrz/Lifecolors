@@ -100,7 +100,7 @@
       <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/suggestedClothesList"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="344dp"
           android:layout_marginTop="@dimen/spacing"
           android:clipChildren="false"
           android:clipToPadding="false"
@@ -191,7 +191,7 @@
       <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/suggestedComplimentaryClothesList"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="344dp"
           android:layout_marginTop="@dimen/spacing"
           android:clipChildren="false"
           android:clipToPadding="false"
