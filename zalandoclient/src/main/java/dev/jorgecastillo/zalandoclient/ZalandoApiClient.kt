@@ -1,9 +1,8 @@
-package dev.jorgecastillo.zalandoapiclient
+package dev.jorgecastillo.zalandoclient
 
-import dev.jorgecastillo.zalandoapiclient.ZalandoApiClient.ZalandoCategory
-import dev.jorgecastillo.zalandoapiclient.ZalandoApiClient.ZalandoColor
+import android.graphics.Color
+import androidx.annotation.ColorInt
 import org.jsoup.Jsoup
-import java.awt.Color
 import kotlin.math.abs
 import kotlin.math.sqrt
 
@@ -149,22 +148,22 @@ class ZalandoApiClient {
   /**
    * Assumes the String is a HEX color with the format #FFFFFF or FFFFFF
    */
-  private fun String.toRGB(): Color {
+  private fun String.toRGB(): Int {
     val color = if (this.startsWith("#")) {
-      Color.decode("0x${this.drop(1)}")
+      Color.parseColor(this)
     } else {
-      Color.decode("0x${this}")
+      Color.parseColor("#${this}")
     }
-    val red = color.red
-    val blue = color.blue
-    val green = color.green
-    return Color(red, green, blue)
+    val red = Color.red(color)
+    val blue = Color.blue(color)
+    val green = Color.green(color)
+    return Color.rgb(red, blue, green)
   }
 
-  private fun Color.colorSum(target: Color) =
-    sqrt(abs(this.red.toFloat() - target.red)) +
-      sqrt(abs(this.green.toFloat() - target.green)) +
-      sqrt(abs(this.blue.toFloat() - target.blue))
+  private fun Int.colorSum(@ColorInt target: Int) =
+    sqrt(abs(Color.red(this).toFloat() - Color.red(target))) +
+      sqrt(abs(Color.green(this).toFloat() - Color.green(target))) +
+      sqrt(abs(Color.blue(this).toFloat() - Color.green(target)))
 
   fun get(category: ZalandoCategory, source: String): List<ZalandoItem> {
     // (Square(Red(source)-Red(target))) +
@@ -180,9 +179,9 @@ class ZalandoApiClient {
     return get(category, closestColor)
   }
 }
-
-fun main() {
-  val apiClient = ZalandoApiClient()
-  val res = apiClient.get(ZalandoCategory.Mujer.ChaquetasPuntoYJerseysMujer(), "#d9849b")
-  println(res)
-}
+//
+//fun main() {
+//  val apiClient = ZalandoApiClient()
+//  val res = apiClient.get(ZalandoCategory.Mujer.ChaquetasPuntoYJerseysMujer(), "#d9849b")
+//  println(res)
+//}

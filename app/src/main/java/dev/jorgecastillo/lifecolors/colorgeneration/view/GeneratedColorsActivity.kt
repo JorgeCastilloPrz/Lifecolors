@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
@@ -55,6 +56,8 @@ import kotlinx.android.synthetic.main.activity_generated_colors.dot
 import kotlinx.android.synthetic.main.activity_generated_colors.selectedColorHex
 import kotlinx.android.synthetic.main.activity_generated_colors.selectedColorName
 import kotlinx.android.synthetic.main.activity_generated_colors.shadesTitle
+import kotlinx.android.synthetic.main.activity_generated_colors.suggestedClothesList
+import kotlinx.android.synthetic.main.activity_generated_colors.suggestedComplimentaryClothesList
 import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor1
 import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor1Hex
 import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor2
@@ -118,6 +121,8 @@ class GeneratedColorsActivity : AuthenticationActivity() {
 
   private lateinit var viewModel: ColorGenerationViewModel
   private lateinit var menu: Menu
+  private val suggestedClothesAdapter = ClothesAdapter()
+  private val suggestedComplimentaryClothesAdapter = ClothesAdapter()
 
   private fun selectedColor() = intent?.extras?.getInt(PICKED_COLOR, DEFAULT_COLOR) ?: DEFAULT_COLOR
 
@@ -147,11 +152,13 @@ class GeneratedColorsActivity : AuthenticationActivity() {
         animateRevealShow(selectedColor)
         animateStatusBarEnter()
         generateColors(selectedColor)
+        setupSuggestedClothesLists()
       }
     } else {
       setupEnterAnimation(selectedColor)
       startPostponedEnterTransition()
       generateColors(selectedColor)
+      setupSuggestedClothesLists()
     }
   }
 
@@ -319,6 +326,8 @@ class GeneratedColorsActivity : AuthenticationActivity() {
           selectedColorName.text = resources.getString(R.string.color_name, state.colorName)
         }
         selectedColorName.fadeIn()
+        suggestedClothesAdapter.submitList(state.suggestedClothes)
+        suggestedComplimentaryClothesAdapter.submitList(state.suggestedComplimentaryClothes)
       }
     }
   }
@@ -420,6 +429,16 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     tetradicColor1Hex.text = tetradicColors.first.toHex()
     tetradicColor2Hex.text = tetradicColors.second.toHex()
     tetradicColor3Hex.text = tetradicColors.third.toHex()
+  }
+
+  private fun setupSuggestedClothesLists() {
+    suggestedClothesList.adapter = suggestedClothesAdapter
+    suggestedClothesList.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.HORIZONTAL, false)
+    suggestedClothesList.setHasFixedSize(true)
+
+    suggestedComplimentaryClothesList.adapter = suggestedComplimentaryClothesAdapter
+    suggestedComplimentaryClothesList.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.HORIZONTAL, false)
+    suggestedComplimentaryClothesList.setHasFixedSize(true)
   }
 
   private fun onColorClickListener(): (View, ColorViewState, Int) -> Unit = { _, colorDetails, _ ->

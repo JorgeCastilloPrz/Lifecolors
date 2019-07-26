@@ -86,6 +86,29 @@
         >
 
       <TextView
+          android:id="@+id/suggestedClothesTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing"
+          android:layout_marginTop="@dimen/spacing"
+          android:text="@string/suggested_clothing_title"
+          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+          android:textColor="@color/colorAccent"
+          android:textSize="16sp"
+          />
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/suggestedClothesList"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/spacing"
+          android:clipChildren="false"
+          android:clipToPadding="false"
+          android:nestedScrollingEnabled="false"
+          android:padding="@dimen/spacing_smallest"
+          />
+
+      <TextView
           android:id="@+id/complimentaryColorTitle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -152,6 +175,29 @@
             tools:text="#38B0C8"
             />
       </LinearLayout>
+
+      <TextView
+          android:id="@+id/suggestedComplimentaryClothesTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing"
+          android:layout_marginTop="@dimen/spacing"
+          android:text="@string/suggested_complimentary_clothing_title"
+          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+          android:textColor="@color/colorAccent"
+          android:textSize="16sp"
+          />
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/suggestedComplimentaryClothesList"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/spacing"
+          android:clipChildren="false"
+          android:clipToPadding="false"
+          android:nestedScrollingEnabled="false"
+          android:padding="@dimen/spacing_smallest"
+          />
 
       <TextView
           android:id="@+id/shadesTitle"

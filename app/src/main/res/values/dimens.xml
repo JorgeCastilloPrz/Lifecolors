@@ -17,4 +17,5 @@
   <dimen name="toolbar_text_size">20sp</dimen>
   <dimen name="generated_color_activity_header">180dp</dimen>
   <dimen name="icon_button_size">52dp</dimen>
+  <dimen name="clothes_item_height">170dp</dimen>
 </resources>

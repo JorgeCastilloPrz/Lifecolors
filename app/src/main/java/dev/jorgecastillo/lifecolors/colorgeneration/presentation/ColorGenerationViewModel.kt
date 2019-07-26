@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.moshi.Moshi
+import dev.jorgecastillo.lifecolors.colorgeneration.view.complimentary
+import dev.jorgecastillo.lifecolors.colorgeneration.view.toHex
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toHexPureValue
 import dev.jorgecastillo.lifecolors.common.domain.model.ColorDetails
 import dev.jorgecastillo.lifecolors.common.usecase.IsColorFav
@@ -12,6 +14,8 @@ import dev.jorgecastillo.lifecolors.common.usecase.IsColorFavResult
 import dev.jorgecastillo.lifecolors.common.usecase.ToggleColorFav
 import dev.jorgecastillo.lifecolors.common.usecase.ToggleColorFavResult
 import dev.jorgecastillo.lifecolors.common.view.NonNullMutableLiveData
+import dev.jorgecastillo.zalandoclient.ZalandoApiClient
+import dev.jorgecastillo.zalandoclient.ZalandoItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.async
@@ -24,14 +28,17 @@ data class GeneratedColorsScreenViewState(
   val colorName: String,
   val isFavorite: Boolean,
   val isLoadingFavState: Boolean,
-  val isShowingError: Boolean
+  val isShowingError: Boolean,
+  val suggestedClothes: List<ZalandoItem>,
+  val suggestedComplimentaryClothes: List<ZalandoItem>
 )
 
 @Suppress("DeferredResultUnused")
 class ColorGenerationViewModel(
   private val selectedColor: Int,
   private val isColorFav: IsColorFav = IsColorFav(),
-  private val toggleColorFav: ToggleColorFav = ToggleColorFav()
+  private val toggleColorFav: ToggleColorFav = ToggleColorFav(),
+  private val zalandoApiClient: ZalandoApiClient = ZalandoApiClient()
 ) : ViewModel() {
 
   private val _state: NonNullMutableLiveData<GeneratedColorsScreenViewState> =
@@ -40,7 +47,9 @@ class ColorGenerationViewModel(
         "",
         isFavorite = false,
         isLoadingFavState = false,
-        isShowingError = false
+        isShowingError = false,
+        suggestedClothes = listOf(),
+        suggestedComplimentaryClothes = listOf()
       )
     )
 
@@ -92,9 +101,27 @@ class ColorGenerationViewModel(
         val colorDetails = jsonAdapter.fromJson(body)!!
 
         updateViewStateSuspend { it.copy(colorName = colorDetails.name.value) }
+        loadClothingSuggestions()
+        loadComplimentaryClothingSuggestions()
       } catch (e: IOException) {
         updateViewStateSuspend { it.copy(isShowingError = true) }
+        loadClothingSuggestions()
+        loadComplimentaryClothingSuggestions()
       }
+    }
+  }
+
+  private fun loadClothingSuggestions() {
+    viewModelScope.async(Dispatchers.IO) {
+      val clothes = zalandoApiClient.get(ZalandoApiClient.ZalandoCategory.Mujer.CalzadoMujer(), selectedColor.toHex())
+      updateViewStateSuspend { it.copy(suggestedClothes = clothes) }
+    }
+  }
+
+  private fun loadComplimentaryClothingSuggestions() {
+    viewModelScope.async(Dispatchers.IO) {
+      val clothes = zalandoApiClient.get(ZalandoApiClient.ZalandoCategory.Mujer.CalzadoMujer(), selectedColor.complimentary().toHex())
+      updateViewStateSuspend { it.copy(suggestedComplimentaryClothes = clothes) }
     }
   }
 
