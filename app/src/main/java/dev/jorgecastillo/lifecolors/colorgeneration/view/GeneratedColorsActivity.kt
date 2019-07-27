@@ -21,6 +21,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import dev.jorgecastillo.lifecolors.R
+import dev.jorgecastillo.lifecolors.clothingdetail.navigation.launchClothingItemDetail
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.GeneratedColorsScreenViewState
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
@@ -37,6 +38,7 @@ import dev.jorgecastillo.lifecolors.palettes.toColorDetails
 import dev.jorgecastillo.lifecolors.utils.GUIUtils
 import dev.jorgecastillo.lifecolors.utils.OnRevealAnimationListener
 import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
+import dev.jorgecastillo.zalandoclient.ZalandoItem
 import kotlinx.android.synthetic.main.activity_generated_colors.analogousColor1
 import kotlinx.android.synthetic.main.activity_generated_colors.analogousColor1Hex
 import kotlinx.android.synthetic.main.activity_generated_colors.analogousColor2
@@ -123,8 +125,8 @@ class GeneratedColorsActivity : AuthenticationActivity() {
 
   private lateinit var viewModel: ColorGenerationViewModel
   private lateinit var menu: Menu
-  private val suggestedClothesAdapter = ClothesAdapter()
-  private val suggestedComplimentaryClothesAdapter = ClothesAdapter()
+  private val suggestedClothesAdapter = ClothesAdapter(onClothingItemClick())
+  private val suggestedComplimentaryClothesAdapter = ClothesAdapter(onClothingItemClick())
 
   private fun selectedColor() = intent?.extras?.getInt(PICKED_COLOR, DEFAULT_COLOR) ?: DEFAULT_COLOR
 
@@ -466,6 +468,10 @@ class GeneratedColorsActivity : AuthenticationActivity() {
 
   private fun onColorClickListener(): (View, ColorViewState, Int) -> Unit = { _, colorDetails, _ ->
     launchWithNoTransition(this, colorDetails.color)
+  }
+
+  private fun onClothingItemClick(): (ZalandoItem) -> Unit = { item ->
+    launchClothingItemDetail(item)
   }
 
   override fun onBackPressed() {
