@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.GeneratedColorsScreenViewState
@@ -57,7 +58,9 @@ import kotlinx.android.synthetic.main.activity_generated_colors.selectedColorHex
 import kotlinx.android.synthetic.main.activity_generated_colors.selectedColorName
 import kotlinx.android.synthetic.main.activity_generated_colors.shadesTitle
 import kotlinx.android.synthetic.main.activity_generated_colors.suggestedClothesList
+import kotlinx.android.synthetic.main.activity_generated_colors.suggestedClothesLoader
 import kotlinx.android.synthetic.main.activity_generated_colors.suggestedComplimentaryClothesList
+import kotlinx.android.synthetic.main.activity_generated_colors.suggestedComplimentaryClothesLoader
 import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor1
 import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor1Hex
 import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor2
@@ -326,9 +329,28 @@ class GeneratedColorsActivity : AuthenticationActivity() {
           selectedColorName.text = resources.getString(R.string.color_name, state.colorName)
         }
         selectedColorName.fadeIn()
-        suggestedClothesAdapter.submitList(state.suggestedClothes)
-        suggestedComplimentaryClothesAdapter.submitList(state.suggestedComplimentaryClothes)
+        renderClothesLists(state)
       }
+    }
+  }
+
+  private fun renderClothesLists(state: GeneratedColorsScreenViewState) {
+    if (state.isLoadingSuggestedClothes) {
+      suggestedClothesLoader.visibility = View.VISIBLE
+      suggestedClothesList.visibility = View.GONE
+    } else {
+      suggestedClothesLoader.visibility = View.GONE
+      suggestedClothesList.visibility = View.VISIBLE
+      suggestedClothesAdapter.submitList(state.suggestedClothes)
+    }
+
+    if (state.isLoadingSuggestedComplimentaryClothes) {
+      suggestedComplimentaryClothesLoader.visibility = View.VISIBLE
+      suggestedComplimentaryClothesList.visibility = View.GONE
+    } else {
+      suggestedComplimentaryClothesLoader.visibility = View.GONE
+      suggestedComplimentaryClothesList.visibility = View.VISIBLE
+      suggestedComplimentaryClothesAdapter.submitList(state.suggestedComplimentaryClothes)
     }
   }
 
@@ -433,12 +455,14 @@ class GeneratedColorsActivity : AuthenticationActivity() {
 
   private fun setupSuggestedClothesLists() {
     suggestedClothesList.adapter = suggestedClothesAdapter
-    suggestedClothesList.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
+    suggestedClothesList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     suggestedClothesList.setHasFixedSize(true)
+    PagerSnapHelper().attachToRecyclerView(suggestedClothesList)
 
     suggestedComplimentaryClothesList.adapter = suggestedComplimentaryClothesAdapter
-    suggestedComplimentaryClothesList.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
+    suggestedComplimentaryClothesList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     suggestedComplimentaryClothesList.setHasFixedSize(true)
+    PagerSnapHelper().attachToRecyclerView(suggestedComplimentaryClothesList)
   }
 
   private fun onColorClickListener(): (View, ColorViewState, Int) -> Unit = { _, colorDetails, _ ->

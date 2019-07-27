@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="130dp"
+    android:layout_width="200dp"
     android:layout_height="@dimen/clothes_item_height"
+    android:layout_margin="1dp"
     android:orientation="vertical"
-    android:padding="1dp"
+    app:cardCornerRadius="@dimen/card_corner_radius"
     >
 
   <ImageView
       android:id="@+id/image"
-      android:scaleType="centerCrop"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:scaleType="centerCrop"
       tools:ignore="ContentDescription"
       />
-</LinearLayout>
+</androidx.cardview.widget.CardView>

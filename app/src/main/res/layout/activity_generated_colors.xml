@@ -97,16 +97,35 @@
           android:textSize="16sp"
           />
 
-      <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/suggestedClothesList"
+      <FrameLayout
           android:layout_width="match_parent"
-          android:layout_height="344dp"
-          android:layout_marginTop="@dimen/spacing"
-          android:clipChildren="false"
-          android:clipToPadding="false"
-          android:nestedScrollingEnabled="false"
-          android:padding="@dimen/spacing_smallest"
-          />
+          android:layout_height="wrap_content"
+          >
+
+        <ProgressBar
+            android:id="@+id/suggestedClothesLoader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/spacing"
+            android:layout_marginTop="@dimen/spacing"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/suggestedClothesList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:nestedScrollingEnabled="false"
+            android:padding="@dimen/spacing_smallest"
+            />
+      </FrameLayout>
 
       <TextView
           android:id="@+id/complimentaryColorTitle"
@@ -188,16 +207,35 @@
           android:textSize="16sp"
           />
 
-      <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/suggestedComplimentaryClothesList"
+      <FrameLayout
           android:layout_width="match_parent"
-          android:layout_height="344dp"
-          android:layout_marginTop="@dimen/spacing"
-          android:clipChildren="false"
-          android:clipToPadding="false"
-          android:nestedScrollingEnabled="false"
-          android:padding="@dimen/spacing_smallest"
-          />
+          android:layout_height="wrap_content"
+          >
+
+        <ProgressBar
+            android:id="@+id/suggestedComplimentaryClothesLoader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/spacing"
+            android:layout_marginTop="@dimen/spacing"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/suggestedComplimentaryClothesList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:nestedScrollingEnabled="false"
+            android:padding="@dimen/spacing_smallest"
+            />
+      </FrameLayout>
 
       <TextView
           android:id="@+id/shadesTitle"

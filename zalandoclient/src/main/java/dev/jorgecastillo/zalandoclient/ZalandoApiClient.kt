@@ -2,8 +2,9 @@ package dev.jorgecastillo.zalandoclient
 
 import android.graphics.Color
 import androidx.annotation.ColorInt
+import androidx.core.graphics.ColorUtils
 import org.jsoup.Jsoup
-import kotlin.math.abs
+import java.lang.Math.pow
 import kotlin.math.sqrt
 
 data class ZalandoItem(
@@ -148,29 +149,32 @@ class ZalandoApiClient {
   /**
    * Assumes the String is a HEX color with the format #FFFFFF or FFFFFF
    */
-  private fun String.toRGB(): Int {
-    val color = if (this.startsWith("#")) {
+  private fun String.toColorInt(): Int {
+    return if (this.startsWith("#")) {
       Color.parseColor(this)
     } else {
       Color.parseColor("#${this}")
     }
-    val red = Color.red(color)
-    val blue = Color.blue(color)
-    val green = Color.green(color)
-    return Color.rgb(red, blue, green)
   }
 
-  private fun Int.colorSum(@ColorInt target: Int) =
-    sqrt(abs(Color.red(this).toFloat() - Color.red(target))) +
-      sqrt(abs(Color.green(this).toFloat() - Color.green(target))) +
-      sqrt(abs(Color.blue(this).toFloat() - Color.green(target)))
+  private fun Int.distanceTo(@ColorInt target: Int): Double {
+    val colorHSL = FloatArray(3)
+    ColorUtils.colorToHSL(target, colorHSL)
+    colorHSL[2] = 0.5f
+    val targetColorAdjusted = ColorUtils.HSLToColor(colorHSL)
+
+    val r = (Color.red(this) + Color.red(targetColorAdjusted)) / 2f
+
+    val deltaR = Color.red(this).toDouble() - Color.red(targetColorAdjusted)
+    val deltaG = Color.green(this).toDouble() - Color.green(targetColorAdjusted)
+    val deltaB = Color.blue(this).toDouble() - Color.blue(targetColorAdjusted)
+
+    return sqrt((2 + r / 256) * pow(deltaR, 2.0) + 4 * pow(deltaG, 2.0) + (2 + (255 - r) / 256) * pow(deltaB, 2.0))
+  }
 
   fun get(category: ZalandoCategory, source: String): List<ZalandoItem> {
-    // (Square(Red(source)-Red(target))) +
-    // (Square(Green(source)-Green(target))) +
-    // (Square(Blue(source)-Blue(target)))
     val closestColor = ZalandoColor.all().reduce { acc, currentColor ->
-      if (acc.hex.toRGB().colorSum(source.toRGB()) < currentColor.hex.toRGB().colorSum(source.toRGB())) {
+      if (acc.hex.toColorInt().distanceTo(source.toColorInt()) < currentColor.hex.toColorInt().distanceTo(source.toColorInt())) {
         acc
       } else {
         currentColor

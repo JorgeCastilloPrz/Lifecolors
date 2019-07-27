@@ -29,6 +29,8 @@ data class GeneratedColorsScreenViewState(
   val isFavorite: Boolean,
   val isLoadingFavState: Boolean,
   val isShowingError: Boolean,
+  val isLoadingSuggestedClothes: Boolean,
+  val isLoadingSuggestedComplimentaryClothes: Boolean,
   val suggestedClothes: List<ZalandoItem>,
   val suggestedComplimentaryClothes: List<ZalandoItem>
 )
@@ -48,6 +50,8 @@ class ColorGenerationViewModel(
         isFavorite = false,
         isLoadingFavState = false,
         isShowingError = false,
+        isLoadingSuggestedClothes = true,
+        isLoadingSuggestedComplimentaryClothes = true,
         suggestedClothes = listOf(),
         suggestedComplimentaryClothes = listOf()
       )
@@ -113,16 +117,20 @@ class ColorGenerationViewModel(
 
   private fun loadClothingSuggestions() {
     viewModelScope.async(Dispatchers.IO) {
+      updateViewStateSuspend { it.copy(isLoadingSuggestedClothes = true) }
+
       val clothes = zalandoApiClient.get(ZalandoApiClient.ZalandoCategory.Mujer.CalzadoMujer(), selectedColor.toHex())
-      updateViewStateSuspend { it.copy(suggestedClothes = clothes) }
+      updateViewStateSuspend { it.copy(isLoadingSuggestedClothes = false, suggestedClothes = clothes) }
     }
   }
 
   private fun loadComplimentaryClothingSuggestions() {
-    viewModelScope.async(Dispatchers.IO) {
-      val clothes = zalandoApiClient.get(ZalandoApiClient.ZalandoCategory.Mujer.CalzadoMujer(), selectedColor.complimentary().toHex())
-      updateViewStateSuspend { it.copy(suggestedComplimentaryClothes = clothes) }
-    }
+//    viewModelScope.async(Dispatchers.IO) {
+//      updateViewStateSuspend { it.copy(isLoadingSuggestedComplimentaryClothes = true) }
+//
+//      val clothes = zalandoApiClient.get(ZalandoApiClient.ZalandoCategory.Mujer.CalzadoMujer(), selectedColor.complimentary().toHex())
+//      updateViewStateSuspend { it.copy(isLoadingSuggestedComplimentaryClothes = false, suggestedComplimentaryClothes = clothes) }
+//    }
   }
 
   fun onFavClick(color: Int) {
