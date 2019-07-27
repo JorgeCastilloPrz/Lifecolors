@@ -18,7 +18,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import dev.jorgecastillo.lifecolors.R
@@ -375,7 +374,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     adapter.colors = selectedColor.getShades().map { it.toColorDetails() }
 
     val hexColor = selectedColor.toHex()
-    shadesTitle.text = resources.getString(R.string.shades, hexColor)
+    shadesTitle.text = resources.getString(R.string.shades)
   }
 
   private fun generateTints(selectedColor: Int) {
@@ -386,12 +385,12 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     adapter.colors = selectedColor.getTints().map { it.toColorDetails() }
 
     val hexColor = selectedColor.toHex()
-    tintsTitle.text = resources.getString(R.string.tints, hexColor)
+    tintsTitle.text = resources.getString(R.string.tints)
   }
 
   private fun generateComplimentary(selectedColor: Int) {
     val hexColor = selectedColor.toHex()
-    complimentaryColorTitle.text = resources.getString(R.string.complimentary, hexColor)
+    complimentaryColorTitle.text = resources.getString(R.string.complimentary)
     complimentaryColorBase.setBackgroundColor(selectedColor)
     complimentaryColor.setBackgroundColor(selectedColor.complimentary())
 
@@ -404,7 +403,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
 
   private fun generateAnalogous(selectedColor: Int) {
     val hexColor = selectedColor.toHex()
-    analogousColorsTitle.text = resources.getString(R.string.analogous, hexColor)
+    analogousColorsTitle.text = resources.getString(R.string.analogous)
     analogousColorBase.setBackgroundColor(selectedColor)
     val analogousColors = selectedColor.analogous()
     analogousColor1.setBackgroundColor(analogousColors.first)
@@ -420,7 +419,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
 
   private fun generateTriadic(selectedColor: Int) {
     val hexColor = selectedColor.toHex()
-    triadicColorsTitle.text = resources.getString(R.string.triadic, hexColor)
+    triadicColorsTitle.text = resources.getString(R.string.triadic)
     triadicColorBase.setBackgroundColor(selectedColor)
     val triadicColors = selectedColor.triadic()
     triadicColor1.setBackgroundColor(triadicColors.first)
@@ -436,7 +435,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
 
   private fun generateTetradic(selectedColor: Int) {
     val hexColor = selectedColor.toHex()
-    tetradicColorsTitle.text = resources.getString(R.string.tetradic, hexColor)
+    tetradicColorsTitle.text = resources.getString(R.string.tetradic)
     tetradicColorBase.setBackgroundColor(selectedColor)
     val tetradicColors = selectedColor.tetradic()
     tetradicColor1.setBackgroundColor(tetradicColors.first)

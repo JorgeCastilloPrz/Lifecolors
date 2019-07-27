@@ -72,8 +72,8 @@ class ZalandoApiClient {
     sealed class Mujer : ZalandoCategory() {
 
       // ropa
+      data class RopaMujer(override val urlSection: String = "ropa-de-mujer") : Mujer()
       data class CalzadoMujer(override val urlSection: String = "calzado-de-mujer") : Mujer()
-
       data class VestidosMujer(override val urlSection: String = "ropa-de-mujer-vestidos") : Mujer()
       data class CamisetasYTopsMujer(override val urlSection: String = "ropa-de-mujer-camisetas-y-tops") : Mujer()
       data class CamisasYBlusasMujer(override val urlSection: String = "ropa-de-mujer-blusas-y-blusones") : Mujer()
