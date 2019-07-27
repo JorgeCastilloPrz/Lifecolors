@@ -64,6 +64,7 @@ import kotlinx.android.synthetic.main.activity_generated_colors.shadesTitle
 import kotlinx.android.synthetic.main.activity_generated_colors.suggestedClothesDropdown
 import kotlinx.android.synthetic.main.activity_generated_colors.suggestedClothesList
 import kotlinx.android.synthetic.main.activity_generated_colors.suggestedClothesLoader
+import kotlinx.android.synthetic.main.activity_generated_colors.suggestedComplimentaryClothesDropdown
 import kotlinx.android.synthetic.main.activity_generated_colors.suggestedComplimentaryClothesList
 import kotlinx.android.synthetic.main.activity_generated_colors.suggestedComplimentaryClothesLoader
 import kotlinx.android.synthetic.main.activity_generated_colors.tetradicColor1
@@ -479,6 +480,14 @@ class GeneratedColorsActivity : AuthenticationActivity() {
   }
 
   private fun setupSuggestedComplimentaryClothes() {
+    val categories = ZalandoCategory.Mujer.all()
+    val adapter = ArrayAdapter(this, R.layout.item_dropdown, categories.map { resources.getString(it.stringId) })
+    suggestedComplimentaryClothesDropdown.setAdapter(adapter)
+    suggestedComplimentaryClothesDropdown.setOnItemClickListener { _, _, pos, _ ->
+      viewModel.loadComplimentaryClothingSuggestions(categories[pos])
+      suggestedComplimentaryClothesDropdown.hideKeyboard(this)
+    }
+    
     suggestedComplimentaryClothesList.adapter = suggestedComplimentaryClothesAdapter
     suggestedComplimentaryClothesList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     suggestedComplimentaryClothesList.setHasFixedSize(true)
