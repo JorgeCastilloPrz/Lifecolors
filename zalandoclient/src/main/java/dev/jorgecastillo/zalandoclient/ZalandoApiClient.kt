@@ -73,6 +73,7 @@ class ZalandoApiClient {
 
       // ropa
       data class RopaMujer(override val urlSection: String = "ropa-de-mujer") : Mujer()
+
       data class CalzadoMujer(override val urlSection: String = "calzado-de-mujer") : Mujer()
       data class VestidosMujer(override val urlSection: String = "ropa-de-mujer-vestidos") : Mujer()
       data class CamisetasYTopsMujer(override val urlSection: String = "ropa-de-mujer-camisetas-y-tops") : Mujer()
@@ -183,9 +184,3 @@ class ZalandoApiClient {
     return get(category, closestColor)
   }
 }
-//
-//fun main() {
-//  val apiClient = ZalandoApiClient()
-//  val res = apiClient.get(ZalandoCategory.Mujer.ChaquetasPuntoYJerseysMujer(), "#d9849b")
-//  println(res)
-//}
