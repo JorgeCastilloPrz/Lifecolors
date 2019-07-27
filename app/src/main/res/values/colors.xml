@@ -12,4 +12,5 @@
     <color name="background_light">#2D2D2D</color>
     <color name="text_light">#EDEDED</color>
     <color name="white_overlay">#55ffffff</color>
+    <color name="price_color">#CE3535</color>
 </resources>
