@@ -32,7 +32,7 @@
       android:paddingTop="@dimen/spacing_small"
       android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
       android:textColor="@color/price_color"
-      android:textSize="18sp"
+      android:textSize="16sp"
       tools:text="39.99€"
       />
 </androidx.cardview.widget.CardView>
