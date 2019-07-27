@@ -1,3 +1,35 @@
 <resources>
   <string name="app_name">zalandoclient</string>
+
+  <string name="ropa_mujer">Ropa</string>
+  <string name="calzado_mujer">Calzado</string>
+  <string name="vestidos_mujer">Vestidos</string>
+  <string name="camisetas_y_tops_mujer">Camisetas y tops</string>
+  <string name="camisas_y_blusas_mujer">Camisetas y blusas</string>
+  <string name="pantalones_mujer">Pantalones</string>
+  <string name="vaqueros_mujer">Vaqueros</string>
+  <string name="monos_mujer">Monos</string>
+  <string name="faldas_mujer">Faldas</string>
+  <string name="chaquetas_y_jerseys">Chaquetas y jerseys</string>
+  <string name="sandalias_mujer">Sandalias</string>
+  <string name="zapatillas_mujer">Zapatillas</string>
+  <string name="alpargatas_mujer">Alpargatas</string>
+  <string name="zapatos_planos_mujer">Zapatos planos</string>
+  <string name="zuecos">Zuecos</string>
+  <string name="bailarinas">Bailarinas</string>
+  <string name="mocasines_mujer">Mocasines</string>
+  <string name="botines_mujer">Botines</string>
+  <string name="botas_mujer">Botas</string>
+  <string name="zapatillas_deporte_mujer">Zapatillas de deporte</string>
+  <string name="zapatos_tacon">Zapatos de tacón</string>
+  <string name="gafas_sol_mujer">Gafas de sol</string>
+  <string name="bolsos_mujer">Bolsos</string>
+  <string name="monederos_mujer">Monederos</string>
+  <string name="gorros_sombreros_mujer">Gorros y sombreros</string>
+  <string name="bisuteria_mujer">Bisutería</string>
+  <string name="collares_mujer">Collares</string>
+  <string name="cinturones_mujer">Cinturones</string>
+  <string name="mochilas_mujer">Mochilas</string>
+  <string name="relojes_mujer">Relojes</string>
+  <string name="panuelos_bufandas_mujer">Pañuelos y bufandas</string>
 </resources>

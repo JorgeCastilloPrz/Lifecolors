@@ -11,6 +11,7 @@ import android.transition.Transition
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.ProgressBar
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.PopupMenu
@@ -27,6 +28,7 @@ import dev.jorgecastillo.lifecolors.colorgeneration.presentation.GeneratedColors
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.common.view.extensions.copyToClipboard
 import dev.jorgecastillo.lifecolors.common.view.extensions.hideAction
+import dev.jorgecastillo.lifecolors.common.view.extensions.hideKeyboard
 import dev.jorgecastillo.lifecolors.common.view.extensions.isDark
 import dev.jorgecastillo.lifecolors.common.view.extensions.showAction
 import dev.jorgecastillo.lifecolors.common.view.menu.MenuItemProgressCircle
@@ -38,6 +40,7 @@ import dev.jorgecastillo.lifecolors.palettes.toColorDetails
 import dev.jorgecastillo.lifecolors.utils.GUIUtils
 import dev.jorgecastillo.lifecolors.utils.OnRevealAnimationListener
 import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
+import dev.jorgecastillo.zalandoclient.ZalandoApiClient.ZalandoCategory
 import dev.jorgecastillo.zalandoclient.ZalandoItem
 import kotlinx.android.synthetic.main.activity_generated_colors.analogousColor1
 import kotlinx.android.synthetic.main.activity_generated_colors.analogousColor1Hex
@@ -58,6 +61,7 @@ import kotlinx.android.synthetic.main.activity_generated_colors.dot
 import kotlinx.android.synthetic.main.activity_generated_colors.selectedColorHex
 import kotlinx.android.synthetic.main.activity_generated_colors.selectedColorName
 import kotlinx.android.synthetic.main.activity_generated_colors.shadesTitle
+import kotlinx.android.synthetic.main.activity_generated_colors.suggestedClothesDropdown
 import kotlinx.android.synthetic.main.activity_generated_colors.suggestedClothesList
 import kotlinx.android.synthetic.main.activity_generated_colors.suggestedClothesLoader
 import kotlinx.android.synthetic.main.activity_generated_colors.suggestedComplimentaryClothesList
@@ -455,11 +459,26 @@ class GeneratedColorsActivity : AuthenticationActivity() {
   }
 
   private fun setupSuggestedClothesLists() {
+    setupSuggestedClothes()
+    setupSuggestedComplimentaryClothes()
+  }
+
+  private fun setupSuggestedClothes() {
+    val categories = ZalandoCategory.Mujer.all()
+    val adapter = ArrayAdapter(this, R.layout.item_dropdown, categories.map { resources.getString(it.stringId) })
+    suggestedClothesDropdown.setAdapter(adapter)
+    suggestedClothesDropdown.setOnItemClickListener { _, _, pos, _ ->
+      viewModel.loadClothingSuggestions(categories[pos])
+      suggestedClothesDropdown.hideKeyboard(this)
+    }
+
     suggestedClothesList.adapter = suggestedClothesAdapter
     suggestedClothesList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     suggestedClothesList.setHasFixedSize(true)
     PagerSnapHelper().attachToRecyclerView(suggestedClothesList)
+  }
 
+  private fun setupSuggestedComplimentaryClothes() {
     suggestedComplimentaryClothesList.adapter = suggestedComplimentaryClothesAdapter
     suggestedComplimentaryClothesList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     suggestedComplimentaryClothesList.setHasFixedSize(true)

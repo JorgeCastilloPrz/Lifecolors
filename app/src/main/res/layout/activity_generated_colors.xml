@@ -85,21 +85,32 @@
         android:orientation="vertical"
         >
 
-      <TextView
+      <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/suggestedClothesTitle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/spacing"
-          android:layout_marginTop="@dimen/spacing"
-          android:text="@string/suggested_clothing_title"
-          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-          android:textColor="@color/colorAccent"
-          android:textSize="16sp"
-          />
+          android:layout_marginEnd="@dimen/spacing_small"
+          android:layout_marginStart="@dimen/spacing_small"
+          android:layout_marginTop="@dimen/spacing_small"
+          android:hint="@string/suggested_clothing_title"
+          style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+          >
+
+        <AutoCompleteTextView
+            android:id="@+id/suggestedClothesDropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="LabelFor"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorAccent"
+            />
+
+      </com.google.android.material.textfield.TextInputLayout>
 
       <FrameLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/clothes_item_height"
+          android:layout_marginTop="@dimen/spacing_small"
           >
 
         <ProgressBar
@@ -107,8 +118,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/spacing"
-            android:layout_marginTop="@dimen/spacing"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -119,11 +128,9 @@
             android:id="@+id/suggestedClothesList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:nestedScrollingEnabled="false"
-            android:padding="@dimen/spacing_smallest"
             />
       </FrameLayout>
 

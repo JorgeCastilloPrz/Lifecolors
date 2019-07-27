@@ -15,6 +15,8 @@ import dev.jorgecastillo.lifecolors.common.usecase.ToggleColorFav
 import dev.jorgecastillo.lifecolors.common.usecase.ToggleColorFavResult
 import dev.jorgecastillo.lifecolors.common.view.NonNullMutableLiveData
 import dev.jorgecastillo.zalandoclient.ZalandoApiClient
+import dev.jorgecastillo.zalandoclient.ZalandoApiClient.ZalandoCategory
+import dev.jorgecastillo.zalandoclient.ZalandoApiClient.ZalandoCategory.Mujer.RopaMujer
 import dev.jorgecastillo.zalandoclient.ZalandoItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
@@ -115,21 +117,21 @@ class ColorGenerationViewModel(
     }
   }
 
-  private fun loadClothingSuggestions() {
+  fun loadClothingSuggestions(category: ZalandoCategory = RopaMujer()) {
     viewModelScope.async(Dispatchers.IO) {
       updateViewStateSuspend { it.copy(isLoadingSuggestedClothes = true) }
 
-      val clothes = zalandoApiClient.get(ZalandoApiClient.ZalandoCategory.Mujer.RopaMujer(), selectedColor.toHex())
+      val clothes = zalandoApiClient.get(category, selectedColor.toHex())
       updateViewStateSuspend { it.copy(isLoadingSuggestedClothes = false, suggestedClothes = clothes) }
     }
   }
 
-  private fun loadComplimentaryClothingSuggestions() {
+  fun loadComplimentaryClothingSuggestions(category: ZalandoCategory = RopaMujer()) {
     viewModelScope.async(Dispatchers.IO) {
       updateViewStateSuspend { it.copy(isLoadingSuggestedComplimentaryClothes = true) }
 
       val clothes = zalandoApiClient.get(
-        ZalandoApiClient.ZalandoCategory.Mujer.RopaMujer(),
+        category,
         selectedColor.complimentary().toHex()
       )
       updateViewStateSuspend {

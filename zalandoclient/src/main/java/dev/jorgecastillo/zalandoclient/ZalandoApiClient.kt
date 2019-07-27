@@ -67,52 +67,205 @@ class ZalandoApiClient {
 
   sealed class ZalandoCategory {
 
+    abstract val stringId: Int
     abstract val urlSection: String
 
     sealed class Mujer : ZalandoCategory() {
 
-      // ropa
-      data class RopaMujer(override val urlSection: String = "ropa-de-mujer") : Mujer()
+      companion object {
+        fun all(): List<Mujer> = listOf(
+          CalzadoMujer(),
+          VestidosMujer(),
+          CamisetasYTopsMujer(),
+          CamisasYBlusasMujer(),
+          PantalonesMujer(),
+          VaquerosMujer(),
+          MonosMujer(),
+          FaldasMujer(),
+          ChaquetasPuntoYJerseysMujer(),
+          SandaliasMujer(),
+          ZapatillasMujer(),
+          AlpargatasMujer(),
+          ZapatosPlanosMujer(),
+          ZuecosMujer(),
+          BailarinasMujer(),
+          MocasinesMujer(),
+          BotinesMujer(),
+          BotasMujer(),
+          ZapatillasDeporteMujer(),
+          ZapatosTaconMujer(),
+          GafasDeSolMujer(),
+          BolsosMujer(),
+          MonederosMujer(),
+          GorrosYSombrerosMujer(),
+          BisuteriaMujer(),
+          CollaresMujer(),
+          CinturonesMujer(),
+          MochilasMujer(),
+          RelojesMujer(),
+          PanuelosYBufandas()
+        )
+      }
 
-      data class CalzadoMujer(override val urlSection: String = "calzado-de-mujer") : Mujer()
-      data class VestidosMujer(override val urlSection: String = "ropa-de-mujer-vestidos") : Mujer()
-      data class CamisetasYTopsMujer(override val urlSection: String = "ropa-de-mujer-camisetas-y-tops") : Mujer()
-      data class CamisasYBlusasMujer(override val urlSection: String = "ropa-de-mujer-blusas-y-blusones") : Mujer()
-      data class PantalonesMujer(override val urlSection: String = "pantalones-mujer") : Mujer()
-      data class VaquerosMujer(override val urlSection: String = "pantalones-vaqueros-mujer") : Mujer()
-      data class MonosMujer(override val urlSection: String = "pantalones-monos-mujer") : Mujer()
-      data class FaldasMujer(override val urlSection: String = "faldas-mujer") : Mujer()
-      data class ChaquetasPuntoYJerseysMujer(override val urlSection: String = "chaquetas-de-punto-y-jerseis-mujer") :
+      // ropa
+      data class RopaMujer(
+        override val stringId: Int = R.string.ropa_mujer,
+        override val urlSection: String = "ropa-de-mujer"
+      ) : Mujer()
+
+      data class CalzadoMujer(
+        override val stringId: Int = R.string.calzado_mujer,
+        override val urlSection: String = "calzado-de-mujer"
+      ) : Mujer()
+
+      data class VestidosMujer(
+        override val stringId: Int = R.string.vestidos_mujer,
+        override val urlSection: String = "ropa-de-mujer-vestidos"
+      ) : Mujer()
+
+      data class CamisetasYTopsMujer(
+        override val stringId: Int = R.string.camisetas_y_tops_mujer,
+        override val urlSection: String = "ropa-de-mujer-camisetas-y-tops"
+      ) : Mujer()
+
+      data class CamisasYBlusasMujer(
+        override val stringId: Int = R.string.camisas_y_blusas_mujer,
+        override val urlSection: String = "ropa-de-mujer-blusas-y-blusones"
+      ) : Mujer()
+
+      data class PantalonesMujer(
+        override val stringId: Int = R.string.pantalones_mujer,
+        override val urlSection: String = "pantalones-mujer"
+      ) : Mujer()
+
+      data class VaquerosMujer(
+        override val stringId: Int = R.string.vaqueros_mujer,
+        override val urlSection: String = "pantalones-vaqueros-mujer"
+      ) : Mujer()
+
+      data class MonosMujer(
+        override val stringId: Int = R.string.monos_mujer,
+        override val urlSection: String = "pantalones-monos-mujer"
+      ) : Mujer()
+
+      data class FaldasMujer(
+        override val stringId: Int = R.string.faldas_mujer,
+        override val urlSection: String = "faldas-mujer"
+      ) : Mujer()
+
+      data class ChaquetasPuntoYJerseysMujer(
+        override val stringId: Int = R.string.chaquetas_y_jerseys,
+        override val urlSection: String = "chaquetas-de-punto-y-jerseis-mujer"
+      ) :
         Mujer()
 
       // calzado
-      data class SandaliasMujer(override val urlSection: String = "sandalias-mujer") : Mujer()
+      data class SandaliasMujer(
+        override val stringId: Int = R.string.sandalias_mujer,
+        override val urlSection: String = "sandalias-mujer"
+      ) : Mujer()
 
-      data class ZapatillasMujer(override val urlSection: String = "zapatillas-mujer") : Mujer()
-      data class AlpargatasMujer(override val urlSection: String = "alpargatas-mujer") : Mujer()
-      data class ZapatosPlanosMujer(override val urlSection: String = "zapatos-bajos-mujer") : Mujer()
-      data class ZuecosMujer(override val urlSection: String = "zuecos-mujer") : Mujer()
-      data class BailarinasMujer(override val urlSection: String = "bailarinas-mujer") : Mujer()
-      data class MocasinesMujer(override val urlSection: String = "zapatos-bajos-mocasines-mujer") : Mujer()
-      data class BotinesMujer(override val urlSection: String = "botines-mujer") : Mujer()
-      data class BotasMujer(override val urlSection: String = "botas-mujer") : Mujer()
-      data class ZapatillasDeporteMujer(override val urlSection: String = "zapatillas-deporte-mujer") : Mujer()
-      data class ZapatosTaconMujer(override val urlSection: String = "zapatos-altos-mujer") : Mujer()
+      data class ZapatillasMujer(
+        override val stringId: Int = R.string.zapatillas_mujer,
+        override val urlSection: String = "zapatillas-mujer"
+      ) : Mujer()
+
+      data class AlpargatasMujer(
+        override val stringId: Int = R.string.alpargatas_mujer,
+        override val urlSection: String = "alpargatas-mujer"
+      ) : Mujer()
+
+      data class ZapatosPlanosMujer(
+        override val stringId: Int = R.string.zapatos_planos_mujer,
+        override val urlSection: String = "zapatos-bajos-mujer"
+      ) : Mujer()
+
+      data class ZuecosMujer(
+        override val stringId: Int = R.string.zuecos,
+        override val urlSection: String = "zuecos-mujer"
+      ) : Mujer()
+
+      data class BailarinasMujer(
+        override val stringId: Int = R.string.bailarinas,
+        override val urlSection: String = "bailarinas-mujer"
+      ) : Mujer()
+
+      data class MocasinesMujer(
+        override val stringId: Int = R.string.mocasines_mujer,
+        override val urlSection: String = "zapatos-bajos-mocasines-mujer"
+      ) : Mujer()
+
+      data class BotinesMujer(
+        override val stringId: Int = R.string.botines_mujer,
+        override val urlSection: String = "botines-mujer"
+      ) : Mujer()
+
+      data class BotasMujer(
+        override val stringId: Int = R.string.botas_mujer,
+        override val urlSection: String = "botas-mujer"
+      ) : Mujer()
+
+      data class ZapatillasDeporteMujer(
+        override val stringId: Int = R.string.zapatillas_deporte_mujer,
+        override val urlSection: String = "zapatillas-deporte-mujer"
+      ) : Mujer()
+
+      data class ZapatosTaconMujer(
+        override val stringId: Int = R.string.zapatos_tacon,
+        override val urlSection: String = "zapatos-altos-mujer"
+      ) : Mujer()
 
       // complementos
-      data class GafasDeSolMujer(override val urlSection: String = "gafas-sol-complementos-mujer") : Mujer()
+      data class GafasDeSolMujer(
+        override val stringId: Int = R.string.gafas_sol_mujer,
+        override val urlSection: String = "gafas-sol-complementos-mujer"
+      ) : Mujer()
 
-      data class BolsosMujer(override val urlSection: String = "bolsos-maletas-complementos-mujer") : Mujer()
-      data class MonederosMujer(override val urlSection: String = "monederos-complementos-mujer") : Mujer()
-      data class GorrosYSombrerosMujer(override val urlSection: String = "gorros-sombreros-gorras-complementos-mujer") :
+      data class BolsosMujer(
+        override val stringId: Int = R.string.bolsos_mujer,
+        override val urlSection: String = "bolsos-maletas-complementos-mujer"
+      ) : Mujer()
+
+      data class MonederosMujer(
+        override val stringId: Int = R.string.monederos_mujer,
+        override val urlSection: String = "monederos-complementos-mujer"
+      ) : Mujer()
+
+      data class GorrosYSombrerosMujer(
+        override val stringId: Int = R.string.gorros_sombreros_mujer,
+        override val urlSection: String = "gorros-sombreros-gorras-complementos-mujer"
+      ) :
         Mujer()
 
-      data class BisuteriaMujer(override val urlSection: String = "bisuteria-relojes-complementos-mujer") : Mujer()
-      data class CollaresMujer(override val urlSection: String = "collares") : Mujer()
-      data class CinturonesMujer(override val urlSection: String = "cinturones-complementos-mujer") : Mujer()
-      data class MochilasMujer(override val urlSection: String = "mochilas-complementos-mujer") : Mujer()
-      data class RelojesMujer(override val urlSection: String = "relojes-mujer") : Mujer()
-      data class PanuelosYBufandas(override val urlSection: String = "panuelos-mujer") : Mujer()
+      data class BisuteriaMujer(
+        override val stringId: Int = R.string.bisuteria_mujer,
+        override val urlSection: String = "bisuteria-relojes-complementos-mujer"
+      ) : Mujer()
+
+      data class CollaresMujer(
+        override val stringId: Int = R.string.collares_mujer,
+        override val urlSection: String = "collares"
+      ) : Mujer()
+
+      data class CinturonesMujer(
+        override val stringId: Int = R.string.cinturones_mujer,
+        override val urlSection: String = "cinturones-complementos-mujer"
+      ) : Mujer()
+
+      data class MochilasMujer(
+        override val stringId: Int = R.string.mochilas_mujer,
+        override val urlSection: String = "mochilas-complementos-mujer"
+      ) : Mujer()
+
+      data class RelojesMujer(
+        override val stringId: Int = R.string.relojes_mujer,
+        override val urlSection: String = "relojes-mujer"
+      ) : Mujer()
+
+      data class PanuelosYBufandas(
+        override val stringId: Int = R.string.panuelos_bufandas_mujer,
+        override val urlSection: String = "panuelos-mujer"
+      ) : Mujer()
     }
   }
 
