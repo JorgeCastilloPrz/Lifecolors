@@ -19,4 +19,6 @@
   <dimen name="generated_color_activity_header">180dp</dimen>
   <dimen name="icon_button_size">52dp</dimen>
   <dimen name="clothes_item_height">300dp</dimen>
+  <dimen name="progress_thin_stroke_width">4dp</dimen>
+  <dimen name="progress_medium_stroke_width">6dp</dimen>
 </resources>

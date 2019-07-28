@@ -113,7 +113,7 @@
           android:layout_marginTop="@dimen/spacing_small"
           >
 
-        <ProgressBar
+        <dev.jorgecastillo.lifecolors.common.view.progress.TintableProgressBar
             android:id="@+id/suggestedClothesLoader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -236,7 +236,7 @@
           android:layout_marginTop="@dimen/spacing_small"
           >
 
-        <ProgressBar
+        <dev.jorgecastillo.lifecolors.common.view.progress.TintableProgressBar
             android:id="@+id/suggestedComplimentaryClothesLoader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

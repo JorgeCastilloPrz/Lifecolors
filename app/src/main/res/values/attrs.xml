@@ -5,10 +5,20 @@
     <attr format="color" name="dotColor"/>
     <attr format="dimension" name="dotStrokeWidth"/>
   </declare-styleable>
+
   <declare-styleable name="BottomCutout">
     <attr format="boolean" name="roundedCorners"/>
   </declare-styleable>
+
   <declare-styleable name="RoundedCornersColor">
     <attr name="color" format="color"/>
+  </declare-styleable>
+
+  <declare-styleable name="TintableProgressBar">
+    <attr name="indeterminateTint" format="color"/>
+    <attr name="indeterminateStyle" format="enum">
+      <enum name="thin" value="0"/>
+      <enum name="medium" value="1"/>
+    </attr>
   </declare-styleable>
 </resources>

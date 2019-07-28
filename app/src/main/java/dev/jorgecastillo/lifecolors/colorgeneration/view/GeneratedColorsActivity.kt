@@ -142,6 +142,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     setContentView(R.layout.activity_generated_colors)
     postponeEnterTransition()
     setupStatusBar()
+    setupLoaderColors()
 
     val selectedColor = selectedColor()
     val headerTextColor = ContextCompat.getColor(
@@ -169,6 +170,12 @@ class GeneratedColorsActivity : AuthenticationActivity() {
       generateColors(selectedColor)
       setupSuggestedClothesLists()
     }
+  }
+
+  private fun setupLoaderColors() {
+    val selectedColor = selectedColor()
+    suggestedClothesLoader.setProgressBarTint(selectedColor)
+    suggestedComplimentaryClothesLoader.setProgressBarTint(selectedColor)
   }
 
   private fun setupStatusBar() {
