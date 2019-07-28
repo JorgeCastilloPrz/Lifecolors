@@ -1,4 +1,4 @@
-package dev.jorgecastillo.lifecolors.colorgeneration.view
+package dev.jorgecastillo.lifecolors.colorgeneration.view.list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.jorgecastillo.lifecolors.R
-import dev.jorgecastillo.lifecolors.colorgeneration.view.GeneratedColorsAdapter.ViewHolder
+import dev.jorgecastillo.lifecolors.colorgeneration.view.list.GeneratedColorsAdapter.ViewHolder
 import dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 

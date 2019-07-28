@@ -24,6 +24,7 @@ import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.clothingdetail.navigation.launchClothingItemDetail
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.GeneratedColorsScreenViewState
+import dev.jorgecastillo.lifecolors.colorgeneration.view.list.GeneratedColorsAdapter
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.common.view.extensions.copyToClipboard
 import dev.jorgecastillo.lifecolors.common.view.extensions.hideAction

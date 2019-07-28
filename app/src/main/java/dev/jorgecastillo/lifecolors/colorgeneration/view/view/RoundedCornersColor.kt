@@ -25,6 +25,10 @@ class RoundedCornersColor @JvmOverloads constructor(
     }
   }
 
+  override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    super.onMeasure(widthMeasureSpec, widthMeasureSpec)
+  }
+
   fun setColor(@ColorInt color: Int) {
     (background as MaterialShapeDrawable).fillColor = ColorStateList.valueOf(color)
   }

@@ -150,14 +150,14 @@
 
       <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="220dp"
+          android:layout_height="wrap_content"
           android:orientation="horizontal"
           >
 
         <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/complimentaryColorBase"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_very_small"
             android:layout_marginStart="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing"
@@ -168,7 +168,7 @@
         <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/complimentaryColor"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginStart="@dimen/spacing_very_small"
             android:layout_marginTop="@dimen/spacing"
@@ -321,14 +321,14 @@
 
       <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="140dp"
+          android:layout_height="wrap_content"
           android:orientation="horizontal"
           >
 
         <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/analogousColorBase"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_very_small"
             android:layout_marginStart="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing"
@@ -339,7 +339,7 @@
         <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/analogousColor1"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_very_small"
             android:layout_marginStart="@dimen/spacing_very_small"
             android:layout_marginTop="@dimen/spacing"
@@ -350,7 +350,7 @@
         <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/analogousColor2"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginStart="@dimen/spacing_very_small"
             android:layout_marginTop="@dimen/spacing"
@@ -416,14 +416,14 @@
 
       <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="140dp"
+          android:layout_height="wrap_content"
           android:orientation="horizontal"
           >
 
         <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/triadicColorBase"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_very_small"
             android:layout_marginStart="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing"
@@ -434,7 +434,7 @@
         <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/triadicColor1"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_very_small"
             android:layout_marginStart="@dimen/spacing_very_small"
             android:layout_marginTop="@dimen/spacing"
@@ -445,7 +445,7 @@
         <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/triadicColor2"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginStart="@dimen/spacing_very_small"
             android:layout_marginTop="@dimen/spacing"
@@ -511,14 +511,14 @@
 
       <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="140dp"
+          android:layout_height="wrap_content"
           android:orientation="horizontal"
           >
 
         <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/tetradicColorBase"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_very_small"
             android:layout_marginStart="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing"
@@ -529,7 +529,7 @@
         <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/tetradicColor1"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_very_small"
             android:layout_marginStart="@dimen/spacing_very_small"
             android:layout_marginTop="@dimen/spacing"
@@ -540,7 +540,7 @@
         <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/tetradicColor2"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_very_small"
             android:layout_marginStart="@dimen/spacing_very_small"
             android:layout_marginTop="@dimen/spacing"
@@ -551,7 +551,7 @@
         <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/tetradicColor3"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginStart="@dimen/spacing_very_small"
             android:layout_marginTop="@dimen/spacing"

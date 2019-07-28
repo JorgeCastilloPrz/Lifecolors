@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<dev.jorgecastillo.lifecolors.colorgeneration.view.view.ClothingItemView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="200dp"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/clothes_item_height"
-    android:layout_marginStart="1dp"
-    android:layout_marginEnd="1dp"
+    android:layout_marginStart="2dp"
+    android:layout_marginEnd="2dp"
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/card_corner_radius"
     >
@@ -36,4 +36,4 @@
       android:textSize="16sp"
       tools:text="39.99€"
       />
-</androidx.cardview.widget.CardView>
+</dev.jorgecastillo.lifecolors.colorgeneration.view.view.ClothingItemView>
