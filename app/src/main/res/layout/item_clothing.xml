@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/clothes_item_height"
-    android:layout_marginStart="2dp"
-    android:layout_marginEnd="2dp"
+    android:layout_margin="2dp"
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/card_corner_radius"
     >

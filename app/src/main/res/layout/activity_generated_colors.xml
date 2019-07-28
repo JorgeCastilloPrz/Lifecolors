@@ -131,8 +131,8 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:nestedScrollingEnabled="false"
-            android:paddingEnd="@dimen/spacing_small"
-            android:paddingStart="@dimen/spacing_small"
+            android:paddingEnd="6dp"
+            android:paddingStart="6dp"
             />
       </FrameLayout>
 
@@ -255,8 +255,8 @@
             android:clipToPadding="false"
             android:nestedScrollingEnabled="false"
             android:paddingBottom="@dimen/spacing_smallest"
-            android:paddingEnd="@dimen/spacing_small"
-            android:paddingStart="@dimen/spacing_small"
+            android:paddingEnd="6dp"
+            android:paddingStart="6dp"
             android:paddingTop="@dimen/spacing_smallest"
             />
       </FrameLayout>

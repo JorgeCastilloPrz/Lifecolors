@@ -17,7 +17,7 @@ class ClothingItemView @JvmOverloads constructor(
 
     val screenWidth = resources.displayMetrics.widthPixels
     val recyclerHorizontalPadding = resources.getDimensionPixelSize(R.dimen.spacing_small)
-    val newWidth = (screenWidth - 8 - recyclerHorizontalPadding * 2) / 2
+    val newWidth = (screenWidth - 12 - recyclerHorizontalPadding * 2) / 2
 
     setMeasuredDimension(newWidth, height)
     super.onMeasure(MeasureSpec.makeMeasureSpec(newWidth, MeasureSpec.EXACTLY), heightMeasureSpec)
