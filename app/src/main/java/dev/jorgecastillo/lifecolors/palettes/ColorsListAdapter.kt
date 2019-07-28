@@ -13,7 +13,7 @@ import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toCMYK
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toHex
 import dev.jorgecastillo.lifecolors.colorgeneration.view.toRGB
-import dev.jorgecastillo.lifecolors.common.view.listadapter.ColorViewStateDiffCallback
+import dev.jorgecastillo.lifecolors.common.view.list.ColorViewStateDiffCallback
 import dev.jorgecastillo.lifecolors.common.view.menu.MenuItemProgressCircle
 import dev.jorgecastillo.lifecolors.detail.view.Dot
 import dev.jorgecastillo.lifecolors.palettes.ColorsListAdapter.ViewHolder

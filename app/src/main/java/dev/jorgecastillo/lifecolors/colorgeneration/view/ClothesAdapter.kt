@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.view.ClothesAdapter.ViewHolder
-import dev.jorgecastillo.lifecolors.colorgeneration.view.listadapter.ZalandoItemDiffCallback
+import dev.jorgecastillo.lifecolors.colorgeneration.view.list.ZalandoItemDiffCallback
 import dev.jorgecastillo.zalandoclient.ZalandoItem
 
 class ClothesAdapter(private val onItemClick: (ZalandoItem) -> Unit = {}) :

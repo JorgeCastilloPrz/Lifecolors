@@ -20,7 +20,6 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.clothingdetail.navigation.launchClothingItemDetail
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
@@ -31,6 +30,7 @@ import dev.jorgecastillo.lifecolors.common.view.extensions.hideAction
 import dev.jorgecastillo.lifecolors.common.view.extensions.hideKeyboard
 import dev.jorgecastillo.lifecolors.common.view.extensions.isDark
 import dev.jorgecastillo.lifecolors.common.view.extensions.showAction
+import dev.jorgecastillo.lifecolors.common.view.list.ItemSnapHelper
 import dev.jorgecastillo.lifecolors.common.view.menu.MenuItemProgressCircle
 import dev.jorgecastillo.lifecolors.detail.view.BottomCutout.Companion.DEFAULT_COLOR
 import dev.jorgecastillo.lifecolors.fadeIn
@@ -379,8 +379,6 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     colorShadesList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     colorShadesList.setHasFixedSize(true)
     adapter.colors = selectedColor.getShades().map { it.toColorDetails() }
-
-    val hexColor = selectedColor.toHex()
     shadesTitle.text = resources.getString(R.string.shades)
   }
 
@@ -389,17 +387,15 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     tintsList.adapter = adapter
     tintsList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     tintsList.setHasFixedSize(true)
-    adapter.colors = selectedColor.getTints().map { it.toColorDetails() }
-
-    val hexColor = selectedColor.toHex()
+    adapter.colors = selectedColor.getTints().map { it.toColorDetails() }ø
     tintsTitle.text = resources.getString(R.string.tints)
   }
 
   private fun generateComplimentary(selectedColor: Int) {
     val hexColor = selectedColor.toHex()
     complimentaryColorTitle.text = resources.getString(R.string.complimentary)
-    complimentaryColorBase.setBackgroundColor(selectedColor)
-    complimentaryColor.setBackgroundColor(selectedColor.complimentary())
+    complimentaryColorBase.setColor(selectedColor)
+    complimentaryColor.setColor(selectedColor.complimentary())
 
     complimentaryColor.setOnClickListener { launchWithNoTransition(this, selectedColor.complimentary()) }
 
@@ -476,7 +472,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     suggestedClothesList.adapter = suggestedClothesAdapter
     suggestedClothesList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     suggestedClothesList.setHasFixedSize(true)
-    PagerSnapHelper().attachToRecyclerView(suggestedClothesList)
+    ItemSnapHelper().attachToRecyclerView(suggestedClothesList)
   }
 
   private fun setupSuggestedComplimentaryClothes() {
@@ -487,11 +483,11 @@ class GeneratedColorsActivity : AuthenticationActivity() {
       viewModel.loadComplimentaryClothingSuggestions(categories[pos])
       suggestedComplimentaryClothesDropdown.hideKeyboard(this)
     }
-    
+
     suggestedComplimentaryClothesList.adapter = suggestedComplimentaryClothesAdapter
     suggestedComplimentaryClothesList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     suggestedComplimentaryClothesList.setHasFixedSize(true)
-    PagerSnapHelper().attachToRecyclerView(suggestedComplimentaryClothesList)
+    ItemSnapHelper().attachToRecyclerView(suggestedComplimentaryClothesList)
   }
 
   private fun onColorClickListener(): (View, ColorViewState, Int) -> Unit = { _, colorDetails, _ ->

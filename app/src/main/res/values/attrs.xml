@@ -8,4 +8,7 @@
   <declare-styleable name="BottomCutout">
     <attr format="boolean" name="roundedCorners"/>
   </declare-styleable>
+  <declare-styleable name="RoundedCornersColor">
+    <attr name="color" format="color"/>
+  </declare-styleable>
 </resources>

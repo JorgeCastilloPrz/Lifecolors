@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/generated_color_size"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="@dimen/spacing_smallest"
     tools:background="@color/background_card"
     >
 
-  <View
+  <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
       android:id="@+id/colorSquare"
       android:layout_width="match_parent"
       android:layout_height="@dimen/generated_color_size"
-      tools:background="@color/colorAccent"
+      app:color="@color/colorAccent"
       />
 
   <TextView

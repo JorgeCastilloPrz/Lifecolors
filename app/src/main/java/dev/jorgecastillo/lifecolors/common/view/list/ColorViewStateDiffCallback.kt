@@ -1,4 +1,4 @@
-package dev.jorgecastillo.lifecolors.common.view.listadapter
+package dev.jorgecastillo.lifecolors.common.view.list
 
 import androidx.recyclerview.widget.DiffUtil
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState

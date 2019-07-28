@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.view.GeneratedColorsAdapter.ViewHolder
+import dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 
 class GeneratedColorsAdapter(private val onItemClick: (View, ColorViewState, Int) -> Unit) :
@@ -35,8 +36,8 @@ class GeneratedColorsAdapter(private val onItemClick: (View, ColorViewState, Int
       onItemClick: (View, ColorViewState, Int) -> Unit,
       position: Int
     ) {
-      val colorSquare = itemView.findViewById<View>(R.id.colorSquare)
-      colorSquare.setBackgroundColor(colorViewState.color)
+      val colorSquare = itemView.findViewById<RoundedCornersColor>(R.id.colorSquare)
+      colorSquare.setColor(colorViewState.color)
 
       val colorText = itemView.findViewById<TextView>(R.id.colorText)
       val hexColor = String.format("#%06X", 0xFFFFFF and colorViewState.color)

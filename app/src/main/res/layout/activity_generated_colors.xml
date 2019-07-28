@@ -131,6 +131,8 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:nestedScrollingEnabled="false"
+            android:paddingEnd="@dimen/spacing_small"
+            android:paddingStart="@dimen/spacing_small"
             />
       </FrameLayout>
 
@@ -152,19 +154,23 @@
           android:orientation="horizontal"
           >
 
-        <View
+        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/complimentaryColorBase"
             android:layout_width="0dp"
-            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/spacing_very_small"
+            android:layout_marginStart="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing"
             android:layout_weight="1"
             tools:color="@color/colorAccent"
             />
 
-        <View
+        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
             android:id="@+id/complimentaryColor"
             android:layout_width="0dp"
-            android:layout_height="@dimen/generated_color_activity_header"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:layout_marginStart="@dimen/spacing_very_small"
             android:layout_marginTop="@dimen/spacing"
             android:layout_weight="1"
             tools:color="@color/colorAccent"
@@ -248,7 +254,10 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:nestedScrollingEnabled="false"
-            android:padding="@dimen/spacing_smallest"
+            android:paddingTop="@dimen/spacing_smallest"
+            android:paddingBottom="@dimen/spacing_smallest"
+            android:paddingEnd="@dimen/spacing_small"
+            android:paddingStart="@dimen/spacing_small"
             />
       </FrameLayout>
 
@@ -269,7 +278,10 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/spacing"
+          android:clipChildren="false"
+          android:clipToPadding="false"
           android:nestedScrollingEnabled="false"
+          android:padding="@dimen/spacing_very_small"
           />
 
       <TextView
@@ -289,7 +301,10 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/spacing"
+          android:clipChildren="false"
+          android:clipToPadding="false"
           android:nestedScrollingEnabled="false"
+          android:padding="@dimen/spacing_very_small"
           />
 
       <TextView
