@@ -387,7 +387,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     tintsList.adapter = adapter
     tintsList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     tintsList.setHasFixedSize(true)
-    adapter.colors = selectedColor.getTints().map { it.toColorDetails() }ø
+    adapter.colors = selectedColor.getTints().map { it.toColorDetails() }
     tintsTitle.text = resources.getString(R.string.tints)
   }
 
@@ -407,10 +407,10 @@ class GeneratedColorsActivity : AuthenticationActivity() {
   private fun generateAnalogous(selectedColor: Int) {
     val hexColor = selectedColor.toHex()
     analogousColorsTitle.text = resources.getString(R.string.analogous)
-    analogousColorBase.setBackgroundColor(selectedColor)
+    analogousColorBase.setColor(selectedColor)
     val analogousColors = selectedColor.analogous()
-    analogousColor1.setBackgroundColor(analogousColors.first)
-    analogousColor2.setBackgroundColor(analogousColors.second)
+    analogousColor1.setColor(analogousColors.first)
+    analogousColor2.setColor(analogousColors.second)
 
     analogousColor1.setOnClickListener { launchWithNoTransition(this, analogousColors.first) }
     analogousColor2.setOnClickListener { launchWithNoTransition(this, analogousColors.second) }
@@ -423,10 +423,10 @@ class GeneratedColorsActivity : AuthenticationActivity() {
   private fun generateTriadic(selectedColor: Int) {
     val hexColor = selectedColor.toHex()
     triadicColorsTitle.text = resources.getString(R.string.triadic)
-    triadicColorBase.setBackgroundColor(selectedColor)
+    triadicColorBase.setColor(selectedColor)
     val triadicColors = selectedColor.triadic()
-    triadicColor1.setBackgroundColor(triadicColors.first)
-    triadicColor2.setBackgroundColor(triadicColors.second)
+    triadicColor1.setColor(triadicColors.first)
+    triadicColor2.setColor(triadicColors.second)
 
     triadicColor1.setOnClickListener { launchWithNoTransition(this, triadicColors.first) }
     triadicColor2.setOnClickListener { launchWithNoTransition(this, triadicColors.second) }
@@ -439,11 +439,11 @@ class GeneratedColorsActivity : AuthenticationActivity() {
   private fun generateTetradic(selectedColor: Int) {
     val hexColor = selectedColor.toHex()
     tetradicColorsTitle.text = resources.getString(R.string.tetradic)
-    tetradicColorBase.setBackgroundColor(selectedColor)
+    tetradicColorBase.setColor(selectedColor)
     val tetradicColors = selectedColor.tetradic()
-    tetradicColor1.setBackgroundColor(tetradicColors.first)
-    tetradicColor2.setBackgroundColor(tetradicColors.second)
-    tetradicColor3.setBackgroundColor(tetradicColors.third)
+    tetradicColor1.setColor(tetradicColors.first)
+    tetradicColor2.setColor(tetradicColors.second)
+    tetradicColor3.setColor(tetradicColors.third)
 
     tetradicColor1.setOnClickListener { launchWithNoTransition(this, tetradicColors.first) }
     tetradicColor2.setOnClickListener { launchWithNoTransition(this, tetradicColors.second) }
