@@ -33,13 +33,14 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "com.squareup.picasso:picasso:$picasso_version"
 
-    implementation 'com.google.firebase:firebase-core:17.0.1'
-    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
-    implementation 'com.google.firebase:firebase-auth:18.1.0'
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.google.firebase:firebase-firestore-ktx:20.1.0'
-    implementation 'com.google.firebase:firebase-common-ktx:18.0.0'
+    implementation "com.google.firebase:firebase-core:$firebase_core_version"
+    implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
+    implementation "com.firebaseui:firebase-ui-auth:$firebase_ui_auth_version"
+    implementation "com.google.firebase:firebase-firestore-ktx:$firebase_firestore_ktx_version"
+    implementation "com.google.firebase:firebase-common-ktx:$firebase_common_ktx_version"
+
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
 
     // Required only if Facebook login support is required
