@@ -59,7 +59,7 @@ dependencies {
     // Find the latest Twitter SDK releases here: https://goo.gl/E5wZvQ
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
 
-    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha02'
 
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
