@@ -16,6 +16,7 @@ buildscript {
         play_services_auth_version = '17.0.0'
         android_camerax_version = '1.0.0-alpha06'
         appcompat_version = '1.1.0'
+        android_core_ktx_version = '1.1.0'
     }
 
     repositories {
