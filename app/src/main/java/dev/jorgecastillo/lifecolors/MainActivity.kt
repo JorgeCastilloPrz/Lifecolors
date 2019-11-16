@@ -6,15 +6,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.display.DisplayManager
 import android.os.Bundle
-import android.util.Rational
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.camera.core.AspectRatio.RATIO_16_9
 import androidx.camera.core.CameraX
 import androidx.camera.core.CameraX.LensFacing
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCapture.ImageCaptureError
 import androidx.camera.core.ImageCaptureConfig
 import androidx.camera.core.Preview
 import androidx.camera.core.PreviewConfig
@@ -28,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_main.bar
 import kotlinx.android.synthetic.main.activity_main.captureButton
 import kotlinx.android.synthetic.main.activity_main.viewFinder
 import java.io.File
+import java.util.concurrent.Executors
 
 private const val REQUEST_CODE_PERMISSIONS = 10
 private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
@@ -98,14 +100,11 @@ class MainActivity : AuthenticationActivity() {
   private fun startCamera() {
     displayId = viewFinder.display.displayId
 
-    // val metrics = DisplayMetrics().also { viewFinder.display.getRealMetrics(it) }
-    val screenAspectRatio = Rational(viewFinder.width, viewFinder.height)
-
     // Create configuration object for the viewfinder use case
     previewConfig = PreviewConfig.Builder()
       .apply {
         setLensFacing(LensFacing.BACK)
-        setTargetAspectRatio(screenAspectRatio)
+        setTargetAspectRatio(RATIO_16_9)
         setTargetRotation(viewFinder.display.rotation)
       }
       .build()
@@ -116,7 +115,7 @@ class MainActivity : AuthenticationActivity() {
     imageCaptureConfig = ImageCaptureConfig.Builder()
       .apply {
         setLensFacing(LensFacing.BACK)
-        setTargetAspectRatio(screenAspectRatio)
+        setTargetAspectRatio(RATIO_16_9)
         setCaptureMode(ImageCapture.CaptureMode.MIN_LATENCY)
         setTargetRotation(viewFinder.display.rotation)
       }
@@ -137,10 +136,12 @@ class MainActivity : AuthenticationActivity() {
       externalMediaDirs.first(),
       "${System.currentTimeMillis()}.jpg"
     )
-    imageCapture.takePicture(file,
+    imageCapture.takePicture(
+      file,
+      Executors.newSingleThreadExecutor(),
       object : ImageCapture.OnImageSavedListener {
         override fun onError(
-          error: ImageCapture.UseCaseError,
+          error: ImageCaptureError,
           message: String,
           exc: Throwable?
         ) {
@@ -151,7 +152,9 @@ class MainActivity : AuthenticationActivity() {
         }
 
         override fun onImageSaved(file: File) {
-          DetailActivity.launch(this@MainActivity, captureButton, file.toUri())
+          viewFinder.post {
+            DetailActivity.launch(this@MainActivity, captureButton, file.toUri())
+          }
         }
       })
   }

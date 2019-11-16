@@ -17,7 +17,7 @@ class RoundedCornersColor @JvmOverloads constructor(
 
   init {
     background = MaterialShapeDrawable().apply {
-      setCornerRadius(resources.getDimensionPixelSize(R.dimen.card_corner_radius).toFloat())
+      setCornerSize(resources.getDimensionPixelSize(R.dimen.card_corner_radius).toFloat())
       val attributes = context.obtainStyledAttributes(attrs, R.styleable.RoundedCornersColor)
       val color = attributes.getColor(R.styleable.RoundedCornersColor_color, DEFAULT_COLOR)
       attributes.recycle()
