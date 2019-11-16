@@ -39,9 +39,10 @@ dependencies {
     implementation "com.google.firebase:firebase-firestore-ktx:$firebase_firestore_ktx_version"
     implementation "com.google.firebase:firebase-common-ktx:$firebase_common_ktx_version"
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_android_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutines_play_services_version"
+
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
 
     // Required only if Facebook login support is required
     // Find the latest Facebook SDK releases here: https://goo.gl/Ce5L94
