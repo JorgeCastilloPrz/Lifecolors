@@ -42,7 +42,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_android_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutines_play_services_version"
 
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation "com.google.android.gms:play-services-auth:$play_services_auth_version"
 
     // Required only if Facebook login support is required
     // Find the latest Facebook SDK releases here: https://goo.gl/Ce5L94
