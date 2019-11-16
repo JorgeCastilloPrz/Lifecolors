@@ -64,18 +64,19 @@ dependencies {
 
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "com.google.android.material:material:$material_version"
-    implementation 'com.oeri.arcmotionplus:arcmotionplus:1.0.2'
+    implementation "com.oeri.arcmotionplus:arcmotionplus:$arcmotion_plus_version"
 
     implementation "androidx.camera:camera-core:$android_camerax_version"
     implementation "androidx.camera:camera-camera2:$android_camerax_version"
-    implementation "androidx.exifinterface:exifinterface:1.0.0"
-    implementation "androidx.palette:palette:1.0.0"
-    implementation "androidx.palette:palette-ktx:1.0.0"
+    implementation "androidx.exifinterface:exifinterface:$android_exif_version"
+    implementation "androidx.palette:palette:$palette_version"
+    implementation "androidx.palette:palette-ktx:$palette_version"
     implementation "androidx.core:core-ktx:$android_core_ktx_version"
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    implementation("com.squareup.okhttp3:okhttp:4.0.1")
-    kapt 'com.github.bumptech.glide:compiler:4.9.0'
-    implementation("com.squareup.moshi:moshi-kotlin:1.8.0")
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation("com.squareup.moshi:moshi-kotlin:$moshi_kotlin_version")
+
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
 }
 
 apply plugin: 'com.google.gms.google-services'

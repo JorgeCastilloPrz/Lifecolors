@@ -20,6 +20,13 @@ buildscript {
         lifecycle_viewmodel_ktx_version = '2.2.0-rc02'
         constraint_layout_version = '2.0.0-beta3'
         material_version = '1.2.0-alpha01'
+        arcmotion_plus_version = '1.0.2'
+        jsoup_version = '1.12.1'
+        android_exif_version = '1.0.0'
+        palette_version = '1.0.0'
+        glide_version = '4.10.0'
+        okhttp_version = '4.0.1'
+        moshi_kotlin_version = '1.8.0'
     }
 
     repositories {
