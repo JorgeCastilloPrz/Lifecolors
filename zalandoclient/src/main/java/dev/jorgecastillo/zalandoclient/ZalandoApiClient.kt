@@ -3,6 +3,8 @@ package dev.jorgecastillo.zalandoclient
 import android.graphics.Color
 import androidx.annotation.ColorInt
 import androidx.core.graphics.ColorUtils
+import dev.jorgecastillo.androidcolorx.library.HEXColor
+import dev.jorgecastillo.androidcolorx.library.asColorInt
 import org.jsoup.Jsoup
 import java.lang.Math.pow
 import kotlin.math.sqrt
@@ -326,9 +328,9 @@ class ZalandoApiClient {
     return sqrt((2 + r / 256) * pow(deltaR, 2.0) + 4 * pow(deltaG, 2.0) + (2 + (255 - r) / 256) * pow(deltaB, 2.0))
   }
 
-  fun get(category: ZalandoCategory, source: String): List<ZalandoItem> {
+  fun get(category: ZalandoCategory, source: HEXColor): List<ZalandoItem> {
     val closestColor = ZalandoColor.all().reduce { acc, currentColor ->
-      if (acc.hex.toColorInt().distanceTo(source.toColorInt()) < currentColor.hex.toColorInt().distanceTo(source.toColorInt())) {
+      if (acc.hex.toColorInt().distanceTo(source.asColorInt()) < currentColor.hex.toColorInt().distanceTo(source.asColorInt())) {
         acc
       } else {
         currentColor

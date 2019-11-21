@@ -5,9 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.moshi.Moshi
-import dev.jorgecastillo.lifecolors.colorgeneration.view.complimentary
-import dev.jorgecastillo.lifecolors.colorgeneration.view.toHex
-import dev.jorgecastillo.lifecolors.colorgeneration.view.toHexPureValue
+import dev.jorgecastillo.androidcolorx.library.asHex
+import dev.jorgecastillo.androidcolorx.library.complimentary
 import dev.jorgecastillo.lifecolors.common.domain.model.ColorDetails
 import dev.jorgecastillo.lifecolors.common.usecase.IsColorFav
 import dev.jorgecastillo.lifecolors.common.usecase.IsColorFavResult
@@ -97,7 +96,7 @@ class ColorGenerationViewModel(
     viewModelScope.async(Dispatchers.IO) {
       val client = OkHttpClient()
       val request = Request.Builder()
-        .url("https://www.thecolorapi.com/id?hex=${selectedColor.toHexPureValue()}")
+        .url("https://www.thecolorapi.com/id?hex=${selectedColor.asHex().toString().drop(1)}")
         .build()
       try {
         val response = client.newCall(request).execute()
@@ -121,7 +120,7 @@ class ColorGenerationViewModel(
     viewModelScope.async(Dispatchers.IO) {
       updateViewStateSuspend { it.copy(isLoadingSuggestedClothes = true) }
 
-      val clothes = zalandoApiClient.get(category, selectedColor.toHex())
+      val clothes = zalandoApiClient.get(category, selectedColor.asHex())
       updateViewStateSuspend { it.copy(isLoadingSuggestedClothes = false, suggestedClothes = clothes) }
     }
   }
@@ -132,7 +131,7 @@ class ColorGenerationViewModel(
 
       val clothes = zalandoApiClient.get(
         category,
-        selectedColor.complimentary().toHex()
+        selectedColor.complimentary().asHex()
       )
       updateViewStateSuspend {
         it.copy(

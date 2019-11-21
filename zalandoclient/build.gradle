@@ -24,6 +24,8 @@ android {
 }
 
 dependencies {
+  implementation "me.jorgecastillo:androidcolorx:$androidcolorx_version"
+
   implementation "org.jsoup:jsoup:$jsoup_version"
   implementation "androidx.appcompat:appcompat:$appcompat_version"
   implementation "androidx.core:core-ktx:$android_core_ktx_version"

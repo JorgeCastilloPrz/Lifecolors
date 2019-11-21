@@ -38,6 +38,7 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "com.squareup.picasso:picasso:$picasso_version"
+    implementation "me.jorgecastillo:androidcolorx:$androidcolorx_version"
 
     implementation "com.google.firebase:firebase-core:$firebase_core_version"
     implementation "com.google.firebase:firebase-auth:$firebase_auth_version"

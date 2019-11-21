@@ -20,6 +20,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import dev.jorgecastillo.androidcolorx.library.*
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.clothingdetail.navigation.launchClothingItemDetail
 import dev.jorgecastillo.lifecolors.colorgeneration.presentation.ColorGenerationViewModel
@@ -152,7 +153,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     )
     selectedColorHex.setTextColor(headerTextColor)
     selectedColorName.setTextColor(headerTextColor)
-    selectedColorHex.text = selectedColor.toHex()
+    selectedColorHex.text = selectedColor.asHex().toString()
 
     dot.color = selectedColor
     dot.transitionName = "$selectedColor"
@@ -263,10 +264,10 @@ class GeneratedColorsActivity : AuthenticationActivity() {
         }
         popup.setOnMenuItemClickListener {
           when (it.itemId) {
-            0 -> copyToClipboard(selectedColor().toRGB())
-            1 -> copyToClipboard(selectedColor().toHex())
-            2 -> copyToClipboard(selectedColor().toCMYK())
-            3 -> copyToClipboard(selectedColor().toHSL())
+            0 -> copyToClipboard(selectedColor().asRgb().toString())
+            1 -> copyToClipboard(selectedColor().asHex().toString())
+            2 -> copyToClipboard(selectedColor().asCmyk().toString())
+            3 -> copyToClipboard(selectedColor().asHsl().toString())
           }
           true
         }
@@ -386,7 +387,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     colorShadesList.adapter = adapter
     colorShadesList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     colorShadesList.setHasFixedSize(true)
-    adapter.colors = selectedColor.getShades().map { it.toColorDetails() }
+    adapter.colors = selectedColor.shades().map { it.toColorDetails() }
     shadesTitle.text = resources.getString(R.string.shades)
   }
 
@@ -395,25 +396,25 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     tintsList.adapter = adapter
     tintsList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     tintsList.setHasFixedSize(true)
-    adapter.colors = selectedColor.getTints().map { it.toColorDetails() }
+    adapter.colors = selectedColor.tints().map { it.toColorDetails() }
     tintsTitle.text = resources.getString(R.string.tints)
   }
 
   private fun generateComplimentary(selectedColor: Int) {
-    val hexColor = selectedColor.toHex()
+    val hexColor = selectedColor.asHex()
     complimentaryColorTitle.text = resources.getString(R.string.complimentary)
     complimentaryColorBase.setColor(selectedColor)
     complimentaryColor.setColor(selectedColor.complimentary())
 
     complimentaryColor.setOnClickListener { launchWithNoTransition(this, selectedColor.complimentary()) }
 
-    val hexColorComplimentary = selectedColor.complimentary().toHex()
-    complimentaryColorBaseHex.text = hexColor
-    complimentaryColorHex.text = hexColorComplimentary
+    val hexColorComplimentary = selectedColor.complimentary().asHex()
+    complimentaryColorBaseHex.text = hexColor.toString()
+    complimentaryColorHex.text = hexColorComplimentary.toString()
   }
 
   private fun generateAnalogous(selectedColor: Int) {
-    val hexColor = selectedColor.toHex()
+    val hexColor = selectedColor.asHex()
     analogousColorsTitle.text = resources.getString(R.string.analogous)
     analogousColorBase.setColor(selectedColor)
     val analogousColors = selectedColor.analogous()
@@ -423,13 +424,13 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     analogousColor1.setOnClickListener { launchWithNoTransition(this, analogousColors.first) }
     analogousColor2.setOnClickListener { launchWithNoTransition(this, analogousColors.second) }
 
-    analogousColorBaseHex.text = hexColor
-    analogousColor1Hex.text = analogousColors.first.toHex()
-    analogousColor2Hex.text = analogousColors.second.toHex()
+    analogousColorBaseHex.text = hexColor.toString()
+    analogousColor1Hex.text = analogousColors.first.asHex().toString()
+    analogousColor2Hex.text = analogousColors.second.asHex().toString()
   }
 
   private fun generateTriadic(selectedColor: Int) {
-    val hexColor = selectedColor.toHex()
+    val hexColor = selectedColor.asHex()
     triadicColorsTitle.text = resources.getString(R.string.triadic)
     triadicColorBase.setColor(selectedColor)
     val triadicColors = selectedColor.triadic()
@@ -439,13 +440,13 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     triadicColor1.setOnClickListener { launchWithNoTransition(this, triadicColors.first) }
     triadicColor2.setOnClickListener { launchWithNoTransition(this, triadicColors.second) }
 
-    triadicColorBaseHex.text = hexColor
-    triadicColor1Hex.text = triadicColors.first.toHex()
-    triadicColor2Hex.text = triadicColors.second.toHex()
+    triadicColorBaseHex.text = hexColor.toString()
+    triadicColor1Hex.text = triadicColors.first.asHex().toString()
+    triadicColor2Hex.text = triadicColors.second.asHex().toString()
   }
 
   private fun generateTetradic(selectedColor: Int) {
-    val hexColor = selectedColor.toHex()
+    val hexColor = selectedColor.asHex()
     tetradicColorsTitle.text = resources.getString(R.string.tetradic)
     tetradicColorBase.setColor(selectedColor)
     val tetradicColors = selectedColor.tetradic()
@@ -457,10 +458,10 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     tetradicColor2.setOnClickListener { launchWithNoTransition(this, tetradicColors.second) }
     tetradicColor3.setOnClickListener { launchWithNoTransition(this, tetradicColors.third) }
 
-    tetradicColorBaseHex.text = hexColor
-    tetradicColor1Hex.text = tetradicColors.first.toHex()
-    tetradicColor2Hex.text = tetradicColors.second.toHex()
-    tetradicColor3Hex.text = tetradicColors.third.toHex()
+    tetradicColorBaseHex.text = hexColor.toString()
+    tetradicColor1Hex.text = tetradicColors.first.asHex().toString()
+    tetradicColor2Hex.text = tetradicColors.second.asHex().toString()
+    tetradicColor3Hex.text = tetradicColors.third.asHex().toString()
   }
 
   private fun setupSuggestedClothesLists() {
