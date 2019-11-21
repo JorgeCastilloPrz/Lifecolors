@@ -30,7 +30,6 @@ import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.common.view.extensions.copyToClipboard
 import dev.jorgecastillo.lifecolors.common.view.extensions.hideAction
 import dev.jorgecastillo.lifecolors.common.view.extensions.hideKeyboard
-import dev.jorgecastillo.lifecolors.common.view.extensions.isDark
 import dev.jorgecastillo.lifecolors.common.view.extensions.showAction
 import dev.jorgecastillo.lifecolors.common.view.list.ItemSnapHelper
 import dev.jorgecastillo.lifecolors.common.view.menu.MenuItemProgressCircle
