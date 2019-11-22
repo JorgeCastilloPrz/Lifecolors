@@ -146,10 +146,7 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     setupLoaderColors()
 
     val selectedColor = selectedColor()
-    val headerTextColor = ContextCompat.getColor(
-      this,
-      if (selectedColor.isDark()) R.color.white else R.color.black
-    )
+    val headerTextColor = selectedColor.contrasting()
     selectedColorHex.setTextColor(headerTextColor)
     selectedColorName.setTextColor(headerTextColor)
     selectedColorHex.text = selectedColor.asHex().toString()
