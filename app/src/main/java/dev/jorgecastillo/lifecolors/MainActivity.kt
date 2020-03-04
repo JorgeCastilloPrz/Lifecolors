@@ -5,23 +5,25 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.display.DisplayManager
+import android.net.Uri
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
-import androidx.camera.core.AspectRatio.RATIO_16_9
-import androidx.camera.core.CameraX
-import androidx.camera.core.CameraX.LensFacing
+import androidx.camera.core.AspectRatio
+import androidx.camera.core.Camera
+import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCapture.ImageCaptureError
-import androidx.camera.core.ImageCaptureConfig
+import androidx.camera.core.ImageCapture.OutputFileResults
+import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
-import androidx.camera.core.PreviewConfig
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.detail.DetailActivity
 import dev.jorgecastillo.lifecolors.favoritecolors.FavoriteColorsActivity
@@ -30,6 +32,9 @@ import kotlinx.android.synthetic.main.activity_main.captureButton
 import kotlinx.android.synthetic.main.activity_main.viewFinder
 import java.io.File
 import java.util.concurrent.Executors
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 private const val REQUEST_CODE_PERMISSIONS = 10
 private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
@@ -38,29 +43,28 @@ class MainActivity : AuthenticationActivity() {
 
   companion object {
     private const val PICK_IMAGE_REQUEST_CODE = 9329
+    private const val RATIO_4_3_VALUE = 4.0 / 3.0
+    private const val RATIO_16_9_VALUE = 16.0 / 9.0
   }
 
   private lateinit var displayManager: DisplayManager
+  private val cameraExecutor = Executors.newSingleThreadExecutor()
+  private var lensFacing: Int = CameraSelector.LENS_FACING_BACK
   private var displayId = -1
+  private var camera: Camera? = null
+  private lateinit var imageCapture: ImageCapture
+  private lateinit var preview: Preview
 
-  /**
-   * We need a display listener for orientation changes that do not trigger a configuration
-   * change, for example if we choose to override config change in manifest or for 180-degree
-   * orientation changes.
-   */
   private val displayListener = object : DisplayManager.DisplayListener {
     override fun onDisplayAdded(displayId: Int) = Unit
     override fun onDisplayRemoved(displayId: Int) = Unit
     override fun onDisplayChanged(displayId: Int) {
-      preview.setTargetRotation(viewFinder.display.rotation)
-      imageCapture.setTargetRotation(viewFinder.display.rotation)
+      if (displayId == this@MainActivity.displayId) {
+        Log.d("CameraX", "Rotation changed: ${viewFinder.display.rotation}")
+        imageCapture.targetRotation = viewFinder.display.rotation
+      }
     }
   }
-
-  private lateinit var previewConfig: PreviewConfig
-  private lateinit var imageCaptureConfig: ImageCaptureConfig
-  private lateinit var imageCapture: ImageCapture
-  private lateinit var preview: Preview
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -92,8 +96,9 @@ class MainActivity : AuthenticationActivity() {
     displayManager.registerDisplayListener(displayListener, null)
   }
 
-  override fun onStop() {
-    super.onStop()
+  override fun onDestroy() {
+    super.onDestroy()
+    cameraExecutor.shutdown()
     displayManager.unregisterDisplayListener(displayListener)
   }
 
@@ -101,60 +106,107 @@ class MainActivity : AuthenticationActivity() {
     displayId = viewFinder.display.displayId
 
     // Create configuration object for the viewfinder use case
-    previewConfig = PreviewConfig.Builder()
-      .apply {
-        setLensFacing(LensFacing.BACK)
-        setTargetAspectRatio(RATIO_16_9)
-        setTargetRotation(viewFinder.display.rotation)
+    viewFinder.post {
+      displayId = viewFinder.display.displayId
+      bindCameraUI()
+      bindCameraUseCases()
+    }
+  }
+
+  private fun aspectRatio(width: Int, height: Int): Int {
+    val previewRatio = max(width, height).toDouble() / min(width, height)
+    return if (abs(previewRatio - RATIO_4_3_VALUE) <= abs(previewRatio - RATIO_16_9_VALUE)) {
+      AspectRatio.RATIO_4_3
+    } else {
+      AspectRatio.RATIO_16_9
+    }
+  }
+
+  /** Declare and bind preview, capture and analysis use cases */
+  private fun bindCameraUseCases() {
+    // Get screen metrics used to setup camera for full screen resolution
+    val metrics = DisplayMetrics().also { viewFinder.display.getRealMetrics(it) }
+    val screenAspectRatio = aspectRatio(metrics.widthPixels, metrics.heightPixels)
+
+    val rotation = viewFinder.display.rotation
+
+    // Bind the CameraProvider to the LifeCycleOwner
+    val cameraSelector = CameraSelector.Builder().requireLensFacing(lensFacing).build()
+    val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+
+    cameraProviderFuture.addListener(Runnable {
+      val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+
+      preview = Preview.Builder()
+        // We request aspect ratio but no resolution
+        .setTargetAspectRatio(screenAspectRatio)
+        // Set initial target rotation
+        .setTargetRotation(rotation)
+        .build()
+
+      // setLensFacing(LensFacing.BACK)
+
+      // Attach the viewfinder's surface provider to preview use case
+      preview.setSurfaceProvider(viewFinder.previewSurfaceProvider)
+
+      // ImageCapture
+      imageCapture = ImageCapture.Builder()
+        .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+        // We request aspect ratio but no resolution to match preview config, but letting
+        // CameraX optimize for whatever specific resolution best fits our use cases
+        .setTargetAspectRatio(screenAspectRatio)
+        // Set initial target rotation, we will have to call this again if rotation changes
+        // during the lifecycle of this use case
+        .setTargetRotation(rotation)
+        .build()
+
+      // setLensFacing(LensFacing.BACK)
+
+      // Must unbind the use-cases before rebinding them
+      cameraProvider.unbindAll()
+
+      try {
+        // A variable number of use-cases can be passed here -
+        // camera provides access to CameraControl & CameraInfo
+        camera = cameraProvider.bindToLifecycle(
+          this,
+          cameraSelector,
+          preview, imageCapture
+        )
+      } catch (exc: Exception) {
+        Log.e("CameraX", "Use case binding failed", exc)
       }
-      .build()
 
-    preview = AutoFitPreviewBuilder.build(previewConfig, viewFinder)
+    }, ContextCompat.getMainExecutor(this))
+  }
 
-    // Create configuration object for the image capture use case
-    imageCaptureConfig = ImageCaptureConfig.Builder()
-      .apply {
-        setLensFacing(LensFacing.BACK)
-        setTargetAspectRatio(RATIO_16_9)
-        setCaptureMode(ImageCapture.CaptureMode.MIN_LATENCY)
-        setTargetRotation(viewFinder.display.rotation)
-      }
-      .build()
-
-    imageCapture = ImageCapture(imageCaptureConfig)
+  private fun bindCameraUI() {
     captureButton.setOnClickListener {
       captureButton.isEnabled = false
       captureImage()
     }
-
-    // Bind use cases to lifecycle
-    CameraX.bindToLifecycle(this, preview, imageCapture)
   }
 
   private fun captureImage() {
-    val file = File(
-      externalMediaDirs.first(),
-      "${System.currentTimeMillis()}.jpg"
-    )
+    val file = File(externalMediaDirs.first(), "${System.currentTimeMillis()}.jpg")
+    val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
+
     imageCapture.takePicture(
-      file,
-      Executors.newSingleThreadExecutor(),
-      object : ImageCapture.OnImageSavedListener {
-        override fun onError(
-          error: ImageCaptureError,
-          message: String,
-          exc: Throwable?
-        ) {
-          val msg = "Photo capture failed: $message"
-          Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT)
-            .show()
-          exc?.printStackTrace()
+      outputOptions,
+      cameraExecutor,
+      object : ImageCapture.OnImageSavedCallback {
+        override fun onImageSaved(output: OutputFileResults) {
+          val savedUri = output.savedUri ?: Uri.fromFile(file)
+          viewFinder.post {
+            DetailActivity.launch(this@MainActivity, captureButton, savedUri)
+          }
         }
 
-        override fun onImageSaved(file: File) {
-          viewFinder.post {
-            DetailActivity.launch(this@MainActivity, captureButton, file.toUri())
-          }
+        override fun onError(exception: ImageCaptureException) {
+          val msg = "Photo capture failed: ${exception.message}"
+          Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT)
+            .show()
+          exception.printStackTrace()
         }
       })
   }
