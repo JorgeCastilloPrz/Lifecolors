@@ -1,4 +1,4 @@
-package dev.jorgecastillo.lifecolors
+package dev.jorgecastillo.lifecolors.camera
 
 import android.Manifest
 import android.content.Context
@@ -24,12 +24,16 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import dev.jorgecastillo.lifecolors.R
+import dev.jorgecastillo.lifecolors.R.array
+import dev.jorgecastillo.lifecolors.R.id
+import dev.jorgecastillo.lifecolors.R.layout
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.detail.DetailActivity
 import dev.jorgecastillo.lifecolors.favoritecolors.FavoriteColorsActivity
-import kotlinx.android.synthetic.main.activity_main.bar
-import kotlinx.android.synthetic.main.activity_main.captureButton
-import kotlinx.android.synthetic.main.activity_main.viewFinder
+import kotlinx.android.synthetic.main.activity_camera.bar
+import kotlinx.android.synthetic.main.activity_camera.captureButton
+import kotlinx.android.synthetic.main.activity_camera.viewFinder
 import java.io.File
 import java.util.concurrent.Executors
 import kotlin.math.abs
@@ -39,7 +43,7 @@ import kotlin.math.min
 private const val REQUEST_CODE_PERMISSIONS = 10
 private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
 
-class MainActivity : AuthenticationActivity() {
+class CameraActivity : AuthenticationActivity() {
 
   companion object {
     private const val PICK_IMAGE_REQUEST_CODE = 9329
@@ -59,7 +63,7 @@ class MainActivity : AuthenticationActivity() {
     override fun onDisplayAdded(displayId: Int) = Unit
     override fun onDisplayRemoved(displayId: Int) = Unit
     override fun onDisplayChanged(displayId: Int) {
-      if (displayId == this@MainActivity.displayId) {
+      if (displayId == this@CameraActivity.displayId) {
         Log.d("CameraX", "Rotation changed: ${viewFinder.display.rotation}")
         imageCapture.targetRotation = viewFinder.display.rotation
       }
@@ -68,7 +72,7 @@ class MainActivity : AuthenticationActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
+    setContentView(layout.activity_camera)
     setSupportActionBar(bar)
     handlePermissions()
   }
@@ -80,7 +84,9 @@ class MainActivity : AuthenticationActivity() {
       }
     } else {
       ActivityCompat.requestPermissions(
-        this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+        this,
+        REQUIRED_PERMISSIONS,
+        REQUEST_CODE_PERMISSIONS
       )
     }
   }
@@ -198,7 +204,7 @@ class MainActivity : AuthenticationActivity() {
         override fun onImageSaved(output: OutputFileResults) {
           val savedUri = output.savedUri ?: Uri.fromFile(file)
           viewFinder.post {
-            DetailActivity.launch(this@MainActivity, captureButton, savedUri)
+            DetailActivity.launch(this@CameraActivity, captureButton, savedUri)
           }
         }
 
@@ -248,17 +254,17 @@ class MainActivity : AuthenticationActivity() {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.actionSettings -> true.also { showSettingsPopup() }
-      R.id.actionFavoriteColors -> true.also { navigateToFavoriteColorsScreen() }
-      R.id.actionGallery -> true.also { selectPictureFromGallery() }
+      id.actionSettings -> true.also { showSettingsPopup() }
+      id.actionFavoriteColors -> true.also { navigateToFavoriteColorsScreen() }
+      id.actionGallery -> true.also { selectPictureFromGallery() }
       else -> super.onOptionsItemSelected(item)
     }
   }
 
   private fun showSettingsPopup() {
-    val anchorView = findViewById<View>(R.id.actionSettings)
+    val anchorView = findViewById<View>(id.actionSettings)
     val popup = PopupMenu(this, anchorView)
-    val options = resources.getStringArray(R.array.main_menu_actions)
+    val options = resources.getStringArray(array.main_menu_actions)
     options.forEachIndexed { index, action ->
       popup.menu.add(0, index, index, action)
     }
@@ -281,7 +287,9 @@ class MainActivity : AuthenticationActivity() {
     val intent = Intent()
     intent.type = "image/*"
     intent.action = Intent.ACTION_PICK
-    startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST_CODE)
+    startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+      PICK_IMAGE_REQUEST_CODE
+    )
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -290,7 +298,7 @@ class MainActivity : AuthenticationActivity() {
       data?.let {
         data.data?.let { uri ->
           captureButton.post {
-            DetailActivity.launch(this@MainActivity, captureButton, uri)
+            DetailActivity.launch(this@CameraActivity, captureButton, uri)
           }
         }
       }

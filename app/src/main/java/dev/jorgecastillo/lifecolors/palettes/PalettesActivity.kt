@@ -29,7 +29,7 @@ import dev.jorgecastillo.lifecolors.palettes.presentation.PalettesViewState.Erro
 import dev.jorgecastillo.lifecolors.palettes.presentation.generatedColors
 import dev.jorgecastillo.lifecolors.palettes.presentation.hasNoPickedColors
 import dev.jorgecastillo.lifecolors.palettes.presentation.pickedColors
-import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
+import dev.jorgecastillo.lifecolors.common.view.SimpleTransitionListener
 import kotlinx.android.synthetic.main.activity_palettes.bottomCutout
 import kotlinx.android.synthetic.main.activity_palettes.content
 import kotlinx.android.synthetic.main.activity_palettes.generatedColorsList

@@ -1,4 +1,4 @@
-package dev.jorgecastillo.lifecolors.utils;
+package dev.jorgecastillo.lifecolors.camera.view;
 
 public interface OnRevealAnimationListener {
 	void onRevealHide();

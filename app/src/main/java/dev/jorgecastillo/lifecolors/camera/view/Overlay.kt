@@ -1,4 +1,4 @@
-package dev.jorgecastillo.lifecolors
+package dev.jorgecastillo.lifecolors.camera.view
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,6 +9,10 @@ import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import dev.jorgecastillo.lifecolors.R.anim
+import dev.jorgecastillo.lifecolors.R.color
+import dev.jorgecastillo.lifecolors.R.dimen
+import dev.jorgecastillo.lifecolors.common.view.extensions.fadeOut
 import dev.jorgecastillo.lifecolors.detail.view.Dot
 import dev.jorgecastillo.lifecolors.detail.view.OverlayTouchPopup
 
@@ -22,7 +26,7 @@ internal class Overlay @JvmOverloads constructor(
   defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-  private val dotSize = resources.getDimensionPixelSize(R.dimen.dot_size)
+  private val dotSize = resources.getDimensionPixelSize(dimen.dot_size)
   private var bitmap: Bitmap? = null
   var onDotSelectedListener: OnDotSelectedListener? = null
 
@@ -45,7 +49,9 @@ internal class Overlay @JvmOverloads constructor(
       leftMargin = popupX
       topMargin = popupY
     })
-    touchPopup.show(ContextCompat.getColor(context, R.color.white_overlay))
+    touchPopup.show(ContextCompat.getColor(context,
+      color.white_overlay
+    ))
   }
 
   fun adjustToBitmap(bitmap: Bitmap) {
@@ -99,7 +105,9 @@ internal class Overlay @JvmOverloads constructor(
   }
 
   private fun animateDot(dot: Dot) {
-    val anim = AnimationUtils.loadAnimation(context, R.anim.dot_bounce)
+    val anim = AnimationUtils.loadAnimation(context,
+      anim.dot_bounce
+    )
     anim.startOffset = 50L
     dot.startAnimation(anim)
   }

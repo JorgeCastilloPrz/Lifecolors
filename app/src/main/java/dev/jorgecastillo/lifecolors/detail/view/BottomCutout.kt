@@ -21,7 +21,7 @@ import dev.jorgecastillo.lifecolors.common.view.model.LifeColor
 import dev.jorgecastillo.lifecolors.common.view.model.toGeneratedLifeColor
 import dev.jorgecastillo.lifecolors.common.view.model.toPickedLifeColor
 import dev.jorgecastillo.lifecolors.detail.view.drawable.CutoutDrawable
-import dev.jorgecastillo.lifecolors.fadeIn
+import dev.jorgecastillo.lifecolors.common.view.extensions.fadeIn
 import kotlinx.android.synthetic.main.cutout_content_palette_activity.view.toolbarIcon
 import kotlinx.android.synthetic.main.cutout_content_palette_activity.view.toolbarTitle
 import kotlinx.android.synthetic.main.cutout_expand_icon.view.colorCount

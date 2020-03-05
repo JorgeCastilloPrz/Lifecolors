@@ -1,4 +1,4 @@
-package dev.jorgecastillo.lifecolors.utils
+package dev.jorgecastillo.lifecolors.common.view
 
 import android.transition.Transition
 import kotlinx.android.synthetic.main.activity_detail.activityRoot

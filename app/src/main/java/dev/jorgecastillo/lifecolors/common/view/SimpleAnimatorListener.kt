@@ -1,4 +1,4 @@
-package dev.jorgecastillo.lifecolors.utils
+package dev.jorgecastillo.lifecolors.common.view
 
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener

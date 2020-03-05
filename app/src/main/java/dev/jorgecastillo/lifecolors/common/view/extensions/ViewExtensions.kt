@@ -1,8 +1,8 @@
-package dev.jorgecastillo.lifecolors
+package dev.jorgecastillo.lifecolors.common.view.extensions
 
 import android.animation.Animator
 import android.view.View
-import dev.jorgecastillo.lifecolors.utils.SimpleAnimatorListener
+import dev.jorgecastillo.lifecolors.common.view.SimpleAnimatorListener
 
 fun View.fadeOut(onComplete: () -> Unit = {}) {
   this.animate()

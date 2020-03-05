@@ -34,13 +34,13 @@ import dev.jorgecastillo.lifecolors.common.view.extensions.showAction
 import dev.jorgecastillo.lifecolors.common.view.list.ItemSnapHelper
 import dev.jorgecastillo.lifecolors.common.view.menu.MenuItemProgressCircle
 import dev.jorgecastillo.lifecolors.detail.view.BottomCutout.Companion.DEFAULT_COLOR
-import dev.jorgecastillo.lifecolors.fadeIn
-import dev.jorgecastillo.lifecolors.fadeOut
+import dev.jorgecastillo.lifecolors.common.view.extensions.fadeIn
+import dev.jorgecastillo.lifecolors.common.view.extensions.fadeOut
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 import dev.jorgecastillo.lifecolors.palettes.toColorDetails
-import dev.jorgecastillo.lifecolors.utils.GUIUtils
-import dev.jorgecastillo.lifecolors.utils.OnRevealAnimationListener
-import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
+import dev.jorgecastillo.lifecolors.camera.view.extensions.GUIUtils
+import dev.jorgecastillo.lifecolors.camera.view.OnRevealAnimationListener
+import dev.jorgecastillo.lifecolors.common.view.SimpleTransitionListener
 import dev.jorgecastillo.zalandoclient.ZalandoApiClient.ZalandoCategory
 import dev.jorgecastillo.zalandoclient.ZalandoItem
 import kotlinx.android.synthetic.main.activity_generated_colors.analogousColor1
@@ -302,7 +302,8 @@ class GeneratedColorsActivity : AuthenticationActivity() {
     val cx = (appBarLayout.left + appBarLayout.right) / 2
     val cy = (appBarLayout.top + appBarLayout.bottom) / 2
     GUIUtils.animateRevealShow(appBarLayout, dot.width / 2, selectedColor,
-      cx, cy, object : OnRevealAnimationListener {
+      cx, cy, object :
+        OnRevealAnimationListener {
         override fun onRevealHide() {
         }
 
@@ -517,7 +518,8 @@ class GeneratedColorsActivity : AuthenticationActivity() {
         selectedColor(),
         ContextCompat.getColor(this, R.color.background),
         dot.width / 2,
-        object : OnRevealAnimationListener {
+        object :
+          OnRevealAnimationListener {
           override fun onRevealHide() {
             backPressed()
           }

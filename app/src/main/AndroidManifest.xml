@@ -38,7 +38,7 @@
         android:theme="@style/GeneratedColorsActivity"/>
 
     <activity
-        android:name=".MainActivity"
+        android:name=".camera.CameraActivity"
         android:theme="@style/MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>

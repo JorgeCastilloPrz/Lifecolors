@@ -17,15 +17,15 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.ImageViewTarget
-import dev.jorgecastillo.lifecolors.OnDotSelectedListener
+import dev.jorgecastillo.lifecolors.camera.view.OnDotSelectedListener
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.detail.view.Dot
-import dev.jorgecastillo.lifecolors.fadeIn
-import dev.jorgecastillo.lifecolors.fadeOut
+import dev.jorgecastillo.lifecolors.common.view.extensions.fadeIn
+import dev.jorgecastillo.lifecolors.common.view.extensions.fadeOut
 import dev.jorgecastillo.lifecolors.palettes.PalettesActivity
-import dev.jorgecastillo.lifecolors.utils.GUIUtils
-import dev.jorgecastillo.lifecolors.utils.OnRevealAnimationListener
-import dev.jorgecastillo.lifecolors.utils.SimpleTransitionListener
+import dev.jorgecastillo.lifecolors.camera.view.extensions.GUIUtils
+import dev.jorgecastillo.lifecolors.camera.view.OnRevealAnimationListener
+import dev.jorgecastillo.lifecolors.common.view.SimpleTransitionListener
 import kotlinx.android.synthetic.main.activity_detail.activityRoot
 import kotlinx.android.synthetic.main.activity_detail.bottomCutout
 import kotlinx.android.synthetic.main.activity_detail.dotAnimationContainer
@@ -33,7 +33,8 @@ import kotlinx.android.synthetic.main.activity_detail.fab
 import kotlinx.android.synthetic.main.activity_detail.overlay
 import kotlinx.android.synthetic.main.activity_detail.picture
 
-class DetailActivity : AppCompatActivity(), OnDotSelectedListener {
+class DetailActivity : AppCompatActivity(),
+  OnDotSelectedListener {
 
   companion object {
     const val FILE_URI_KEY = "FILE_URI_KEY"
@@ -79,7 +80,8 @@ class DetailActivity : AppCompatActivity(), OnDotSelectedListener {
     val cx = (viewRoot.left + viewRoot.right) / 2
     val cy = (viewRoot.top + viewRoot.bottom) / 2
     GUIUtils.animateRevealShow(activityRoot, fab.width / 2, ContextCompat.getColor(this, R.color.colorAccent),
-      cx, cy, object : OnRevealAnimationListener {
+      cx, cy, object :
+        OnRevealAnimationListener {
         override fun onRevealHide() {
         }
 
@@ -160,7 +162,8 @@ class DetailActivity : AppCompatActivity(), OnDotSelectedListener {
       ContextCompat.getColor(this, R.color.colorAccent),
       ContextCompat.getColor(this, R.color.background),
       fab.width / 2,
-      object : OnRevealAnimationListener {
+      object :
+        OnRevealAnimationListener {
         override fun onRevealHide() {
           backPressed()
         }

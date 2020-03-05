@@ -1,11 +1,11 @@
-package dev.jorgecastillo.lifecolors.utils;
+package dev.jorgecastillo.lifecolors.camera.view.extensions;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Context;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import dev.jorgecastillo.lifecolors.camera.view.OnRevealAnimationListener;
 
 public class GUIUtils {
 

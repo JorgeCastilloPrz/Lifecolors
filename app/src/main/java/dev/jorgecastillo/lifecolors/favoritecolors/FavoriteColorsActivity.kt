@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.colorgeneration.view.GeneratedColorsActivity
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
-import dev.jorgecastillo.lifecolors.fadeIn
-import dev.jorgecastillo.lifecolors.fadeOut
+import dev.jorgecastillo.lifecolors.common.view.extensions.fadeIn
+import dev.jorgecastillo.lifecolors.common.view.extensions.fadeOut
 import dev.jorgecastillo.lifecolors.favoritecolors.presentation.FavoriteColorsViewModel
 import dev.jorgecastillo.lifecolors.favoritecolors.presentation.FavoriteColorsViewState
 import dev.jorgecastillo.lifecolors.favoritecolors.presentation.FavoriteColorsViewState.Colors
