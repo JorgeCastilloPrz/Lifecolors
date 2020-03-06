@@ -6,7 +6,7 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
-  <style name="MainActivity" parent="AppTheme">
+  <style name="CameraActivity" parent="AppTheme">
     <item name="android:windowSharedElementExitTransition">@null</item>
     <item name="android:windowSharedElementReenterTransition">@null</item>
   </style>

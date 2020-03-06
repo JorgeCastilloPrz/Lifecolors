@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="dev.jorgecastillo.lifecolors">
 
-  <uses-permission android:name="android.permission.INTERNET"/>
-  <uses-permission android:name="android.permission.CAMERA"/>
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
   <uses-feature
       android:name="android.hardware.sensor.gyroscope"
-      android:required="true"/>
+      android:required="true" />
 
   <application
       android:allowBackup="true"
@@ -23,42 +23,43 @@
 
     <activity
         android:name=".detail.DetailActivity"
-        android:theme="@style/DetailActivity"/>
+        android:theme="@style/DetailActivity" />
 
     <activity
         android:name=".palettes.PalettesActivity"
-        android:theme="@style/PalettesActivity"/>
+        android:theme="@style/PalettesActivity" />
 
     <activity
         android:name=".favoritecolors.FavoriteColorsActivity"
-        android:theme="@style/FavoriteColorsActivity"/>
+        android:theme="@style/FavoriteColorsActivity" />
 
     <activity
         android:name=".colorgeneration.view.GeneratedColorsActivity"
-        android:theme="@style/GeneratedColorsActivity"/>
+        android:theme="@style/GeneratedColorsActivity" />
+
+    <activity android:name=".dashboard.DashboardActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
 
     <activity
         android:name=".camera.CameraActivity"
-        android:theme="@style/MainActivity">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
+        android:theme="@style/CameraActivity">
 
       <!-- Register as a system camera app -->
       <intent-filter>
-        <action android:name="android.media.action.IMAGE_CAPTURE"/>
-        <action android:name="android.media.action.STILL_IMAGE_CAMERA"/>
-        <action android:name="android.media.action.VIDEO_CAMERA"/>
-
-        <category android:name="android.intent.category.DEFAULT"/>
+        <action android:name="android.media.action.IMAGE_CAPTURE" />
+        <action android:name="android.media.action.STILL_IMAGE_CAMERA" />
+        <action android:name="android.media.action.VIDEO_CAMERA" />
       </intent-filter>
 
       <!-- Declare notch support -->
       <meta-data
           android:name="android.notch_support"
-          android:value="true"/>
+          android:value="true" />
     </activity>
 
     <!-- FileProvider used to share photos with other apps -->
@@ -69,7 +70,7 @@
         android:grantUriPermissions="true">
       <meta-data
           android:name="android.support.FILE_PROVIDER_PATHS"
-          android:resource="@xml/file_paths"/>
+          android:resource="@xml/file_paths" />
     </provider>
   </application>
 </manifest>
