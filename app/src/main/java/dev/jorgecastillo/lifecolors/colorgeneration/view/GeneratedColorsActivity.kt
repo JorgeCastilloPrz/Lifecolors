@@ -39,7 +39,9 @@ import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 import dev.jorgecastillo.lifecolors.palettes.toColorDetails
 import dev.jorgecastillo.zalandoclient.ZalandoApiClient.ZalandoCategory
 import kotlinx.android.synthetic.main.activity_generated_colors.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 class GeneratedColorsActivity : AuthenticationActivity() {
 
     companion object {
@@ -87,8 +89,9 @@ class GeneratedColorsActivity : AuthenticationActivity() {
 
     private lateinit var viewModel: ColorGenerationViewModel
     private lateinit var menu: Menu
-    private val suggestedClothesAdapter = ClothesAdapter(onClothingItemClick())
-    private val suggestedComplimentaryClothesAdapter = ClothesAdapter(onClothingItemClick())
+    private val suggestedClothesAdapter = ClothesAdapter(onClothingItemClick(), onClothingItemFav())
+    private val suggestedComplimentaryClothesAdapter =
+        ClothesAdapter(onClothingItemClick(), onClothingItemFav())
 
     private fun selectedColor() =
         intent?.extras?.getInt(PICKED_COLOR, DEFAULT_COLOR) ?: DEFAULT_COLOR
@@ -479,6 +482,12 @@ class GeneratedColorsActivity : AuthenticationActivity() {
 
     private fun onClothingItemClick(): (ClothingItem) -> Unit = { item ->
         launchClothingItemDetail(item)
+    }
+
+    private fun onClothingItemFav(): (ClothingItem) -> Unit = { item ->
+        authenticate(
+            onAuthenticationSuccess = { viewModel.onClothingItemFav(item) }
+        )
     }
 
     override fun onBackPressed() {

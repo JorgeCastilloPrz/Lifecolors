@@ -5,5 +5,7 @@ data class ClothingItem(
     val url: String,
     val name: String,
     val price: String,
-    val isFaved: Boolean
-)
+    val isFaved: Boolean? = null
+) {
+    val id = imageUrl + url + name + price
+}

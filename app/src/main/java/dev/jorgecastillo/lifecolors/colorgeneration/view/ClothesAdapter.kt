@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.item_clothing.view.*
 
 class ClothesAdapter(
     private val onItemClick: (ClothingItem) -> Unit = {},
-    private val onItemFav: (ClothingItem, Boolean) -> Unit = { _, _ -> }
+    private val onItemFav: (ClothingItem) -> Unit = {}
 ) :
     ListAdapter<ClothingItem, ViewHolder>(ClothingItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,13 +33,13 @@ class ClothesAdapter(
     class ViewHolder(
         itemView: View,
         private val onItemClick: (ClothingItem) -> Unit,
-        private val onItemFav: (ClothingItem, Boolean) -> Unit
+        private val onItemFav: (ClothingItem) -> Unit
     ) :
         RecyclerView.ViewHolder(itemView) {
         fun bind(item: ClothingItem) {
             itemView.setOnClickListener { onItemClick(item) }
             itemView.favButton.bindFavIcon(item.isFaved)
-            itemView.favButton.setOnClickListener { onItemFav(item, !item.isFaved) }
+            itemView.favButton.setOnClickListener { onItemFav(item) }
 
             val image = itemView.findViewById<ImageView>(R.id.image)
             Picasso.get().load(item.imageUrl).into(image)
@@ -48,9 +48,9 @@ class ClothesAdapter(
             price.text = item.price
         }
 
-        private fun ImageButton.bindFavIcon(isFaved: Boolean) {
+        private fun ImageButton.bindFavIcon(isFaved: Boolean?) {
             setImageResource(
-                if (isFaved) {
+                if (isFaved == true) {
                     R.drawable.ic_favorite_black_24dp
                 } else {
                     R.drawable.ic_favorite_border_black_24dp

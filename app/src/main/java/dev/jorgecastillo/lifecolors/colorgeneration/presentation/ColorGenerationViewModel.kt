@@ -8,7 +8,7 @@ import com.squareup.moshi.Moshi
 import dev.jorgecastillo.androidcolorx.library.asHex
 import dev.jorgecastillo.androidcolorx.library.complimentary
 import dev.jorgecastillo.lifecolors.clothes.domain.ClothingItem
-import dev.jorgecastillo.lifecolors.clothes.network.ZalandoNetworkService
+import dev.jorgecastillo.lifecolors.clothes.domain.ClothingRepository
 import dev.jorgecastillo.lifecolors.common.domain.model.ColorDetails
 import dev.jorgecastillo.lifecolors.common.usecase.IsColorFav
 import dev.jorgecastillo.lifecolors.common.usecase.IsColorFavResult
@@ -18,9 +18,12 @@ import dev.jorgecastillo.lifecolors.common.view.NonNullMutableLiveData
 import dev.jorgecastillo.zalandoclient.ZalandoApiClient.ZalandoCategory
 import dev.jorgecastillo.zalandoclient.ZalandoApiClient.ZalandoCategory.Mujer.RopaMujer
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
@@ -36,12 +39,13 @@ data class GeneratedColorsScreenViewState(
     val suggestedComplimentaryClothes: List<ClothingItem>
 )
 
+@ExperimentalCoroutinesApi
 @Suppress("DeferredResultUnused")
 class ColorGenerationViewModel(
     private val selectedColor: Int,
     private val isColorFav: IsColorFav = IsColorFav(),
     private val toggleColorFav: ToggleColorFav = ToggleColorFav(),
-    private val zalandoNetworkService: ZalandoNetworkService = ZalandoNetworkService()
+    private val clothingRepository: ClothingRepository = ClothingRepository()
 ) : ViewModel() {
 
     private val _state: NonNullMutableLiveData<GeneratedColorsScreenViewState> =
@@ -72,7 +76,7 @@ class ColorGenerationViewModel(
             viewModelScope.async(Dispatchers.IO) {
                 when (val isColorFav = isColorFav.execute(selectedColor)) {
                     is IsColorFavResult.Error -> {
-                        updateViewStateSuspend {
+                        updateViewState {
                             it.copy(
                                 isShowingError = true,
                                 isLoadingFavState = false
@@ -80,7 +84,7 @@ class ColorGenerationViewModel(
                         }
                     }
                     is IsColorFavResult.Success -> {
-                        updateViewStateSuspend {
+                        updateViewState {
                             it.copy(
                                 isFavorite = isColorFav.isFavorite,
                                 isLoadingFavState = false
@@ -92,14 +96,8 @@ class ColorGenerationViewModel(
         }
     }
 
-    private suspend fun updateViewStateSuspend(transform: (GeneratedColorsScreenViewState) -> GeneratedColorsScreenViewState) {
-        withContext(Main) {
-            _state.value = transform(_state.value)
-        }
-    }
-
     private fun updateViewState(transform: (GeneratedColorsScreenViewState) -> GeneratedColorsScreenViewState) {
-        _state.value = transform(_state.value)
+        _state.postValue(transform(_state.value))
     }
 
     private fun loadColorDetails() {
@@ -117,11 +115,11 @@ class ColorGenerationViewModel(
                 val jsonAdapter = moshi.adapter(ColorDetails::class.java)
                 val colorDetails = jsonAdapter.fromJson(body)!!
 
-                updateViewStateSuspend { it.copy(colorName = colorDetails.name.value) }
+                updateViewState { it.copy(colorName = colorDetails.name.value) }
                 loadClothingSuggestions()
                 loadComplimentaryClothingSuggestions()
             } catch (e: IOException) {
-                updateViewStateSuspend { it.copy(isShowingError = true) }
+                updateViewState { it.copy(isShowingError = true) }
                 loadClothingSuggestions()
                 loadComplimentaryClothingSuggestions()
             }
@@ -129,33 +127,41 @@ class ColorGenerationViewModel(
     }
 
     fun loadClothingSuggestions(category: ZalandoCategory = RopaMujer()) {
-        viewModelScope.async(Dispatchers.IO) {
-            updateViewStateSuspend { it.copy(isLoadingSuggestedClothes = true) }
+        updateViewState { it.copy(isLoadingSuggestedClothes = true) }
 
-            val clothes = zalandoNetworkService.get(category, selectedColor.asHex())
-            updateViewStateSuspend {
-                it.copy(
-                    isLoadingSuggestedClothes = false,
-                    suggestedClothes = clothes
-                )
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            clothingRepository.get(category, selectedColor.asHex())
+                .onEach { clothes ->
+                    updateViewState {
+                        it.copy(
+                            isLoadingSuggestedClothes = false,
+                            suggestedClothes = clothes
+                        )
+                    }
+                }
+                .catch { error ->
+                    error
+                    updateViewState { it.copy(isShowingError = true) }
+                }
+                .collect()
         }
     }
 
     fun loadComplimentaryClothingSuggestions(category: ZalandoCategory = RopaMujer()) {
-        viewModelScope.async(Dispatchers.IO) {
-            updateViewStateSuspend { it.copy(isLoadingSuggestedComplimentaryClothes = true) }
+        updateViewState { it.copy(isLoadingSuggestedComplimentaryClothes = true) }
 
-            val clothes = zalandoNetworkService.get(
-                category,
-                selectedColor.complimentary().asHex()
-            )
-            updateViewStateSuspend {
-                it.copy(
-                    isLoadingSuggestedComplimentaryClothes = false,
-                    suggestedComplimentaryClothes = clothes
-                )
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            clothingRepository.get(category, selectedColor.complimentary().asHex())
+                .onEach { clothes ->
+                    updateViewState {
+                        it.copy(
+                            isLoadingSuggestedComplimentaryClothes = false,
+                            suggestedComplimentaryClothes = clothes
+                        )
+                    }
+                }
+                .catch { updateViewState { it.copy(isShowingError = true) } }
+                .collect()
         }
     }
 
@@ -165,7 +171,7 @@ class ColorGenerationViewModel(
         viewModelScope.async(Dispatchers.IO) {
             when (val result = toggleColorFav.execute(color)) {
                 is ToggleColorFavResult.Error -> {
-                    updateViewStateSuspend {
+                    updateViewState {
                         it.copy(
                             isShowingError = true,
                             isLoadingFavState = false
@@ -173,13 +179,23 @@ class ColorGenerationViewModel(
                     }
                 }
                 is ToggleColorFavResult.Success -> {
-                    updateViewStateSuspend {
+                    updateViewState {
                         it.copy(
                             isFavorite = result.newFavState,
                             isLoadingFavState = false
                         )
                     }
                 }
+            }
+        }
+    }
+
+    fun onClothingItemFav(item: ClothingItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                clothingRepository.toggleItemFav(item)
+            } catch (e: Exception) {
+                // updateViewState { it.copy(isShowingError = true) }
             }
         }
     }
