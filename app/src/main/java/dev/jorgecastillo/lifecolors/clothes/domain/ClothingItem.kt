@@ -3,9 +3,10 @@ package dev.jorgecastillo.lifecolors.clothes.domain
 data class ClothingItem(
     val imageUrl: String,
     val url: String,
-    val name: String,
+    val brandName: String,
+    val articleName: String,
     val price: String,
     val isFaved: Boolean? = null
 ) {
-    val id = imageUrl + url + name + price
+    val id = brandName + articleName
 }

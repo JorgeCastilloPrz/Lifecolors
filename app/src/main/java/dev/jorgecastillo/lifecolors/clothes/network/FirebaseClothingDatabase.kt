@@ -2,7 +2,7 @@ package dev.jorgecastillo.lifecolors.clothes.network
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import dev.jorgecastillo.lifecolors.common.data.FirebaseTables.CLOTHES_FAVED_TABLE
+import dev.jorgecastillo.lifecolors.common.data.FirebaseTables.USER_FAVED_CLOTHES
 import dev.jorgecastillo.lifecolors.common.data.errors.FirebaseUserNotAuthenticatedException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -20,13 +20,15 @@ class FirebaseClothingDatabase {
             offer(emptyList<String>())
         } else {
             val eventDocument = FirebaseFirestore.getInstance()
-                .collection(CLOTHES_FAVED_TABLE)
+                .collection(USER_FAVED_CLOTHES)
                 .document(userId)
 
             val subscription = eventDocument.addSnapshotListener { snapshot, _ ->
                 if (snapshot!!.exists()) {
                     val favedMap: Map<String, Any> = snapshot.data ?: mapOf<String, Any>()
                     offer(favedMap.filterValues { faved -> faved as Boolean }.keys.toList())
+                } else {
+                    offer(emptyList<String>())
                 }
             }
 
@@ -41,7 +43,7 @@ class FirebaseClothingDatabase {
             throw FirebaseUserNotAuthenticatedException
         } else {
             val result = FirebaseFirestore.getInstance()
-                .collection(CLOTHES_FAVED_TABLE)
+                .collection(USER_FAVED_CLOTHES)
                 .document(userId)
                 .get()
                 .await()
@@ -50,12 +52,12 @@ class FirebaseClothingDatabase {
             val currentValueForId = favedMap[id] as? Boolean ?: false
             favedMap[id] = !currentValueForId
 
-            storeColors(id, favedMap)
+            storeFavedClothes(userId, favedMap)
         }
     }
 }
 
-private suspend fun storeColors(userId: String, favedMap: Map<String, Any>) {
+private suspend fun storeFavedClothes(userId: String, favedMap: Map<String, Any>) {
     val db = FirebaseFirestore.getInstance()
-    db.collection(CLOTHES_FAVED_TABLE).document(userId).set(favedMap).await()
+    db.collection(USER_FAVED_CLOTHES).document(userId).set(favedMap).await()
 }

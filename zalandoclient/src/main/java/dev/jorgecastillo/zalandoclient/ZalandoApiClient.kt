@@ -12,7 +12,8 @@ import kotlin.math.sqrt
 data class ZalandoItem(
     val imageUrl: String,
     val url: String,
-    val name: String,
+    val brandName: String,
+    val articleName: String,
     val price: String
 )
 
@@ -343,7 +344,8 @@ class ZalandoApiClient {
                     val url =
                         "https://www.zalando.es${gridItem.select("[class^=cat_infoDetail]").first()
                             .attr("href")}"
-                    val name = gridItem.select("[class^=cat_brandName]").first().text()
+                    val brandName = gridItem.select("[class^=cat_brandName]").first().text()
+                    val articleName = gridItem.select("[class^=cat_articleName]").first().text()
 
                     val originalPrice = gridItem.select("[class^=cat_originalPrice]")
                     val promotionalPriceItems = gridItem.select("[class^=cat_promotionalPrice]")
@@ -354,7 +356,7 @@ class ZalandoApiClient {
                         originalPrice.text()
                     }
 
-                    acc + ZalandoItem(imageUrl, url, name, price)
+                    acc + ZalandoItem(imageUrl, url, brandName, articleName, price)
                 } else {
                     acc
                 }

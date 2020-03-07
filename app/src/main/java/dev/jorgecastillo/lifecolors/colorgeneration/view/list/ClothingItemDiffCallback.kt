@@ -5,7 +5,7 @@ import dev.jorgecastillo.lifecolors.clothes.domain.ClothingItem
 
 class ClothingItemDiffCallback : DiffUtil.ItemCallback<ClothingItem>() {
     override fun areItemsTheSame(oldItem: ClothingItem, newItem: ClothingItem): Boolean {
-        return oldItem.name == newItem.name
+        return oldItem.brandName == newItem.brandName
     }
 
     override fun areContentsTheSame(oldItem: ClothingItem, newItem: ClothingItem): Boolean {
