@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "60278618286-73bsp7gjvl3mpc4dtb8ijb2gegiag61g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.jorgecastillo.lifecolors",
+            "certificate_hash": "cbe17b2e88d69927762f1b4288ded54360e797e4"
+          }
+        },
+        {
           "client_id": "60278618286-3vgi9vrp8m6vk9ns0og1dkjpuslg62et.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
