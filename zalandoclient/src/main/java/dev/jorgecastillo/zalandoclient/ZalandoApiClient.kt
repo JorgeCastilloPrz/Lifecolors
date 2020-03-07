@@ -331,8 +331,8 @@ class ZalandoApiClient {
      */
     fun get(category: ZalandoCategory, color: ZalandoColor): List<ZalandoItem> {
         try {
-            val doc =
-                Jsoup.connect("https://www.zalando.es/${category.urlSection}/${color.name}/").get()
+            val url = "https://www.zalando.es/${category.urlSection}/${color.name}/"
+            val doc = Jsoup.connect(url).get()
             println(doc.title())
             val itemsGridDiv = doc.body().select("z-grid.cat_catArticles-2Pxh7")
             return itemsGridDiv[0].children().fold(listOf()) { acc, gridItem ->

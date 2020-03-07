@@ -6,13 +6,13 @@ import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.camera.CameraActivity
+import dev.jorgecastillo.lifecolors.clothes.domain.ClothingItem
 import dev.jorgecastillo.lifecolors.clothingdetail.navigation.launchClothingItemDetail
 import dev.jorgecastillo.lifecolors.colorgeneration.view.ClothesAdapter
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.common.view.extensions.hideKeyboard
 import dev.jorgecastillo.lifecolors.common.view.list.ItemSnapHelper
 import dev.jorgecastillo.zalandoclient.ZalandoApiClient
-import dev.jorgecastillo.zalandoclient.ZalandoItem
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 
@@ -57,7 +57,7 @@ class DashboardActivity : AuthenticationActivity() {
         ItemSnapHelper().attachToRecyclerView(clothesRecycler)
     }
 
-    private fun onClothingItemClick(): (ZalandoItem) -> Unit = { item ->
+    private fun onClothingItemClick(): (ClothingItem) -> Unit = { item ->
         launchClothingItemDetail(item)
     }
 }
