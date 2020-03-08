@@ -26,7 +26,9 @@ import kotlinx.android.synthetic.main.activity_favorite_colors.colorList
 import kotlinx.android.synthetic.main.activity_favorite_colors.emptyState
 import kotlinx.android.synthetic.main.activity_favorite_colors.loading
 import kotlinx.android.synthetic.main.activity_favorite_colors.toolbar
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 class FavoriteColorsActivity : AuthenticationActivity() {
 
   companion object {

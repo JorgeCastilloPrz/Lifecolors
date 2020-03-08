@@ -16,6 +16,7 @@ import dev.jorgecastillo.lifecolors.camera.CameraActivity
 import dev.jorgecastillo.lifecolors.clothes.domain.ClothingItem
 import dev.jorgecastillo.lifecolors.clothingdetail.navigation.launchClothingItemDetail
 import dev.jorgecastillo.lifecolors.colorgeneration.view.ClothesAdapter
+import dev.jorgecastillo.lifecolors.colorgeneration.view.GeneratedColorsActivity
 import dev.jorgecastillo.lifecolors.common.presentation.DashboardViewModelFactory
 import dev.jorgecastillo.lifecolors.common.presentation.ViewState
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
@@ -95,12 +96,14 @@ class DashboardActivity : AuthenticationActivity() {
         launchClothingItemDetail(item)
     }
 
-    private fun onColorItemClick(): (View, ColorViewState, Int) -> Unit = { view, state, position ->
-        // launchClothingItemDetail(item)
+    private fun onColorItemClick(): (View, ColorViewState, Int) -> Unit = { view, details, _ ->
+        window.enterTransition = null
+        window.exitTransition = null
+        GeneratedColorsActivity.launch(this, view, details.color)
     }
 
     private fun onColorFavClick(): (View, ColorViewState, Int) -> Unit = { view, state, position ->
-        // launchClothingItemDetail(item)
+        // viewModel.onColorFavClick(details, position)
     }
 
     private fun render(viewState: ViewState<ContentViewState>): Unit =
