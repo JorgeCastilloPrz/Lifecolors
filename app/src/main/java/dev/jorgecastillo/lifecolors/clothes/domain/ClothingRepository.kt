@@ -29,11 +29,13 @@ class ClothingRepository(
         }
     }
 
+    suspend fun getFavedItems(category: ZalandoApiClient.ZalandoCategory): Flow<List<ClothingItem>> =
+        firebaseClothingDatabase.getFavedItems(category).distinctUntilChanged()
+
     private fun ClothingItem.idIn(items: List<String>): Boolean =
         items.any { it == this.id }
 
     suspend fun toggleItemFav(clothingItem: ClothingItem): Unit {
-        val id = clothingItem.id
-        firebaseClothingDatabase.toggleItemFav(id)
+        firebaseClothingDatabase.toggleItemFav(clothingItem)
     }
 }

@@ -1,7 +1,6 @@
 package dev.jorgecastillo.lifecolors.dashboard.presentation
 
 import androidx.lifecycle.viewModelScope
-import dev.jorgecastillo.androidcolorx.library.HEXColor
 import dev.jorgecastillo.lifecolors.clothes.domain.ClothingItem
 import dev.jorgecastillo.lifecolors.clothes.domain.ClothingRepository
 import dev.jorgecastillo.lifecolors.colors.network.FirebaseColorsDatabase
@@ -32,7 +31,7 @@ class DashboardViewModel(
     fun onReadyToLoadContent(clothingCategory: ZalandoApiClient.ZalandoCategory) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            val clothesAndColorsFlow = clothingRepo.get(clothingCategory, HEXColor("#000000"))
+            val clothesAndColorsFlow = clothingRepo.getFavedItems(clothingCategory)
                 .combine(colorsDatabase.getFavedColors()) { clothes, colors ->
                     ContentViewState(clothes.take(6), colors.map {
                         ColorViewState(
