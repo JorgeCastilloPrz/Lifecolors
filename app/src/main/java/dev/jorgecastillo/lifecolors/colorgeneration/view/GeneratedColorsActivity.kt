@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jorgecastillo.androidcolorx.library.*
 import dev.jorgecastillo.lifecolors.R
@@ -32,7 +33,6 @@ import dev.jorgecastillo.lifecolors.colorgeneration.view.list.GeneratedColorsAda
 import dev.jorgecastillo.lifecolors.common.view.AuthenticationActivity
 import dev.jorgecastillo.lifecolors.common.view.SimpleTransitionListener
 import dev.jorgecastillo.lifecolors.common.view.extensions.*
-import dev.jorgecastillo.lifecolors.common.view.list.ItemSnapHelper
 import dev.jorgecastillo.lifecolors.common.view.menu.MenuItemProgressCircle
 import dev.jorgecastillo.lifecolors.detail.view.BottomCutout.Companion.DEFAULT_COLOR
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
@@ -450,10 +450,8 @@ class GeneratedColorsActivity : AuthenticationActivity() {
         }
 
         suggestedClothesList.adapter = suggestedClothesAdapter
-        suggestedClothesList.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        suggestedClothesList.setHasFixedSize(true)
-        ItemSnapHelper().attachToRecyclerView(suggestedClothesList)
+        suggestedClothesList.layoutManager = GridLayoutManager(this, 3)
+        suggestedClothesList.setHasFixedSize(false)
     }
 
     private fun setupSuggestedComplimentaryClothes() {
@@ -469,10 +467,8 @@ class GeneratedColorsActivity : AuthenticationActivity() {
         }
 
         suggestedComplimentaryClothesList.adapter = suggestedComplimentaryClothesAdapter
-        suggestedComplimentaryClothesList.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        suggestedComplimentaryClothesList.setHasFixedSize(true)
-        ItemSnapHelper().attachToRecyclerView(suggestedComplimentaryClothesList)
+        suggestedComplimentaryClothesList.layoutManager = GridLayoutManager(this, 3)
+        suggestedComplimentaryClothesList.setHasFixedSize(false)
     }
 
     private fun onColorClickListener(): (View, ColorViewState, Int) -> Unit =

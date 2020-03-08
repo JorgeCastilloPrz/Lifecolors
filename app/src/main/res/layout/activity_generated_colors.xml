@@ -6,614 +6,581 @@
     android:id="@+id/viewRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_card"
-    android:orientation="vertical"
-    >
+    android:background="@color/white"
+    android:orientation="vertical">
 
-  <com.google.android.material.appbar.AppBarLayout
-      android:id="@+id/appBarLayout"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/generated_color_activity_header"
-      >
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/generated_color_activity_header">
 
-    <com.google.android.material.appbar.CollapsingToolbarLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+            <dev.jorgecastillo.lifecolors.detail.view.Dot
+                android:id="@+id/dot"
+                android:layout_width="@dimen/dot_size_big"
+                android:layout_height="@dimen/dot_size_big"
+                android:layout_gravity="center"
+                app:dotColor="@color/colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/selectedColorHex"
+                    style="@style/TextAppearance.MaterialComponents.Headline4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0"
+                    android:gravity="center"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/selectedColorName"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_very_small"
+                    android:alpha="0"
+                    android:gravity="center"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:title="" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-        >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-      <dev.jorgecastillo.lifecolors.detail.view.Dot
-          android:id="@+id/dot"
-          android:layout_width="@dimen/dot_size_big"
-          android:layout_height="@dimen/dot_size_big"
-          android:layout_gravity="center"
-          app:dotColor="@color/colorAccent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          />
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:gravity="center"
-          android:orientation="vertical"
-          >
-        <TextView
-            android:id="@+id/selectedColorHex"
+        <LinearLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0"
-            android:gravity="center"
-            android:textColor="@color/white"
-            style="@style/TextAppearance.MaterialComponents.Headline4"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/selectedColorName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_very_small"
-            android:alpha="0"
-            android:gravity="center"
-            android:textColor="@color/white"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            />
-      </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/suggestedClothesTitle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:hint="@string/suggested_clothing_title">
 
-      <androidx.appcompat.widget.Toolbar
-          android:id="@+id/toolbar"
-          android:layout_width="match_parent"
-          android:layout_height="?attr/actionBarSize"
-          app:layout_collapseMode="pin"
-          app:title=""
-          />
-    </com.google.android.material.appbar.CollapsingToolbarLayout>
-  </com.google.android.material.appbar.AppBarLayout>
+                <AutoCompleteTextView
+                    android:id="@+id/suggestedClothesDropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textColorHint="@color/colorAccent"
+                    tools:ignore="LabelFor" />
 
-  <androidx.core.widget.NestedScrollView
-      android:id="@+id/content"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:layout_behavior="@string/appbar_scrolling_view_behavior"
-      >
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small">
 
-      <com.google.android.material.textfield.TextInputLayout
-          android:id="@+id/suggestedClothesTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="@dimen/spacing_small"
-          android:layout_marginStart="@dimen/spacing_small"
-          android:layout_marginTop="@dimen/spacing_small"
-          android:hint="@string/suggested_clothing_title"
-          style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-          >
+                <dev.jorgecastillo.lifecolors.common.view.progress.TintableProgressBar
+                    android:id="@+id/suggestedClothesLoader"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:indeterminateStyle="thin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-        <AutoCompleteTextView
-            android:id="@+id/suggestedClothesDropdown"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorAccent"
-            tools:ignore="LabelFor"
-            />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/suggestedClothesList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    tools:itemCount="3"
+                    tools:layoutManager="GridLayoutManager"
+                    tools:listitem="@layout/item_clothing"
+                    tools:spanCount="3" />
+            </FrameLayout>
 
-      </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:id="@+id/viewAllSuggestedClothes"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:text="@string/view_all" />
 
-      <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/clothes_item_height"
-          android:layout_marginTop="@dimen/spacing_small"
-          >
+            <TextView
+                android:id="@+id/complimentaryColorTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="@string/complimentary"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
 
-        <dev.jorgecastillo.lifecolors.common.view.progress.TintableProgressBar
-            android:id="@+id/suggestedClothesLoader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/suggestedClothesList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:nestedScrollingEnabled="false"
-            android:paddingEnd="6dp"
-            android:paddingStart="6dp"
-            />
-      </FrameLayout>
+                <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
+                    android:id="@+id/complimentaryColorBase"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing"
+                    android:layout_marginEnd="@dimen/spacing_very_small"
+                    android:layout_weight="1"
+                    tools:color="@color/colorAccent" />
 
-      <TextView
-          android:id="@+id/complimentaryColorTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/spacing"
-          android:layout_marginTop="@dimen/spacing"
-          android:text="@string/complimentary"
-          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-          android:textColor="@color/colorAccent"
-          android:textSize="16sp"
-          />
+                <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
+                    android:id="@+id/complimentaryColor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_very_small"
+                    android:layout_marginTop="@dimen/spacing"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:layout_weight="1"
+                    tools:color="@color/colorAccent" />
+            </LinearLayout>
 
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
-            android:id="@+id/complimentaryColorBase"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_very_small"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing"
-            android:layout_weight="1"
-            tools:color="@color/colorAccent"
-            />
+                <TextView
+                    android:id="@+id/complimentaryColorBaseHex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="?android:textColorPrimary"
+                    tools:text="#38B0C8" />
 
-        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
-            android:id="@+id/complimentaryColor"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:layout_marginStart="@dimen/spacing_very_small"
-            android:layout_marginTop="@dimen/spacing"
-            android:layout_weight="1"
-            tools:color="@color/colorAccent"
-            />
-      </LinearLayout>
+                <TextView
+                    android:id="@+id/complimentaryColorHex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="?android:textColorPrimary"
+                    tools:text="#38B0C8" />
+            </LinearLayout>
 
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          >
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/suggestedComplimentaryClothesTitle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:hint="@string/suggested_complimentary_clothing_title">
 
-        <TextView
-            android:id="@+id/complimentaryColorBaseHex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/white"
-            tools:text="#38B0C8"
-            />
+                <AutoCompleteTextView
+                    android:id="@+id/suggestedComplimentaryClothesDropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textColorHint="@color/colorAccent"
+                    tools:ignore="LabelFor" />
 
-        <TextView
-            android:id="@+id/complimentaryColorHex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/white"
-            tools:text="#38B0C8"
-            />
-      </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-      <com.google.android.material.textfield.TextInputLayout
-          android:id="@+id/suggestedComplimentaryClothesTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="@dimen/spacing_small"
-          android:layout_marginStart="@dimen/spacing_small"
-          android:layout_marginTop="@dimen/spacing_small"
-          android:hint="@string/suggested_complimentary_clothing_title"
-          style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-          >
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small">
 
-        <AutoCompleteTextView
-            android:id="@+id/suggestedComplimentaryClothesDropdown"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorAccent"
-            tools:ignore="LabelFor"
-            />
+                <dev.jorgecastillo.lifecolors.common.view.progress.TintableProgressBar
+                    android:id="@+id/suggestedComplimentaryClothesLoader"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:indeterminateStyle="thin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-      </com.google.android.material.textfield.TextInputLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/suggestedComplimentaryClothesList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    tools:itemCount="3"
+                    tools:layoutManager="GridLayoutManager"
+                    tools:listitem="@layout/item_clothing"
+                    tools:spanCount="3" />
+            </FrameLayout>
 
-      <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/clothes_item_height"
-          android:layout_marginTop="@dimen/spacing_small"
-          >
+            <Button
+                android:id="@+id/viewAllComplimentaryClothes"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:text="@string/view_all" />
 
-        <dev.jorgecastillo.lifecolors.common.view.progress.TintableProgressBar
-            android:id="@+id/suggestedComplimentaryClothesLoader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            />
+            <TextView
+                android:id="@+id/shadesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="@string/shades"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/suggestedComplimentaryClothesList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:nestedScrollingEnabled="false"
-            android:paddingBottom="@dimen/spacing_smallest"
-            android:paddingEnd="6dp"
-            android:paddingStart="6dp"
-            android:paddingTop="@dimen/spacing_smallest"
-            />
-      </FrameLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/colorShadesList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:padding="@dimen/spacing_very_small" />
 
-      <TextView
-          android:id="@+id/shadesTitle"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/spacing"
-          android:layout_marginTop="@dimen/spacing"
-          android:text="@string/shades"
-          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-          android:textColor="@color/colorAccent"
-          android:textSize="16sp"
-          />
+            <TextView
+                android:id="@+id/tintsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing"
+                android:layout_marginTop="@dimen/spacing"
+                android:text="@string/tints"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
 
-      <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/colorShadesList"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/spacing"
-          android:clipChildren="false"
-          android:clipToPadding="false"
-          android:nestedScrollingEnabled="false"
-          android:padding="@dimen/spacing_very_small"
-          />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tintsList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:padding="@dimen/spacing_very_small" />
 
-      <TextView
-          android:id="@+id/tintsTitle"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/spacing"
-          android:layout_marginTop="@dimen/spacing"
-          android:text="@string/tints"
-          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-          android:textColor="@color/colorAccent"
-          android:textSize="16sp"
-          />
+            <TextView
+                android:id="@+id/analogousColorsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing"
+                android:layout_marginTop="@dimen/spacing"
+                android:text="@string/analogous"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
 
-      <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/tintsList"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/spacing"
-          android:clipChildren="false"
-          android:clipToPadding="false"
-          android:nestedScrollingEnabled="false"
-          android:padding="@dimen/spacing_very_small"
-          />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-      <TextView
-          android:id="@+id/analogousColorsTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/spacing"
-          android:layout_marginTop="@dimen/spacing"
-          android:text="@string/analogous"
-          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-          android:textColor="@color/colorAccent"
-          android:textSize="16sp"
-          />
+                <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
+                    android:id="@+id/analogousColorBase"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing"
+                    android:layout_marginEnd="@dimen/spacing_very_small"
+                    android:layout_weight="1"
+                    tools:color="@color/colorAccent" />
 
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          >
+                <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
+                    android:id="@+id/analogousColor1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_very_small"
+                    android:layout_marginTop="@dimen/spacing"
+                    android:layout_marginEnd="@dimen/spacing_very_small"
+                    android:layout_weight="1"
+                    tools:color="@color/colorAccent" />
 
-        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
-            android:id="@+id/analogousColorBase"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_very_small"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing"
-            android:layout_weight="1"
-            tools:color="@color/colorAccent"
-            />
+                <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
+                    android:id="@+id/analogousColor2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_very_small"
+                    android:layout_marginTop="@dimen/spacing"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:layout_weight="1"
+                    tools:color="@color/colorAccent" />
+            </LinearLayout>
 
-        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
-            android:id="@+id/analogousColor1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_very_small"
-            android:layout_marginStart="@dimen/spacing_very_small"
-            android:layout_marginTop="@dimen/spacing"
-            android:layout_weight="1"
-            tools:color="@color/colorAccent"
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
-            android:id="@+id/analogousColor2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:layout_marginStart="@dimen/spacing_very_small"
-            android:layout_marginTop="@dimen/spacing"
-            android:layout_weight="1"
-            tools:color="@color/colorAccent"
-            />
-      </LinearLayout>
+                <TextView
+                    android:id="@+id/analogousColorBaseHex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="?android:textColorPrimary"
+                    tools:text="#38B0C8" />
 
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          >
+                <TextView
+                    android:id="@+id/analogousColor1Hex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="?android:textColorPrimary"
+                    tools:text="#38B0C8" />
 
-        <TextView
-            android:id="@+id/analogousColorBaseHex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/white"
-            tools:text="#38B0C8"
-            />
+                <TextView
+                    android:id="@+id/analogousColor2Hex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="?android:textColorPrimary"
+                    tools:text="#38B0C8" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/analogousColor1Hex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/white"
-            tools:text="#38B0C8"
-            />
+            <TextView
+                android:id="@+id/triadicColorsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing"
+                android:layout_marginTop="@dimen/spacing"
+                android:text="@string/triadic"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/analogousColor2Hex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/white"
-            tools:text="#38B0C8"
-            />
-      </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-      <TextView
-          android:id="@+id/triadicColorsTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/spacing"
-          android:layout_marginTop="@dimen/spacing"
-          android:text="@string/triadic"
-          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-          android:textColor="@color/colorAccent"
-          android:textSize="16sp"
-          />
+                <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
+                    android:id="@+id/triadicColorBase"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing"
+                    android:layout_marginEnd="@dimen/spacing_very_small"
+                    android:layout_weight="1"
+                    tools:color="@color/colorAccent" />
 
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          >
+                <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
+                    android:id="@+id/triadicColor1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_very_small"
+                    android:layout_marginTop="@dimen/spacing"
+                    android:layout_marginEnd="@dimen/spacing_very_small"
+                    android:layout_weight="1"
+                    tools:color="@color/colorAccent" />
 
-        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
-            android:id="@+id/triadicColorBase"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_very_small"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing"
-            android:layout_weight="1"
-            tools:color="@color/colorAccent"
-            />
+                <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
+                    android:id="@+id/triadicColor2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_very_small"
+                    android:layout_marginTop="@dimen/spacing"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:layout_weight="1"
+                    tools:color="@color/colorAccent" />
+            </LinearLayout>
 
-        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
-            android:id="@+id/triadicColor1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_very_small"
-            android:layout_marginStart="@dimen/spacing_very_small"
-            android:layout_marginTop="@dimen/spacing"
-            android:layout_weight="1"
-            tools:color="@color/colorAccent"
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
-            android:id="@+id/triadicColor2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:layout_marginStart="@dimen/spacing_very_small"
-            android:layout_marginTop="@dimen/spacing"
-            android:layout_weight="1"
-            tools:color="@color/colorAccent"
-            />
-      </LinearLayout>
+                <TextView
+                    android:id="@+id/triadicColorBaseHex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="?android:textColorPrimary"
+                    tools:text="#38B0C8" />
 
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          >
+                <TextView
+                    android:id="@+id/triadicColor1Hex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="?android:textColorPrimary"
+                    tools:text="#38B0C8" />
 
-        <TextView
-            android:id="@+id/triadicColorBaseHex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/white"
-            tools:text="#38B0C8"
-            />
+                <TextView
+                    android:id="@+id/triadicColor2Hex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="?android:textColorPrimary"
+                    tools:text="#38B0C8" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/triadicColor1Hex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/white"
-            tools:text="#38B0C8"
-            />
+            <TextView
+                android:id="@+id/tetradicColorsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing"
+                android:layout_marginTop="@dimen/spacing"
+                android:text="@string/tetradic"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/triadicColor2Hex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/white"
-            tools:text="#38B0C8"
-            />
-      </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-      <TextView
-          android:id="@+id/tetradicColorsTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/spacing"
-          android:layout_marginTop="@dimen/spacing"
-          android:text="@string/tetradic"
-          android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-          android:textColor="@color/colorAccent"
-          android:textSize="16sp"
-          />
+                <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
+                    android:id="@+id/tetradicColorBase"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing"
+                    android:layout_marginEnd="@dimen/spacing_very_small"
+                    android:layout_weight="1"
+                    tools:color="@color/colorAccent" />
 
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          >
+                <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
+                    android:id="@+id/tetradicColor1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_very_small"
+                    android:layout_marginTop="@dimen/spacing"
+                    android:layout_marginEnd="@dimen/spacing_very_small"
+                    android:layout_weight="1"
+                    tools:color="@color/colorAccent" />
 
-        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
-            android:id="@+id/tetradicColorBase"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_very_small"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing"
-            android:layout_weight="1"
-            tools:color="@color/colorAccent"
-            />
+                <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
+                    android:id="@+id/tetradicColor2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_very_small"
+                    android:layout_marginTop="@dimen/spacing"
+                    android:layout_marginEnd="@dimen/spacing_very_small"
+                    android:layout_weight="1"
+                    tools:color="@color/colorAccent" />
 
-        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
-            android:id="@+id/tetradicColor1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_very_small"
-            android:layout_marginStart="@dimen/spacing_very_small"
-            android:layout_marginTop="@dimen/spacing"
-            android:layout_weight="1"
-            tools:color="@color/colorAccent"
-            />
+                <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
+                    android:id="@+id/tetradicColor3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_very_small"
+                    android:layout_marginTop="@dimen/spacing"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:layout_weight="1"
+                    tools:color="@color/colorAccent" />
+            </LinearLayout>
 
-        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
-            android:id="@+id/tetradicColor2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_very_small"
-            android:layout_marginStart="@dimen/spacing_very_small"
-            android:layout_marginTop="@dimen/spacing"
-            android:layout_weight="1"
-            tools:color="@color/colorAccent"
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <dev.jorgecastillo.lifecolors.colorgeneration.view.view.RoundedCornersColor
-            android:id="@+id/tetradicColor3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:layout_marginStart="@dimen/spacing_very_small"
-            android:layout_marginTop="@dimen/spacing"
-            android:layout_weight="1"
-            tools:color="@color/colorAccent"
-            />
-      </LinearLayout>
+                <TextView
+                    android:id="@+id/tetradicColorBaseHex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="?android:textColorPrimary"
+                    tools:text="#38B0C8" />
 
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          >
+                <TextView
+                    android:id="@+id/tetradicColor1Hex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="?android:textColorPrimary"
+                    tools:text="#38B0C8" />
 
-        <TextView
-            android:id="@+id/tetradicColorBaseHex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/white"
-            tools:text="#38B0C8"
-            />
+                <TextView
+                    android:id="@+id/tetradicColor2Hex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="?android:textColorPrimary"
+                    tools:text="#38B0C8" />
 
-        <TextView
-            android:id="@+id/tetradicColor1Hex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/white"
-            tools:text="#38B0C8"
-            />
-
-        <TextView
-            android:id="@+id/tetradicColor2Hex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/white"
-            tools:text="#38B0C8"
-            />
-
-        <TextView
-            android:id="@+id/tetradicColor3Hex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/white"
-            tools:text="#38B0C8"
-            />
-      </LinearLayout>
-    </LinearLayout>
-  </androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/tetradicColor3Hex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="?android:textColorPrimary"
+                    tools:text="#38B0C8" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

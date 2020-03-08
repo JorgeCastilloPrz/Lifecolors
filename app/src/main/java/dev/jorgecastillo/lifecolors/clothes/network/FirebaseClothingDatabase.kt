@@ -63,7 +63,7 @@ class FirebaseClothingDatabase {
                     val favedMap: Map<String, Any> = snapshot.data ?: mapOf<String, Any>()
                     offer(
                         favedMap.map { (it.value as String).deserializeItem() }
-                            .filter { it.category == category }
+                            .filter { it.category == category && it.isFaved == true }
                             .toList()
                     )
                 } else {

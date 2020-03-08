@@ -135,7 +135,7 @@ class ColorGenerationViewModel(
                     updateViewState {
                         it.copy(
                             isLoadingSuggestedClothes = false,
-                            suggestedClothes = clothes
+                            suggestedClothes = clothes.take(6)
                         )
                     }
                 }
@@ -156,7 +156,7 @@ class ColorGenerationViewModel(
                     updateViewState {
                         it.copy(
                             isLoadingSuggestedComplimentaryClothes = false,
-                            suggestedComplimentaryClothes = clothes
+                            suggestedComplimentaryClothes = clothes.take(6)
                         )
                     }
                 }

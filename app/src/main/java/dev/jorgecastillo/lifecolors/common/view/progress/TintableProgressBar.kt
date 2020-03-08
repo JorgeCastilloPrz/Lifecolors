@@ -12,47 +12,49 @@ import dev.jorgecastillo.lifecolors.common.view.progress.TintableProgressBar.Ind
 
 @SuppressLint("CustomViewStyleable")
 internal class TintableProgressBar @JvmOverloads constructor(
-  context: Context,
-  attrs: AttributeSet? = null,
-  defStyleAttr: Int = android.R.attr.progressBarStyle
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = android.R.attr.progressBarStyle
 ) : android.widget.ProgressBar(context, attrs, defStyleAttr) {
 
-  private enum class IndeterminateStyles {
-    THIN,
-    MEDIUM
-  }
-
-  private var indeterminateStyle = THIN
-
-  init {
-    val typedArray = context.obtainStyledAttributes(attrs, R.styleable.TintableProgressBar)
-    val defaultColor = ContextCompat.getColor(context, R.color.colorAccent)
-    val indeterminateTint =
-      typedArray.getColor(R.styleable.TintableProgressBar_indeterminateTint, defaultColor)
-
-    val styleOrdinal = typedArray.getInt(R.styleable.TintableProgressBar_indeterminateStyle, 0)
-    indeterminateStyle = when (styleOrdinal) {
-      1 -> MEDIUM
-      else -> THIN
+    private enum class IndeterminateStyles {
+        THIN,
+        MEDIUM
     }
 
-    setupIndeterminateDrawable(indeterminateStyle, indeterminateTint)
+    private var indeterminateStyle = THIN
 
-    typedArray.recycle()
-  }
+    init {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.TintableProgressBar)
+        val defaultColor = ContextCompat.getColor(context, R.color.colorAccent)
+        val indeterminateTint =
+            typedArray.getColor(R.styleable.TintableProgressBar_indeterminateTint, defaultColor)
 
-  private fun setupIndeterminateDrawable(style: IndeterminateStyles, indeterminateTint: Int) {
-    indeterminateDrawable = CircularProgressDrawable(context).apply {
-      strokeWidth = when (style) {
-        THIN -> resources.getDimensionPixelSize(R.dimen.progress_thin_stroke_width).toFloat()
-        MEDIUM -> resources.getDimensionPixelSize(R.dimen.progress_medium_stroke_width).toFloat()
-      }
+        val styleOrdinal = typedArray.getInt(R.styleable.TintableProgressBar_indeterminateStyle, 0)
+        indeterminateStyle = when (styleOrdinal) {
+            1 -> MEDIUM
+            else -> THIN
+        }
+
+        setupIndeterminateDrawable(indeterminateStyle, indeterminateTint)
+
+        typedArray.recycle()
     }
 
-    setProgressBarTint(indeterminateTint)
-  }
+    private fun setupIndeterminateDrawable(style: IndeterminateStyles, indeterminateTint: Int) {
+        indeterminateDrawable = CircularProgressDrawable(context).apply {
+            strokeWidth = when (style) {
+                THIN -> resources.getDimensionPixelSize(R.dimen.progress_thin_stroke_width)
+                    .toFloat()
+                MEDIUM -> resources.getDimensionPixelSize(R.dimen.progress_medium_stroke_width)
+                    .toFloat()
+            }
+        }
 
-  fun setProgressBarTint(@ColorInt color: Int) {
-    (indeterminateDrawable as CircularProgressDrawable).setColorSchemeColors(color)
-  }
+        setProgressBarTint(indeterminateTint)
+    }
+
+    fun setProgressBarTint(@ColorInt color: Int) {
+        (indeterminateDrawable as CircularProgressDrawable).setColorSchemeColors(color)
+    }
 }
