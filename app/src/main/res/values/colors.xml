@@ -7,7 +7,7 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="background">#ffffff</color>
-    <color name="background_card">#1E1E1E</color>
+    <color name="background_card">#ffffff</color>
     <color name="background_light">#2D2D2D</color>
     <color name="text_light">#EDEDED</color>
     <color name="white_overlay">#55ffffff</color>

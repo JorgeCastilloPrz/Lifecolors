@@ -4,61 +4,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
-  <androidx.appcompat.widget.Toolbar
-      android:id="@+id/toolbar"
-      android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"
-      android:background="@color/colorAccent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-      app:title="@string/favorite_colors_screen_title"
-      />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+        app:title="@string/favorite_colors_screen_title" />
 
-  <ProgressBar
-      android:id="@+id/loading"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/toolbar"
-      />
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/colorList"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:alpha="0"
-      android:background="@color/background_card"
-      android:clipChildren="false"
-      android:clipToPadding="false"
-      android:paddingBottom="@dimen/spacing"
-      android:paddingTop="@dimen/spacing"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/toolbar"
-      tools:alpha="1"
-      tools:itemCount="2"
-      tools:listitem="@layout/item_color_list"
-      />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/colorList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0"
+        android:background="@color/background_card"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingTop="@dimen/spacing"
+        android:paddingBottom="@dimen/spacing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:alpha="1"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_color_list" />
 
-  <TextView
-      android:id="@+id/emptyState"
-      android:alpha="0"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/favorite_colors_empty_state"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      android:textColor="@color/white"
-      android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-      app:layout_constraintTop_toBottomOf="@id/toolbar"
-      app:layout_constraintBottom_toBottomOf="parent"
-      />
+    <TextView
+        android:id="@+id/emptyState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:text="@string/favorite_colors_empty_state"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
