@@ -73,13 +73,13 @@ class DashboardActivity : AuthenticationActivity() {
     private fun setupClothingList() {
         clothesRecycler.adapter = savedClothesAdapter
         clothesRecycler.layoutManager = GridLayoutManager(this, 3)
-        clothesRecycler.setHasFixedSize(true)
+        clothesRecycler.setHasFixedSize(false)
     }
 
     private fun setupColorList() {
         pickedColorsList.adapter = colorsAdapter
         pickedColorsList.layoutManager = LinearLayoutManager(this)
-        pickedColorsList.setHasFixedSize(true)
+        pickedColorsList.setHasFixedSize(false)
         val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
             setDrawable(
                 ContextCompat.getDrawable(

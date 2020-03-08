@@ -65,9 +65,9 @@ class ColorsListAdapter(
             val favButton = itemView.findViewById<ImageButton>(R.id.favButton)
             favButton.setImageResource(
                 if (colorViewState.isFavorite) {
-                    R.drawable.ic_favorite_white_24dp
+                    R.drawable.ic_favorite_dark
                 } else {
-                    R.drawable.ic_favorite_border_white_24dp
+                    R.drawable.ic_favorite_border_dark
                 }
             )
             favButton.setOnClickListener {

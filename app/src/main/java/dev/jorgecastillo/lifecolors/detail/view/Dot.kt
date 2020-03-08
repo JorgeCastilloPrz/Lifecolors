@@ -32,7 +32,7 @@ class Dot @JvmOverloads constructor(
   init {
     val attributes = context.obtainStyledAttributes(attrs, R.styleable.Dot)
     color = attributes.getColor(R.styleable.Dot_dotColor, Color.WHITE)
-    strokeColor = attributes.getColor(R.styleable.Dot_dotStrokeColor, Color.WHITE)
+    strokeColor = attributes.getColor(R.styleable.Dot_dotStrokeColor, Color.BLACK)
     objectBoundaryPaint.strokeWidth =
       attributes.getDimensionPixelSize(R.styleable.Dot_dotStrokeWidth, STROKE_WIDTH.toInt()).toFloat()
     attributes.recycle()
