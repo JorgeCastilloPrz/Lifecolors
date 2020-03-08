@@ -61,7 +61,11 @@ class FirebaseClothingDatabase {
             val subscription = eventDocument.addSnapshotListener { snapshot, _ ->
                 if (snapshot!!.exists()) {
                     val favedMap: Map<String, Any> = snapshot.data ?: mapOf<String, Any>()
-                    offer(favedMap.map { (it.value as String).deserializeItem() }.toList())
+                    offer(
+                        favedMap.map { (it.value as String).deserializeItem() }
+                            .filter { it.category == category }
+                            .toList()
+                    )
                 } else {
                     offer(emptyList<ClothingItem>())
                 }

@@ -14,7 +14,8 @@ data class ZalandoItem(
     val url: String,
     val brandName: String,
     val articleName: String,
-    val price: String
+    val price: String,
+    val category: ZalandoApiClient.ZalandoCategory
 )
 
 class ZalandoApiClient {
@@ -356,7 +357,7 @@ class ZalandoApiClient {
                         originalPrice.text()
                     }
 
-                    acc + ZalandoItem(imageUrl, url, brandName, articleName, price)
+                    acc + ZalandoItem(imageUrl, url, brandName, articleName, price, category)
                 } else {
                     acc
                 }

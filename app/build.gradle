@@ -78,6 +78,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$android_core_ktx_version"
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation("com.squareup.moshi:moshi-kotlin:$moshi_kotlin_version")
+    implementation "com.squareup.moshi:moshi-adapters:$moshi_kotlin_version"
 
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
