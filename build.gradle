@@ -18,6 +18,7 @@ buildscript {
         appcompat_version = '1.1.0'
         android_core_ktx_version = '1.2.0'
         lifecycle_viewmodel_ktx_version = '2.2.0'
+        fragment_ktx_version = '1.2.2'
         constraint_layout_version = '2.0.0-beta4'
         material_version = '1.2.0-alpha05'
         arcmotion_plus_version = '1.0.2'

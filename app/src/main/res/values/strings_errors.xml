@@ -1,4 +1,5 @@
 <resources>
   <string name="auth_error">There was a problem during authentication. Review your connection.</string>
   <string name="loading_fav_statuses_error">There was a problem loading favorite statuses.</string>
+  <string name="error_server">There was a problem loading the content.</string>
 </resources>

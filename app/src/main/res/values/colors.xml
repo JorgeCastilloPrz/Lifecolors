@@ -2,11 +2,11 @@
 <resources>
     <color name="colorPrimary">#451093</color>
     <color name="colorPrimaryDark">#451093</color>
-    <color name="colorAccent">#4caf50</color>
-    <color name="colorAccentDark">#357a38</color>
+    <color name="colorAccent">#451093</color>
+    <color name="colorAccentDark">#451093</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="background">#101010</color>
+    <color name="background">#ffffff</color>
     <color name="background_card">#1E1E1E</color>
     <color name="background_light">#2D2D2D</color>
     <color name="text_light">#EDEDED</color>

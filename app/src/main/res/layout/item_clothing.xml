@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dev.jorgecastillo.lifecolors.colorgeneration.view.view.ClothingItemView
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/clothes_item_height"
+    tools:layout_width="120dp"
+    android:layout_height="200dp"
     android:layout_margin="2dp"
     android:orientation="vertical"
+    app:cardElevation="1dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/card_corner_radius"
     tools:cardBackgroundColor="#EAEAEA">
@@ -42,6 +44,6 @@
         android:layout_gravity="top|end"
         android:padding="@dimen/spacing"
         android:background="@drawable/bg_icon_button"
-        android:src="@drawable/ic_favorite_border_black_24dp"
+        android:src="@drawable/ic_favorite_border_dark"
         tools:ignore="ContentDescription" />
-</dev.jorgecastillo.lifecolors.colorgeneration.view.view.ClothingItemView>
+</androidx.cardview.widget.CardView>

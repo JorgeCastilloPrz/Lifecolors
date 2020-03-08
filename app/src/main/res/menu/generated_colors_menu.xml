@@ -5,7 +5,7 @@
 
   <item
       android:id="@+id/favColor"
-      android:icon="@drawable/ic_favorite_border_black_24dp"
+      android:icon="@drawable/ic_favorite_border_dark"
       android:title="@string/action_copy_to_clipboard"
       app:showAsAction="ifRoom"/>
 

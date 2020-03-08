@@ -18,8 +18,8 @@ import kotlinx.android.synthetic.main.item_clothing.view.*
 class ClothesAdapter(
     private val onItemClick: (ClothingItem) -> Unit = {},
     private val onItemFav: (ClothingItem) -> Unit = {}
-) :
-    ListAdapter<ClothingItem, ViewHolder>(ClothingItemDiffCallback()) {
+) : ListAdapter<ClothingItem, ViewHolder>(ClothingItemDiffCallback()) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_clothing, parent, false)
@@ -51,9 +51,9 @@ class ClothesAdapter(
         private fun ImageButton.bindFavIcon(isFaved: Boolean?) {
             setImageResource(
                 if (isFaved == true) {
-                    R.drawable.ic_favorite_black_24dp
+                    R.drawable.ic_favorite_dark
                 } else {
-                    R.drawable.ic_favorite_border_black_24dp
+                    R.drawable.ic_favorite_border_dark
                 }
             )
         }

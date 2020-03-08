@@ -173,8 +173,8 @@ class GeneratedColorsActivity : AuthenticationActivity() {
             renderClipboardIcon(copyToClipboardItem, R.drawable.ic_content_copy_black_24dp)
             renderFavIcon(
                 favIcon,
-                R.drawable.ic_favorite_black_24dp,
-                R.drawable.ic_favorite_border_black_24dp,
+                R.drawable.ic_favorite_dark,
+                R.drawable.ic_favorite_border_dark,
                 MenuItemProgressCircle(this).apply {
                     this.indeterminateTintList = ColorStateList.valueOf(Color.BLACK)
                 })

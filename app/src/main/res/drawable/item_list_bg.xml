@@ -4,6 +4,6 @@
     android:color="@color/background">
 
   <item>
-    <color android:color="@color/background_card" />
+    <color android:color="@color/white_overlay" />
   </item>
 </ripple>
