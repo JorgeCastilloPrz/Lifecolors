@@ -37,7 +37,7 @@
 
                 <TextView
                     android:id="@+id/selectedColorHex"
-                    style="@style/TextAppearance.MaterialComponents.Headline4"
+                    style="@style/Lifecolors.TextAppearance.Headline4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:alpha="0"
@@ -46,7 +46,7 @@
 
                 <TextView
                     android:id="@+id/selectedColorName"
-                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    style="@style/Lifecolors.TextAppearance.Subtitle1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_very_small"
@@ -143,7 +143,7 @@
                 android:layout_marginStart="@dimen/spacing"
                 android:layout_marginTop="@dimen/spacing_small"
                 android:text="@string/complimentary"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textAppearance="@style/Lifecolors.TextAppearance.Headline6"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
 
@@ -185,7 +185,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
                     android:textColor="?android:textColorPrimary"
                     tools:text="#38B0C8" />
 
@@ -196,7 +196,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
                     android:textColor="?android:textColorPrimary"
                     tools:text="#38B0C8" />
             </LinearLayout>
@@ -268,7 +268,7 @@
                 android:layout_marginStart="@dimen/spacing"
                 android:layout_marginTop="@dimen/spacing_small"
                 android:text="@string/shades"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textAppearance="@style/Lifecolors.TextAppearance.Headline6"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
 
@@ -289,7 +289,7 @@
                 android:layout_marginStart="@dimen/spacing"
                 android:layout_marginTop="@dimen/spacing"
                 android:text="@string/tints"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textAppearance="@style/Lifecolors.TextAppearance.Headline6"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
 
@@ -310,7 +310,7 @@
                 android:layout_marginStart="@dimen/spacing"
                 android:layout_marginTop="@dimen/spacing"
                 android:text="@string/analogous"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textAppearance="@style/Lifecolors.TextAppearance.Headline6"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
 
@@ -362,7 +362,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
                     android:textColor="?android:textColorPrimary"
                     tools:text="#38B0C8" />
 
@@ -373,7 +373,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
                     android:textColor="?android:textColorPrimary"
                     tools:text="#38B0C8" />
 
@@ -384,7 +384,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
                     android:textColor="?android:textColorPrimary"
                     tools:text="#38B0C8" />
             </LinearLayout>
@@ -396,7 +396,7 @@
                 android:layout_marginStart="@dimen/spacing"
                 android:layout_marginTop="@dimen/spacing"
                 android:text="@string/triadic"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textAppearance="@style/Lifecolors.TextAppearance.Headline6"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
 
@@ -448,7 +448,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
                     android:textColor="?android:textColorPrimary"
                     tools:text="#38B0C8" />
 
@@ -459,7 +459,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
                     android:textColor="?android:textColorPrimary"
                     tools:text="#38B0C8" />
 
@@ -470,7 +470,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
                     android:textColor="?android:textColorPrimary"
                     tools:text="#38B0C8" />
             </LinearLayout>
@@ -482,7 +482,7 @@
                 android:layout_marginStart="@dimen/spacing"
                 android:layout_marginTop="@dimen/spacing"
                 android:text="@string/tetradic"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textAppearance="@style/Lifecolors.TextAppearance.Headline6"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
 
@@ -544,7 +544,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
                     android:textColor="?android:textColorPrimary"
                     tools:text="#38B0C8" />
 
@@ -555,7 +555,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
                     android:textColor="?android:textColorPrimary"
                     tools:text="#38B0C8" />
 
@@ -566,7 +566,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
                     android:textColor="?android:textColorPrimary"
                     tools:text="#38B0C8" />
 
@@ -577,7 +577,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
                     android:textColor="?android:textColorPrimary"
                     tools:text="#38B0C8" />
             </LinearLayout>

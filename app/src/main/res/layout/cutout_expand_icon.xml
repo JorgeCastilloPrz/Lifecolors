@@ -7,7 +7,7 @@
     android:drawableStart="@drawable/ic_color_lens_black_24dp"
     android:text="6"
     android:drawablePadding="@dimen/spacing_very_small"
-    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle1"
     android:textColor="@color/white"
     android:layout_marginEnd="@dimen/spacing_small"
     />

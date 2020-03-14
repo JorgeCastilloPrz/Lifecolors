@@ -23,7 +23,7 @@
       android:layout_height="wrap_content"
       android:gravity="center"
       android:padding="@dimen/spacing_small"
-      android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+      android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle2"
       android:textColor="?android:textColorPrimary"
       tools:text="#38B0C8"
       />

@@ -54,7 +54,7 @@
                     android:paddingTop="@dimen/spacing_small"
                     android:paddingEnd="@dimen/spacing_small"
                     android:text="@string/picked_colors"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Headline6"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp" />
 
@@ -96,7 +96,7 @@
                     android:paddingTop="@dimen/spacing_small"
                     android:paddingEnd="@dimen/spacing_small"
                     android:text="@string/detected_colors"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textAppearance="@style/Lifecolors.TextAppearance.Headline6"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp" />
 

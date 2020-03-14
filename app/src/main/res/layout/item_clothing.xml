@@ -32,7 +32,7 @@
         android:paddingTop="@dimen/spacing_small"
         android:paddingEnd="@dimen/spacing"
         android:paddingBottom="@dimen/spacing_small"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textAppearance="@style/Lifecolors.TextAppearance.Headline6"
         android:textColor="@color/price_color"
         android:textSize="16sp"
         tools:text="39.99€" />

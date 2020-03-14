@@ -9,5 +9,5 @@
     android:orientation="vertical"
     android:padding="@dimen/spacing"
     android:text="@string/overlay_popup_bubble_hint"
-    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+    android:textAppearance="@style/Lifecolors.TextAppearance.Body1"
     />

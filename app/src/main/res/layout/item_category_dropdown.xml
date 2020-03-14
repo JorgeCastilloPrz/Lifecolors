@@ -6,5 +6,5 @@
     android:ellipsize="end"
     android:maxLines="1"
     android:padding="16dp"
-    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+    android:textAppearance="@style/Lifecolors.TextAppearance.Subtitle1"
     tools:text="Zapatos de mujer" />

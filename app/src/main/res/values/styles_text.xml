@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Lifecolors.TextAppearance.Body1" parent="TextAppearance.MaterialComponents.Body1">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Body2" parent="TextAppearance.MaterialComponents.Body2">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Button" parent="TextAppearance.MaterialComponents.Button">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Caption" parent="TextAppearance.MaterialComponents.Caption">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Overline" parent="TextAppearance.MaterialComponents.Overline">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+
+  <style name="Lifecolors.TextAppearance.Tooltip" parent="TextAppearance.MaterialComponents.Tooltip">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+</resources>
