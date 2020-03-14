@@ -34,6 +34,7 @@
 
   <style name="Lifecolors.TextAppearance.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
     <item name="fontFamily">@font/inter_family</item>
+    <item name="android:textStyle">bold</item>
   </style>
 
   <style name="Lifecolors.TextAppearance.Headline6" parent="TextAppearance.MaterialComponents.Headline6">

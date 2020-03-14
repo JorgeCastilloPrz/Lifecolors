@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Lifecolors.Widget.Button" parent="Widget.MaterialComponents.Button.TextButton">
+    <item name="fontFamily">@font/inter_family</item>
+  </style>
+</resources>
