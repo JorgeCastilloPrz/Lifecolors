@@ -25,6 +25,6 @@ data class ColorViewState(
       isPlaceHolder = true
     )
 
-    fun placeholders(): List<ColorViewState> = (1..3).map { placeholder() }
+    fun placeholders(): List<ColorViewState> = (1..2).map { placeholder() }
   }
 }

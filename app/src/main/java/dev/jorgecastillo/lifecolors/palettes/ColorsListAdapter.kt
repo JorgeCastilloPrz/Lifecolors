@@ -20,13 +20,13 @@ import dev.jorgecastillo.lifecolors.palettes.ColorsListAdapter.ViewHolder
 import dev.jorgecastillo.lifecolors.palettes.domain.model.ColorViewState
 
 class ColorsListAdapter(
-  private val onItemClick: (View, ColorViewState, Int) -> Unit,
-  private val onFavItemClick: (View, ColorViewState, Int) -> Unit
+    private val onItemClick: (View, ColorViewState, Int) -> Unit,
+    private val onFavItemClick: (View, ColorViewState, Int) -> Unit
 ) : ListAdapter<ColorViewState, ViewHolder>(ColorViewStateDiffCallback()) {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val view =
-      LayoutInflater.from(parent.context).inflate(R.layout.item_color_list, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.item_color_list, parent, false)
     return ViewHolder(view)
   }
 
@@ -36,9 +36,9 @@ class ColorsListAdapter(
 
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(
-      colorViewState: ColorViewState,
-      onItemClick: (View, ColorViewState, Int) -> Unit,
-      onFavItemClick: (View, ColorViewState, Int) -> Unit
+        colorViewState: ColorViewState,
+        onItemClick: (View, ColorViewState, Int) -> Unit,
+        onFavItemClick: (View, ColorViewState, Int) -> Unit
     ) {
       if (colorViewState.isPlaceHolder) {
         bindPlaceHolder()
@@ -63,7 +63,7 @@ class ColorsListAdapter(
 
       val cmykColorView = itemView.findViewById<TextView>(R.id.cmyk)
       cmykColorView.text =
-        itemView.resources.getString(R.string.cmyk, Color.WHITE.asCmyk())
+          itemView.resources.getString(R.string.cmyk, Color.WHITE.asCmyk())
 
       itemView.setOnClickListener(null)
       itemView.isClickable = false
@@ -75,14 +75,12 @@ class ColorsListAdapter(
 
       loading.visibility = View.GONE
       favButton.visibility = View.VISIBLE
-
-      itemView.alpha = 0.2f
     }
 
     private fun bindColor(
-      colorViewState: ColorViewState,
-      onItemClick: (View, ColorViewState, Int) -> Unit,
-      onFavItemClick: (View, ColorViewState, Int) -> Unit
+        colorViewState: ColorViewState,
+        onItemClick: (View, ColorViewState, Int) -> Unit,
+        onFavItemClick: (View, ColorViewState, Int) -> Unit
     ) {
       val dotView = itemView.findViewById<Dot>(R.id.colorDot)
       dotView.transitionName = "${colorViewState.color}"
@@ -99,7 +97,7 @@ class ColorsListAdapter(
 
       val cmykColorView = itemView.findViewById<TextView>(R.id.cmyk)
       cmykColorView.text =
-        itemView.resources.getString(R.string.cmyk, colorViewState.color.asCmyk())
+          itemView.resources.getString(R.string.cmyk, colorViewState.color.asCmyk())
 
       itemView.isClickable = true
       itemView.setOnClickListener { onItemClick(dotView, colorViewState, adapterPosition) }
@@ -109,17 +107,17 @@ class ColorsListAdapter(
 
       val favButton = itemView.findViewById<ImageButton>(R.id.favButton)
       favButton.setImageResource(
-        if (colorViewState.isFavorite) {
-          R.drawable.ic_favorite_dark
-        } else {
-          R.drawable.ic_favorite_border_dark
-        }
+          if (colorViewState.isFavorite) {
+            R.drawable.ic_favorite_dark
+          } else {
+            R.drawable.ic_favorite_border_dark
+          }
       )
       favButton.setOnClickListener {
         onFavItemClick(
-          dotView,
-          colorViewState,
-          adapterPosition
+            dotView,
+            colorViewState,
+            adapterPosition
         )
       }
 
@@ -130,8 +128,6 @@ class ColorsListAdapter(
         loading.visibility = View.GONE
         favButton.visibility = View.VISIBLE
       }
-
-      itemView.alpha = 1f
     }
   }
 }
