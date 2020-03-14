@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Button
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -123,12 +124,45 @@ class DashboardActivity : AuthenticationActivity() {
           } else {
             pickedColorsList.alpha = 1f
           }
+
+          viewAllClothes.bindViewAllClothesButtonText(viewState.t)
+          viewAllColors.bindViewAllColorsButtonText(viewState.t)
         }
         ViewState.Error -> {
           loading.visibility = View.GONE
           showError()
         }
       }
+
+  private fun Button.bindViewAllClothesButtonText(state: ContentViewState) {
+    setText(
+        when {
+          state.needsLogin -> {
+            R.string.view_all_clothes_login
+          }
+          state.clothes.any { it.isPlaceHolder } -> {
+            R.string.view_all_clothes_empty
+          }
+          else -> {
+            R.string.view_all
+          }
+        })
+  }
+
+  private fun Button.bindViewAllColorsButtonText(state: ContentViewState) {
+    setText(
+        when {
+          state.needsLogin -> {
+            R.string.view_all_colors_login
+          }
+          state.colors.any { it.isPlaceHolder } -> {
+            R.string.view_all_colors_empty
+          }
+          else -> {
+            R.string.view_all
+          }
+        })
+  }
 
   private fun showError() {
     Snackbar.make(main, R.string.error_server, Snackbar.LENGTH_LONG).show()
