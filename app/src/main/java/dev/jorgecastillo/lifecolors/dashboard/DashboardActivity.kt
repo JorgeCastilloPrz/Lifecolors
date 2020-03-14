@@ -87,16 +87,6 @@ class DashboardActivity : AuthenticationActivity() {
         popup.show()
     }
 
-    private fun selectPictureFromGallery() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_PICK
-        startActivityForResult(
-            Intent.createChooser(intent, "Select Picture"),
-            PICK_IMAGE_REQUEST_CODE
-        )
-    }
-
     private fun setupFab() {
         fab.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, CameraActivity::class.java))
