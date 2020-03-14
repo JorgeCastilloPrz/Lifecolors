@@ -36,10 +36,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 class DashboardActivity : AuthenticationActivity() {
 
-    companion object {
-        private const val PICK_IMAGE_REQUEST_CODE = 9329
-    }
-
     private val viewModel by viewModels<DashboardViewModel> { DashboardViewModelFactory }
 
     private val savedClothesAdapter = ClothesAdapter(onClothingItemClick())
