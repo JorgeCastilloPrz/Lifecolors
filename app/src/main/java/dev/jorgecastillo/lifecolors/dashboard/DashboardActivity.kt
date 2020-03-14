@@ -76,7 +76,7 @@ class DashboardActivity : AuthenticationActivity() {
             when (it.itemId) {
                 0 -> {
                 }
-                1 -> logout()
+                1 -> if (isLoggedIn) logout() else authenticate { }
             }
             true
         }
