@@ -24,111 +24,112 @@ class ColorsListAdapter(
     private val onFavItemClick: (View, ColorViewState, Int) -> Unit
 ) : ListAdapter<ColorViewState, ViewHolder>(ColorViewStateDiffCallback()) {
 
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val view =
-        LayoutInflater.from(parent.context).inflate(R.layout.item_color_list, parent, false)
-    return ViewHolder(view)
-  }
-
-  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    holder.bind(getItem(position), onItemClick, onFavItemClick)
-  }
-
-  class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bind(
-        colorViewState: ColorViewState,
-        onItemClick: (View, ColorViewState, Int) -> Unit,
-        onFavItemClick: (View, ColorViewState, Int) -> Unit
-    ) {
-      if (colorViewState.isPlaceHolder) {
-        bindPlaceHolder()
-      } else {
-        bindColor(colorViewState, onItemClick, onFavItemClick)
-      }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_color_list, parent, false)
+        return ViewHolder(view)
     }
 
-    private fun bindPlaceHolder() {
-      val dotView = itemView.findViewById<Dot>(R.id.colorDot)
-      dotView.transitionName = ""
-      dotView.color = Color.parseColor("#CACACA")
-      dotView.invalidate()
-
-      val hexColor = Color.WHITE.asHex()
-      val hexColorView = itemView.findViewById<TextView>(R.id.hexCode)
-      hexColorView.text = hexColor.toString()
-
-      val rgbColor = Color.WHITE.asRgb()
-      val rgbColorView = itemView.findViewById<TextView>(R.id.rgb)
-      rgbColorView.text = itemView.resources.getString(R.string.rgb, rgbColor)
-
-      val cmykColorView = itemView.findViewById<TextView>(R.id.cmyk)
-      cmykColorView.text =
-          itemView.resources.getString(R.string.cmyk, Color.WHITE.asCmyk())
-
-      itemView.setOnClickListener(null)
-      itemView.isClickable = false
-
-      val loading = itemView.findViewById<MenuItemProgressCircle>(R.id.loading)
-      loading.indeterminateTintList = ColorStateList.valueOf(Color.WHITE)
-
-      val favButton = itemView.findViewById<ImageButton>(R.id.favButton)
-      favButton.setImageResource( R.drawable.ic_favorite_placeholder)
-
-      loading.visibility = View.GONE
-      favButton.visibility = View.VISIBLE
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(getItem(position), onItemClick, onFavItemClick)
     }
 
-    private fun bindColor(
-        colorViewState: ColorViewState,
-        onItemClick: (View, ColorViewState, Int) -> Unit,
-        onFavItemClick: (View, ColorViewState, Int) -> Unit
-    ) {
-      val dotView = itemView.findViewById<Dot>(R.id.colorDot)
-      dotView.transitionName = "${colorViewState.color}"
-      dotView.color = colorViewState.color
-      dotView.invalidate()
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(
+            colorViewState: ColorViewState,
+            onItemClick: (View, ColorViewState, Int) -> Unit,
+            onFavItemClick: (View, ColorViewState, Int) -> Unit
+        ) {
+            if (colorViewState.isPlaceHolder) {
+                bindPlaceHolder()
+            } else {
+                bindColor(colorViewState, onItemClick, onFavItemClick)
+            }
+        }
 
-      val hexColor = colorViewState.color.asHex()
-      val hexColorView = itemView.findViewById<TextView>(R.id.hexCode)
-      hexColorView.text = hexColor.toString()
+        private fun bindPlaceHolder() {
+            val dotView = itemView.findViewById<Dot>(R.id.colorDot)
+            dotView.transitionName = ""
+            dotView.color = Color.parseColor("#CACACA")
+            dotView.invalidate()
 
-      val rgbColor = colorViewState.color.asRgb()
-      val rgbColorView = itemView.findViewById<TextView>(R.id.rgb)
-      rgbColorView.text = itemView.resources.getString(R.string.rgb, rgbColor)
+            val hexColor = Color.WHITE.asHex()
+            val hexColorView = itemView.findViewById<TextView>(R.id.hexCode)
+            hexColorView.text = hexColor.toString()
 
-      val cmykColorView = itemView.findViewById<TextView>(R.id.cmyk)
-      cmykColorView.text =
-          itemView.resources.getString(R.string.cmyk, colorViewState.color.asCmyk())
+            val rgbColor = Color.WHITE.asRgb()
+            val rgbColorView = itemView.findViewById<TextView>(R.id.rgb)
+            rgbColorView.text = itemView.resources.getString(R.string.rgb, rgbColor)
 
-      itemView.isClickable = true
-      itemView.setOnClickListener { onItemClick(dotView, colorViewState, adapterPosition) }
+            val cmykColorView = itemView.findViewById<TextView>(R.id.cmyk)
+            cmykColorView.text =
+                itemView.resources.getString(R.string.cmyk, Color.WHITE.asCmyk())
 
-      val loading = itemView.findViewById<MenuItemProgressCircle>(R.id.loading)
-      loading.indeterminateTintList = ColorStateList.valueOf(Color.WHITE)
+            itemView.setOnClickListener(null)
+            itemView.isClickable = false
 
-      val favButton = itemView.findViewById<ImageButton>(R.id.favButton)
-      favButton.setImageResource(
-          if (colorViewState.isFavorite) {
-            R.drawable.ic_favorite_dark
-          } else {
-            R.drawable.ic_favorite_border_dark
-          }
-      )
-      favButton.setOnClickListener {
-        onFavItemClick(
-            dotView,
-            colorViewState,
-            adapterPosition
-        )
-      }
+            val loading = itemView.findViewById<MenuItemProgressCircle>(R.id.loading)
+            loading.indeterminateTintList = ColorStateList.valueOf(Color.WHITE)
 
-      if (colorViewState.isLoading) {
-        loading.visibility = View.VISIBLE
-        favButton.visibility = View.GONE
-      } else {
-        loading.visibility = View.GONE
-        favButton.visibility = View.VISIBLE
-      }
+            val favButton = itemView.findViewById<ImageButton>(R.id.favButton)
+            favButton.setImageResource(R.drawable.ic_favorite_placeholder)
+            favButton.setOnClickListener(null)
+
+            loading.visibility = View.GONE
+            favButton.visibility = View.VISIBLE
+        }
+
+        private fun bindColor(
+            colorViewState: ColorViewState,
+            onItemClick: (View, ColorViewState, Int) -> Unit,
+            onFavItemClick: (View, ColorViewState, Int) -> Unit
+        ) {
+            val dotView = itemView.findViewById<Dot>(R.id.colorDot)
+            dotView.transitionName = "${colorViewState.color}"
+            dotView.color = colorViewState.color
+            dotView.invalidate()
+
+            val hexColor = colorViewState.color.asHex()
+            val hexColorView = itemView.findViewById<TextView>(R.id.hexCode)
+            hexColorView.text = hexColor.toString()
+
+            val rgbColor = colorViewState.color.asRgb()
+            val rgbColorView = itemView.findViewById<TextView>(R.id.rgb)
+            rgbColorView.text = itemView.resources.getString(R.string.rgb, rgbColor)
+
+            val cmykColorView = itemView.findViewById<TextView>(R.id.cmyk)
+            cmykColorView.text =
+                itemView.resources.getString(R.string.cmyk, colorViewState.color.asCmyk())
+
+            itemView.isClickable = true
+            itemView.setOnClickListener { onItemClick(dotView, colorViewState, adapterPosition) }
+
+            val loading = itemView.findViewById<MenuItemProgressCircle>(R.id.loading)
+            loading.indeterminateTintList = ColorStateList.valueOf(Color.WHITE)
+
+            val favButton = itemView.findViewById<ImageButton>(R.id.favButton)
+            favButton.setImageResource(
+                if (colorViewState.isFavorite) {
+                    R.drawable.ic_favorite_dark
+                } else {
+                    R.drawable.ic_favorite_border_dark
+                }
+            )
+            favButton.setOnClickListener {
+                onFavItemClick(
+                    dotView,
+                    colorViewState,
+                    adapterPosition
+                )
+            }
+
+            if (colorViewState.isLoading) {
+                loading.visibility = View.VISIBLE
+                favButton.visibility = View.GONE
+            } else {
+                loading.visibility = View.GONE
+                favButton.visibility = View.VISIBLE
+            }
+        }
     }
-  }
 }

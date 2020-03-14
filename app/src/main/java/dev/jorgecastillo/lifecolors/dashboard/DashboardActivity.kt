@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.camera.CameraActivity
 import dev.jorgecastillo.lifecolors.clothes.domain.ClothingItem
@@ -64,7 +65,14 @@ class DashboardActivity : AuthenticationActivity() {
 
     private fun showSettingsPopup() {
         val popup = PopupMenu(this, anchorView)
-        val options = resources.getStringArray(R.array.main_menu_actions)
+        val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
+        val options = resources.getStringArray(
+            if (isLoggedIn) {
+                R.array.main_menu_actions_logout
+            } else {
+                R.array.main_menu_actions_login
+            }
+        )
         options.forEachIndexed { index, action ->
             popup.menu.add(0, index, index, action)
         }
