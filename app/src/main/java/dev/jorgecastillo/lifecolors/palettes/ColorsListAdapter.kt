@@ -74,6 +74,7 @@ class ColorsListAdapter(
             val favButton = itemView.findViewById<ImageButton>(R.id.favButton)
             favButton.setImageResource(R.drawable.ic_favorite_placeholder)
             favButton.setOnClickListener(null)
+            favButton.isClickable = false
 
             loading.visibility = View.GONE
             favButton.visibility = View.VISIBLE
