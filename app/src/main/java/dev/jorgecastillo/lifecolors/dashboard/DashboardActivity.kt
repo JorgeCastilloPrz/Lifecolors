@@ -170,6 +170,14 @@ class DashboardActivity : AuthenticationActivity() {
             R.string.view_all
           }
         })
+
+    if (state.needsLogin) {
+      setOnClickListener {
+//        authenticate(
+//            onAuthenticationSuccess = {
+//            })
+      }
+    }
   }
 
   private fun showError() {

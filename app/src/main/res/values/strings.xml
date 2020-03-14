@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Lifecolors</string>
-    <string name="dashboard_your_clothes_title">Your saved clothes</string>
+    <string name="dashboard_your_clothes_title">Your wardrobe</string>
     <string name="overlay_popup_bubble_hint">Toca cualquier punto en la imagen para generar sugerencias de ropa, colores complementarios, tintes, sombras, y mucho más! 🎨</string>
     <string name="picture_colors">Colores en la imagen</string>
     <string name="picked_colors">Colores seleccionados</string>
@@ -19,7 +19,7 @@
     <string name="successful_logout">Nos vemos pronto!</string>
     <string name="firebase_auth_confirmation_title">Requiere login</string>
     <string name="firebase_auth_confirmation_msg">Esta funcionalidad requiere que estés logeado. Por favor, crea una cuenta para disfrutar de una mejor experiencia de usuario.</string>
-    <string name="favorite_colors_screen_title">Your favorite colors</string>
+    <string name="favorite_colors_screen_title">Your colors</string>
     <string name="favorite_colors_empty_state">No tienes colores favoritos. Selecciona alguno! 🎨</string>
     <string name="suggested_clothing_title">Ropa para este color</string>
     <string name="suggested_complimentary_clothing_title">Ropa complementaria</string>
