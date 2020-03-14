@@ -50,7 +50,7 @@ class ColorsListAdapter(
     private fun bindPlaceHolder() {
       val dotView = itemView.findViewById<Dot>(R.id.colorDot)
       dotView.transitionName = ""
-      dotView.color = Color.WHITE
+      dotView.color = Color.parseColor("#CACACA")
       dotView.invalidate()
 
       val hexColor = Color.WHITE.asHex()
@@ -72,6 +72,7 @@ class ColorsListAdapter(
       loading.indeterminateTintList = ColorStateList.valueOf(Color.WHITE)
 
       val favButton = itemView.findViewById<ImageButton>(R.id.favButton)
+      favButton.setImageResource( R.drawable.ic_favorite_placeholder)
 
       loading.visibility = View.GONE
       favButton.visibility = View.VISIBLE

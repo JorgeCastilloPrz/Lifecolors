@@ -20,7 +20,7 @@ data class ColorViewState(
   companion object {
     fun placeholder() = ColorViewState(
       0, GENERATED,
-      isFavorite = false,
+      isFavorite = true,
       isLoading = false,
       isPlaceHolder = true
     )
