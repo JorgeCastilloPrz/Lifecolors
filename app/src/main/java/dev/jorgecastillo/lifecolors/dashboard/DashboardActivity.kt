@@ -2,8 +2,6 @@ package dev.jorgecastillo.lifecolors.dashboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -49,8 +47,7 @@ class DashboardActivity : AuthenticationActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-        setSupportActionBar(bar)
-
+        setupAppBar()
         setupClothingSelector()
         setupClothingList()
         setupColorList()
@@ -60,21 +57,12 @@ class DashboardActivity : AuthenticationActivity() {
         viewModel.onReadyToLoadContent(ZalandoApiClient.ZalandoCategory.Mujer.RopaMujer())
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.menu_dashboard, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.actionSettings -> true.also { showSettingsPopup() }
-            else -> super.onOptionsItemSelected(item)
-        }
+    private fun setupAppBar() {
+        setSupportActionBar(bar)
+        bar.setNavigationOnClickListener { showSettingsPopup() }
     }
 
     private fun showSettingsPopup() {
-        val anchorView = findViewById<View>(R.id.actionSettings)
         val popup = PopupMenu(this, anchorView)
         val options = resources.getStringArray(R.array.main_menu_actions)
         options.forEachIndexed { index, action ->

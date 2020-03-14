@@ -141,7 +141,16 @@
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
+        android:layout_gravity="bottom"
+        app:navigationIcon="@drawable/ic_menu_black_24dp" />
+
+    <View
+        android:id="@+id/anchorView"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/spacing_very_small"
+        android:layout_marginBottom="62dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
