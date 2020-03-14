@@ -202,6 +202,20 @@ class DashboardActivity : AuthenticationActivity() {
                     R.string.view_all
                 }
             })
+
+        setOnClickListener {
+            when {
+                state.needsLogin -> {
+                    authenticate { }
+                }
+                state.colors.any { it.isPlaceHolder } -> {
+                    R.string.view_all_colors_empty
+                }
+                else -> {
+                    FavoriteColorsActivity.launch(this@DashboardActivity)
+                }
+            }
+        }
     }
 
     private fun Button.bindViewAllColorsButtonText(state: ContentViewState) {
@@ -221,6 +235,7 @@ class DashboardActivity : AuthenticationActivity() {
         setOnClickListener {
             when {
                 state.needsLogin -> {
+                    authenticate { }
                 }
                 state.colors.any { it.isPlaceHolder } -> {
                     R.string.view_all_colors_empty
