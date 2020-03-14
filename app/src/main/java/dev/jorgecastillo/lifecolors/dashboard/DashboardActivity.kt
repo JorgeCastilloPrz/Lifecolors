@@ -7,7 +7,6 @@ import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -81,7 +80,7 @@ class DashboardActivity : AuthenticationActivity() {
     pickedColorsList.adapter = colorsAdapter
     pickedColorsList.layoutManager = LinearLayoutManager(this)
     pickedColorsList.setHasFixedSize(false)
-    val dividerDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
+    val dividerDecorator = DividerItemDecoration(this).apply {
       setDrawable(
           ContextCompat.getDrawable(
               this@DashboardActivity,
