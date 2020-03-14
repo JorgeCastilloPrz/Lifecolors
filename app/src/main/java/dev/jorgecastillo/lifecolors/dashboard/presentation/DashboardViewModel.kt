@@ -35,11 +35,15 @@ class DashboardViewModel(
         .combine(colorsDatabase.getFavedColors()) { clothes, colors ->
           ContentViewState(
             if (clothes.isEmpty()) ClothingItem.placeholders() else clothes.take(6),
-            colors.map {
-              ColorViewState(
-                it,
-                ColorType.GENERATED, isFavorite = true, isLoading = false
-              )
+            if (colors.isEmpty()) {
+              ColorViewState.placeholders()
+            } else {
+              colors.map {
+                ColorViewState(
+                  it,
+                  ColorType.GENERATED, isFavorite = true, isLoading = false
+                )
+              }
             })
         }
 
