@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import dev.jorgecastillo.lifecolors.R
 import dev.jorgecastillo.lifecolors.camera.CameraActivity
 import dev.jorgecastillo.lifecolors.clothes.domain.ClothingItem
@@ -114,8 +115,11 @@ class DashboardActivity : AuthenticationActivity() {
         }
         is ViewState.Content<*> -> {
           loading.visibility = View.GONE
-          clothesRecycler.visibility = View.VISIBLE
+
           val content = viewState.t as ContentViewState
+          clothingCategory.bindClothesDropdown(viewState.t)
+
+          clothesRecycler.visibility = View.VISIBLE
           savedClothesAdapter.submitList(content.clothes)
           colorsAdapter.submitList(content.colors)
 
@@ -133,6 +137,10 @@ class DashboardActivity : AuthenticationActivity() {
           showError()
         }
       }
+
+  private fun TextInputLayout.bindClothesDropdown(state: ContentViewState) {
+    isEnabled = !state.needsLogin || !state.clothes.any { it.isPlaceHolder }
+  }
 
   private fun Button.bindViewAllClothesButtonText(state: ContentViewState) {
     setText(
